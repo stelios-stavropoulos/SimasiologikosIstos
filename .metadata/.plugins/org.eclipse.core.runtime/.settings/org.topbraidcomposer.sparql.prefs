@@ -1,0 +1,2 @@
+eclipse.preferences.version=1
+org.topbraidcomposer.sparql.view.editor.QueryEditor.query=SELECT *\nWHERE {\n    ?subject rdfs\:subClassOf ?object .\n}

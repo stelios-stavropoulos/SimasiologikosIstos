@@ -1,0 +1,297 @@
+# baseURI: http://topbraid.org/tbgeo
+# imports: http://datashapes.org/dash
+# prefix: tbgeo
+
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix swa: <http://topbraid.org/swa#> .
+@prefix tbgeo: <http://topbraid.org/tbgeo#> .
+@prefix tosh: <http://topbraid.org/tosh#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://topbraid.org/tbgeo>
+  a owl:Ontology ;
+  rdfs:comment "This is a minimal SHACL vocabulary defining the properties for geo:lat/long and the core concepts and properties used by TopBraid's GeoSPARQL support." ;
+  rdfs:label "TopBraid GeoSPARQL Vocabulary" ;
+  owl:imports <http://datashapes.org/dash> ;
+.
+tbgeo:GeographyPropertyGroup
+  a sh:PropertyGroup ;
+  rdfs:label "Geography" ;
+  sh:order "90"^^xsd:decimal ;
+.
+tbgeo:MapClickHandler
+  a rdfs:Class ;
+  a sh:NodeShape ;
+  rdfs:comment """A script that gets triggered when a user clicks on a polygon or marker on a map. In TopBraid this is supported by the Context Map panels, assuming the graph is not in read-only mode.
+
+The script implementation has access to two pre-bound variables in JavaScript: focusNode is the resource that was clicked on, and mapContext is the current tbgeo:MapContext. All scripts implementing MapClickHandlers will be invoked at each click. This means that the script should include guard clauses (such as if statements) to verify that the action should actually proceed. For example, if some actions only apply to instances of g:Country then the script should start like if(focusNode.instanceOf('g:Country')) { ... }.""" ;
+  rdfs:label "Map click handler" ;
+  rdfs:subClassOf dash:Script ;
+.
+tbgeo:MapContext
+  a owl:Class ;
+  a sh:NodeShape ;
+  dash:abstract true ;
+  rdfs:comment """The abstract superclass of objects that may serve as the context of Context Maps. A Context Map is populated with a set of geo resources that are either asserted or dynamically computed by a sh:values rule. Context Maps may perform actions when the user clicks on certain resources, and those actions may modify the state of the resources that define the geo features on the map.
+
+Subclasses should declare a property shape for the predicate tbgeo:mapFeatures, which may be an inferred property based on sh:this, or hold asserted values. For example, if the MapContext instance is an instance of Country which has its states as narrower concepts then tbgeo:mapFeatures may be computed from the node expression [ sh:path [ sh:inversePath skos:broader ] ].
+
+See tbgeo:MapClickAction on how to define click handlers.
+
+A status string may be displayed at the top of the Context Map. That is the value of tbgeo:mapStatus which again may get computed using a sh:values rule. This may be used to indicate the type of action that will happen on clicks.""" ;
+  rdfs:label "Map context" ;
+  rdfs:subClassOf owl:Thing ;
+.
+tbgeo:MapRenderingPropertyGroup
+  a sh:PropertyGroup ;
+  rdfs:comment "Properties that determine how a given feature will be rendered on a (Google) Map." ;
+  rdfs:label "Map rendering" ;
+  sh:order "95"^^xsd:decimal ;
+.
+tbgeo:hasIndex
+  a sh:Function ;
+  rdfs:comment "Checks if a GeoSPARQL index exists for a given graph." ;
+  rdfs:label "has index" ;
+  sh:parameter [
+      a sh:Parameter ;
+      sh:path tbgeo:graphURI ;
+      sh:description "The URI of the (master) graph." ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:returnType xsd:boolean ;
+.
+tbgeo:indexError
+  a sh:Function ;
+  rdfs:comment "Gets an error produced while building a given GeoSPARQL index." ;
+  rdfs:label "index error" ;
+  sh:parameter [
+      a sh:Parameter ;
+      sh:path tbgeo:graphURI ;
+      sh:description "The URI of the (master) graph." ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:returnType xsd:integer ;
+.
+tbgeo:indexItemCount
+  a sh:Function ;
+  rdfs:comment "Gets the number of resources that are covered by a given GeoSPARQL index." ;
+  rdfs:label "index item count" ;
+  sh:parameter [
+      a sh:Parameter ;
+      sh:path tbgeo:graphURI ;
+      sh:description "The URI of the (master) graph." ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:returnType xsd:integer ;
+.
+tbgeo:indexTimeStamp
+  a sh:Function ;
+  rdfs:comment "Gets the time stamp that a given GeoSPARQL index was built." ;
+  rdfs:label "index time stamp" ;
+  sh:parameter [
+      a sh:Parameter ;
+      sh:path tbgeo:graphURI ;
+      sh:description "The URI of the (master) graph." ;
+      sh:nodeKind sh:IRI ;
+    ] ;
+  sh:returnType xsd:integer ;
+.
+tbgeo:lineStrings
+  a sh:Function ;
+  rdfs:comment "Converts a given GeoSPARQL literal (GML/WKT) into a JSON array of LineString (polyline) arrays. Returns nothing if the literal does not represent line strings, but for example a point." ;
+  rdfs:label "line strings" ;
+  sh:parameter [
+      a sh:Parameter ;
+      sh:path tbgeo:literal ;
+      sh:description "The literal to convert." ;
+      sh:nodeKind sh:Literal ;
+    ] ;
+  sh:returnType xsd:string ;
+.
+tbgeo:point
+  a sh:Function ;
+  rdfs:comment "Converts a given GeoSPARQL literal (GML/WKT) that represents a lat/long Point into a string consisting of long and lat, separated by a space. Returns nothing if the literal does not represent a point, but for example a polygon." ;
+  rdfs:label "point" ;
+  sh:parameter [
+      a sh:Parameter ;
+      sh:path tbgeo:literal ;
+      sh:description "The literal to convert." ;
+      sh:nodeKind sh:Literal ;
+    ] ;
+  sh:returnType xsd:string ;
+.
+tbgeo:polygons
+  a sh:Function ;
+  rdfs:comment "Converts a given GeoSPARQL literal (GML/WKT) into a JSON array of Polygon arrays. Returns nothing if the literal does not represent polygons, but for example a point." ;
+  rdfs:label "polygons" ;
+  sh:parameter [
+      a sh:Parameter ;
+      sh:path tbgeo:literal ;
+      sh:description "The literal to convert." ;
+      sh:nodeKind sh:Literal ;
+    ] ;
+  sh:returnType xsd:string ;
+.
+geosparql:Feature-hasGeometry
+  a sh:PropertyShape ;
+  sh:path geosparql:hasGeometry ;
+  sh:class geosparql:Geometry ;
+  sh:description "A spatial representation for a given feature." ;
+  sh:group tbgeo:GeographyPropertyGroup ;
+  sh:name "has geometry" ;
+.
+geosparql:Geometry
+  a owl:Class ;
+  a sh:NodeShape ;
+  rdfs:comment """The class represents the top-level geometry type. This class is 
+      equivalent to the UML class GM_Object defined in ISO 19107, and 
+      it is superclass of all geometry types.
+    """ ;
+  rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
+  rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
+  rdfs:label "Geometry" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property geosparql:Geometry-asGML ;
+  sh:property geosparql:Geometry-asWKT ;
+.
+geosparql:Geometry-asGML
+  a sh:PropertyShape ;
+  sh:path geosparql:asGML ;
+  sh:datatype geosparql:gmlLiteral ;
+  sh:description "The GML serialization of a geometry." ;
+  sh:name "as GML" ;
+.
+geosparql:Geometry-asWKT
+  a sh:PropertyShape ;
+  sh:path geosparql:asWKT ;
+  sh:datatype geosparql:wktLiteral ;
+  sh:description "The WKT serialization of a geometry." ;
+  sh:name "as WKT" ;
+.
+geosparql:gmlLiteral
+  a rdfs:Datatype ;
+  rdfs:comment "A GML serialization of a geometry object." ;
+  rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
+  rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
+  rdfs:label "GML Literal" ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+geosparql:wktLiteral
+  a rdfs:Datatype ;
+  rdfs:comment "A WKT serialization of a geometry object." ;
+  rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> ;
+  rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
+  rdfs:label "WKT Literal" ;
+  rdfs:subClassOf rdfs:Literal ;
+.
+geo:SpatialThing
+  a owl:Class ;
+  a sh:NodeShape ;
+  rdfs:comment "Anything with spatial extent, i.e. size, shape, or position, e.g. people, places, bowling balls, as well as abstract areas like cubes." ;
+  rdfs:label "Spatial thing" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property geo:SpatialThing-lat ;
+  sh:property geo:SpatialThing-long ;
+.
+geo:SpatialThing-fillColor
+  a sh:PropertyShape ;
+  sh:path tbgeo:fillColor ;
+  sh:datatype xsd:string ;
+  sh:description "The CSS3 color that shall be used to fill the geometry object(s)." ;
+  sh:group tbgeo:MapRenderingPropertyGroup ;
+  sh:name "fill color" ;
+.
+geo:SpatialThing-fillOpacity
+  a sh:PropertyShape ;
+  sh:path tbgeo:fillOpacity ;
+  sh:datatype xsd:decimal ;
+  sh:description "The opacity between 0 and 1." ;
+  sh:group tbgeo:MapRenderingPropertyGroup ;
+  sh:name "fill opacity" ;
+.
+geo:SpatialThing-lat
+  a sh:PropertyShape ;
+  sh:path geo:lat ;
+  sh:description "The WGS84 latitude of a spatial thing (decimal degrees)." ;
+  sh:group tbgeo:GeographyPropertyGroup ;
+  sh:maxInclusive "90"^^xsd:decimal ;
+  sh:minInclusive "-90"^^xsd:decimal ;
+  sh:name "latitude" ;
+  sh:or (
+      [
+        sh:datatype xsd:decimal ;
+      ]
+      [
+        sh:datatype xsd:double ;
+      ]
+      [
+        sh:datatype xsd:float ;
+      ]
+    ) ;
+.
+geo:SpatialThing-long
+  a sh:PropertyShape ;
+  sh:path geo:long ;
+  sh:description "The WGS84 longitude of a spatial thing (decimal degrees)." ;
+  sh:group tbgeo:GeographyPropertyGroup ;
+  sh:maxInclusive "180"^^xsd:decimal ;
+  sh:minInclusive "-180"^^xsd:decimal ;
+  sh:name "longitude" ;
+  sh:or (
+      [
+        sh:datatype xsd:decimal ;
+      ]
+      [
+        sh:datatype xsd:double ;
+      ]
+      [
+        sh:datatype xsd:float ;
+      ]
+    ) ;
+.
+geo:SpatialThing-strokeColor
+  a sh:PropertyShape ;
+  sh:path tbgeo:strokeColor ;
+  sh:datatype xsd:string ;
+  sh:description "The CSS3 color that shall be used for the (out) lines the geometry object(s). For polylines (LineStrings) this can only be a hexadecimal HTML color of the format \"#FFFFFF\"." ;
+  sh:group tbgeo:MapRenderingPropertyGroup ;
+  sh:name "stroke color" ;
+.
+geo:SpatialThing-strokeWeight
+  a sh:PropertyShape ;
+  sh:path tbgeo:strokeWeight ;
+  sh:datatype xsd:integer ;
+  sh:description "The stroke weight in pixels." ;
+  sh:group tbgeo:MapRenderingPropertyGroup ;
+  sh:name "stroke weight" ;
+.
+geo:SpatialThing-symbolPath
+  a sh:PropertyShape ;
+  sh:path tbgeo:symbolPath ;
+  sh:datatype xsd:string ;
+  sh:description "For Points, this may specify the SVG Path to render the marker on a map, e.g. \"M -20 -10 L 20 -10 L 20 10 L -20 10 L -20 -10\" for a rectangle." ;
+  sh:group tbgeo:MapRenderingPropertyGroup ;
+  sh:name "symbol path" ;
+.
+geo:SpatialThing-symbolScale
+  a sh:PropertyShape ;
+  sh:path tbgeo:symbolScale ;
+  sh:datatype xsd:decimal ;
+  sh:description "For Points, this may specify the symbol's scaling factor, defaulting to 1." ;
+  sh:group tbgeo:MapRenderingPropertyGroup ;
+  sh:name "symbol scale" ;
+.
+geo:SpatialThing-text
+  a sh:PropertyShape ;
+  sh:path tbgeo:text ;
+  sh:datatype xsd:string ;
+  sh:description "A (short) text to display on a marker." ;
+  sh:group tbgeo:GeographyPropertyGroup ;
+  sh:name "text" ;
+.

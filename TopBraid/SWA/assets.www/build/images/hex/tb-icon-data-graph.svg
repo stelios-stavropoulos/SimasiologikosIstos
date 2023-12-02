@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="268 359 64 64">
+<g>
+	<polyline fill="#5DA9DD" points="299.435,359.768 326.63,375.468 326.63,406.871 299.435,422.572 272.239,406.871 272.239,375.468"/>
+	<g>
+		<circle fill="#FFFFFF" cx="284.541" cy="391.199" r="6.959"/>
+		<circle fill="#FFFFFF" cx="314.328" cy="390.568" r="3.827"/>
+		<path fill="#FFFFFF" d="M311.439,376.586c0,3.844-3.113,6.96-6.956,6.96c-3.847,0-6.962-3.116-6.962-6.96s3.115-6.959,6.962-6.959
+			C308.326,369.627,311.439,372.742,311.439,376.586z"/>
+		<circle fill="#FFFFFF" cx="304.517" cy="404.388" r="6.959"/>
+			<line fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4.8" stroke-miterlimit="10" x1="284.799" y1="390.586" x2="305.114" y2="405.378"/>
+
+			<line fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4.8" stroke-miterlimit="10" x1="284.799" y1="390.407" x2="304.937" y2="377.219"/>
+
+			<line fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4.8" stroke-miterlimit="10" x1="284.263" y1="390.765" x2="313.311" y2="390.765"/>
+	</g>
+</g>
+</svg>

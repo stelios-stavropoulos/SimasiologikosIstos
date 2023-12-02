@@ -1,0 +1,116 @@
+# baseURI: http://datashapes.org/shacl2owl
+# imports: http://datashapes.org/shacl2rdfs
+# prefix: shacl2owl
+
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shacl2owl: <http://datashapes.org/shacl2owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://datashapes.org/shacl2owl>
+  a owl:Ontology ;
+  rdfs:comment "A collection of SHACL rules that take a SHACL ontology as input and produce corresponding OWL statements, and via its owl:import also RDF Schema statements." ;
+  rdfs:label "SHACL to OWL conversion rules" ;
+  owl:imports <http://datashapes.org/shacl2rdfs> ;
+.
+shacl2owl:PropertyShapeShape
+  a sh:NodeShape ;
+  rdfs:label "Property shape shape for OWL" ;
+  sh:rule shacl2owl:addAllValuesFrom ;
+  sh:rule shacl2owl:addMaxCardinality ;
+  sh:rule shacl2owl:addMinCardinality ;
+  sh:rule shacl2owl:addTypeOWLDatatypeProperty ;
+  sh:rule shacl2owl:addTypeOWLObjectProperty ;
+  sh:targetObjectsOf sh:property ;
+.
+shacl2owl:addAllValuesFrom
+  a sh:SPARQLRule ;
+  rdfs:label "add allValuesFrom" ;
+  sh:construct """CONSTRUCT {
+    ?class rdfs:subClassOf ?restriction .
+	?restriction a owl:Restriction .
+	?restriction owl:onProperty ?path .
+	?restriction owl:allValuesFrom ?filler .
+}
+WHERE {
+    $this sh:class|sh:datatype ?filler .
+	$this sh:path ?path .
+	FILTER isIRI(?path) .
+	?class sh:property $this .
+	BIND (BNODE() AS ?restriction)
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
+shacl2owl:addMaxCardinality
+  a sh:SPARQLRule ;
+  rdfs:label "add max cardinality" ;
+  sh:construct """CONSTRUCT {
+    ?class rdfs:subClassOf ?restriction .
+	?restriction a owl:Restriction .
+	?restriction owl:onProperty ?path .
+	?restriction owl:maxCardinality ?maxCount .
+}
+WHERE {
+    $this sh:maxCount ?maxCount .
+	$this sh:path ?path .
+	FILTER isIRI(?path) .
+	?class sh:property $this .
+	BIND (BNODE() AS ?restriction)
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
+shacl2owl:addMinCardinality
+  a sh:SPARQLRule ;
+  rdfs:label "add min cardinality" ;
+  sh:construct """CONSTRUCT {
+    ?class rdfs:subClassOf ?restriction .
+	?restriction a owl:Restriction .
+	?restriction owl:onProperty ?path .
+	?restriction owl:minCardinality ?minCount .
+}
+WHERE {
+    $this sh:minCount ?minCount .
+	$this sh:path ?path .
+	FILTER isIRI(?path) .
+	?class sh:property $this .
+	BIND (BNODE() AS ?restriction)
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
+shacl2owl:addTypeOWLDatatypeProperty
+  a sh:SPARQLRule ;
+  rdfs:label "add type owl:DatatypeProperty" ;
+  sh:construct """CONSTRUCT {
+    ?path a owl:DatatypeProperty .
+}
+WHERE {
+    $this sh:path ?path .
+	FILTER (isIRI(?path)) .
+	FILTER (
+		EXISTS { $this sh:datatype ?anyDatatype } || 
+		EXISTS { $this sh:nodeKind sh:Literal }
+	)
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
+shacl2owl:addTypeOWLObjectProperty
+  a sh:SPARQLRule ;
+  rdfs:label "add type owl:ObjectProperty" ;
+  sh:construct """CONSTRUCT {
+    ?path a owl:ObjectProperty .
+}
+WHERE {
+    $this sh:path ?path .
+	FILTER (isIRI(?path)) .
+	FILTER (
+		EXISTS { $this sh:class ?anyClass } || 
+		EXISTS { $this sh:nodeKind sh:BlankNode } ||
+		EXISTS { $this sh:nodeKind sh:BlankNodeOrIRI } ||
+		EXISTS { $this sh:nodeKind sh:IRI }
+	)
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.

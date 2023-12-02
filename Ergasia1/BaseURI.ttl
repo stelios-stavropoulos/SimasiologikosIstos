@@ -1,0 +1,156 @@
+# baseURI: http://example.org/BaseURI
+
+@prefix : <http://example.org/BaseURI#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/BaseURI>
+  a owl:Ontology ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+:AlcoholDrink
+  a rdfs:Class ;
+  rdfs:subClassOf :Drink ;
+.
+:Business
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:BusinessOwner
+  a rdfs:Class ;
+  rdfs:subClassOf :Person ;
+.
+:BusinessPayment
+  a rdfs:Class ;
+  rdfs:subClassOf :Payment ;
+.
+:BusinessVehicle
+  a rdfs:Class ;
+  rdfs:subClassOf :Vehicle ;
+.
+:Canteen
+  a rdfs:Class ;
+  rdfs:subClassOf :Business ;
+.
+:Chef
+  a rdfs:Class ;
+  rdfs:subClassOf :Worker ;
+.
+:Cleaner
+  a rdfs:Class ;
+  rdfs:subClassOf :Worker ;
+.
+:CleaningTool
+  a rdfs:Class ;
+  rdfs:subClassOf :Tool ;
+.
+:CousineTool
+  a rdfs:Class ;
+  rdfs:subClassOf :Tool ;
+.
+:Customer
+  a rdfs:Class ;
+  rdfs:subClassOf :Person ;
+.
+:Drink
+  a rdfs:Class ;
+  rdfs:subClassOf :MenuProduct ;
+.
+:Equipment
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:FeePayment
+  a rdfs:Class ;
+  rdfs:subClassOf :BusinessPayment ;
+.
+:Food
+  a rdfs:Class ;
+  rdfs:subClassOf :MenuProduct ;
+.
+:FoodTruck
+  a rdfs:Class ;
+  rdfs:subClassOf :Truck ;
+.
+:Ingredient
+  a rdfs:Class ;
+  rdfs:subClassOf :Product ;
+.
+:Location
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:Machine
+  a rdfs:Class ;
+  rdfs:subClassOf :Equipment ;
+.
+:MemberCard
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:Menu
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:MenuProduct
+  a rdfs:Class ;
+  rdfs:subClassOf :Product ;
+.
+:Payment
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:Person
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:PersonalVehicle
+  a rdfs:Class ;
+  rdfs:subClassOf :Vehicle ;
+.
+:Product
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:Recipe
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:Reservation
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:RestockPayment
+  a rdfs:Class ;
+  rdfs:subClassOf :BusinessPayment ;
+.
+:ServicePayment
+  a rdfs:Class ;
+  rdfs:subClassOf :Payment ;
+.
+:SupplierCompany
+  a rdfs:Class ;
+  rdfs:subClassOf :Business ;
+.
+:Table
+  a rdfs:Class ;
+  rdfs:subClassOf :Equipment ;
+.
+:Tool
+  a rdfs:Class ;
+  rdfs:subClassOf :Equipment ;
+.
+:Truck
+  a rdfs:Class ;
+  rdfs:subClassOf :BusinessVehicle ;
+.
+:Vehicle
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:Worker
+  a rdfs:Class ;
+  rdfs:subClassOf :Person ;
+.

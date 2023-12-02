@@ -1,0 +1,37 @@
+# baseURI: http://topbraid.org/sparqlmotionfunctions
+# imports: http://spinrdf.org/spif
+# imports: http://topbraid.org/functions-afn
+# imports: http://topbraid.org/functions-fn
+# imports: http://topbraid.org/functions-smf
+# prefix: smf
+
+@prefix daml: <http://www.daml.org/2001/03/daml+oil#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix smf: <http://topbraid.org/sparqlmotionfunctions#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://topbraid.org/sparqlmotionfunctions>
+  a owl:Ontology ;
+  owl:imports <http://spinrdf.org/spif> ;
+  owl:imports <http://topbraid.org/functions-afn> ;
+  owl:imports <http://topbraid.org/functions-fn> ;
+  owl:imports <http://topbraid.org/functions-smf> ;
+  owl:versionInfo "2.0.0" ;
+.
+smf:fileDuplicateBaseURI
+  a spin:Function ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate <http://spinrdf.org/arg#filePath> ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The path of the file to get the \"sibling\" files of." ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:comment "Returns a comma-separated string with paths of other files that have the same base URI as a given file." ;
+  rdfs:label "file duplicate base URI" ;
+  rdfs:subClassOf spl:MiscFunctions ;
+.

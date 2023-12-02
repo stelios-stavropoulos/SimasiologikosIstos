@@ -1,0 +1,25 @@
+# baseURI: http://server.topbraidlive.org/dynamic/config
+# imports: http://server.topbraidlive.org/web/2009/config
+
+@prefix : <http://server.topbraidlive.org/dynamic/config#> .
+@prefix cfg: <http://server.topbraidlive.org/web/2009/config#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://server.topbraidlive.org/dynamic/config>
+  a owl:Ontology ;
+  owl:imports <http://server.topbraidlive.org/web/2009/config> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+:configuration
+  a cfg:ServerConfiguration ;
+  cfg:cacheAll true ;
+  cfg:contractViolationsAreErrors false ;
+  cfg:enableFairLocks true ;
+  cfg:enableOntologyOptimizations true ;
+  cfg:queryManagement false ;
+  cfg:serverURL "http://localhost:8083" ;
+  cfg:suppressVariousWarnings true ;
+.

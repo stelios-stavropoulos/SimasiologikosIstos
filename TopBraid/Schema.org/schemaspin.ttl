@@ -1,0 +1,1212 @@
+# baseURI: http://topbraid.org/spin/schemaspin
+# imports: http://qudt.org/vocab/1.0/unit
+# imports: http://spinrdf.org/spl
+# imports: http://topbraid.org/schema/schema-single-range
+# prefix: schemaspin
+
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix schemaspin: <http://topbraid.org/spin/schemaspin#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+schema:Event
+  spin:constraint [
+      a schemaspin:DatesMustBeOrdered ;
+      sp:arg1 schema:startDate ;
+      sp:arg2 schema:endDate ;
+    ] ;
+.
+schema:GeoCoordinates
+  spin:constraint [
+      a schemaspin:NumericRangeCheck ;
+      sp:arg1 schema:latitude ;
+      sp:arg2 "-90"^^xsd:double ;
+      sp:arg3 "90"^^xsd:double ;
+    ] ;
+  spin:constraint [
+      a schemaspin:NumericRangeCheck ;
+      sp:arg1 schema:longitude ;
+      sp:arg2 "-180"^^xsd:double ;
+      sp:arg3 "180"^^xsd:double ;
+    ] ;
+.
+schema:Person
+  spin:constraint [
+      a schemaspin:ChildrenCannotContainCycles ;
+    ] ;
+  spin:constraint [
+      a schemaspin:ChildrenMustBeBornAfterTheParent ;
+    ] ;
+  spin:constraint [
+      a schemaspin:DatesMustBeOrdered ;
+      sp:arg1 schema:birthDate ;
+      sp:arg2 schema:deathDate ;
+    ] ;
+.
+schema:Thing
+  spin:constraint [
+      a schemaspin:InvalidEmailAddress ;
+    ] ;
+  spin:constraint [
+      a schemaspin:PropertyDomainCheck ;
+    ] ;
+  spin:constraint [
+      a schemaspin:PropertyRangeCheck ;
+    ] ;
+.
+schema:children
+  a owl:IrreflexiveProperty ;
+.
+schema:colleagues
+  a owl:IrreflexiveProperty ;
+.
+schema:currenciesAccepted
+  a schemaspin:CurrencyProperty ;
+.
+schema:follows
+  a owl:IrreflexiveProperty ;
+.
+schema:knows
+  a owl:IrreflexiveProperty ;
+.
+schema:parents
+  a owl:IrreflexiveProperty ;
+.
+schema:priceCurrency
+  a schemaspin:CurrencyProperty ;
+.
+schema:relatedTo
+  a owl:IrreflexiveProperty ;
+.
+schema:siblings
+  a owl:IrreflexiveProperty ;
+.
+schema:spouse
+  a owl:IrreflexiveProperty ;
+.
+schema:subEvents
+  a owl:IrreflexiveProperty ;
+.
+schema:superEvent
+  a owl:IrreflexiveProperty ;
+.
+<http://topbraid.org/spin/schemaspin>
+  a owl:Ontology ;
+  rdfs:comment "A collection of SPIN constraints to detect quality issues on models based on the schema.org classes and properties." ;
+  owl:imports <http://qudt.org/vocab/1.0/unit> ;
+  owl:imports <http://spinrdf.org/spl> ;
+  owl:imports <http://topbraid.org/schema/schema-single-range> ;
+  owl:versionInfo "0.1.0" ;
+.
+schemaspin:ChildrenCannotContainCycles
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b70715 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b70715 ;
+          ]
+          [
+            sp:object schema:children ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b70715 ;
+          ]
+          [
+            sp:object "Children relationship cannot contain cycles" ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b70715 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            a sp:TriplePath ;
+            sp:object spin:_this ;
+            sp:path [
+                a sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 1 ;
+                sp:subPath schema:children ;
+              ] ;
+            sp:subject spin:_this ;
+          ]
+        ) ;
+    ] ;
+  spin:labelTemplate "Children cannot contain cycles" ;
+  rdfs:comment "Children cannot contain cycles" ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:ChildrenMustBeBornAfterTheParent
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b59670 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b59670 ;
+          ]
+          [
+            sp:object schema:children ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b59670 ;
+          ]
+          [
+            sp:object [
+                sp:varName "message" ;
+              ] ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b59670 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "parentBirthDate" ;
+              ] ;
+            sp:predicate schema:birthDate ;
+            sp:subject spin:_this ;
+          ]
+          [
+            a sp:TriplePath ;
+            sp:object [
+                sp:varName "child" ;
+              ] ;
+            sp:path [
+                a sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 1 ;
+                sp:subPath schema:children ;
+              ] ;
+            sp:subject spin:_this ;
+          ]
+          [
+            sp:object [
+                sp:varName "childBirthDate" ;
+              ] ;
+            sp:predicate schema:birthDate ;
+            sp:subject [
+                sp:varName "child" ;
+              ] ;
+          ]
+          [
+            a sp:Filter ;
+            sp:expression [
+                a sp:gt ;
+                sp:arg1 [
+                    sp:varName "parentBirthDate" ;
+                  ] ;
+                sp:arg2 [
+                    sp:varName "childBirthDate" ;
+                  ] ;
+              ] ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a sp:concat ;
+                sp:arg1 "Child " ;
+                sp:arg2 [
+                    a spif:name ;
+                    sp:arg1 [
+                        sp:varName "child" ;
+                      ] ;
+                  ] ;
+                sp:arg3 " cannot be have a birth date after the birth date of " ;
+                sp:arg4 [
+                    a spif:name ;
+                    sp:arg1 spin:_this ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "message" ;
+              ] ;
+          ]
+        ) ;
+      rdfs:comment "Children must be born after the parent" ;
+    ] ;
+  spin:labelTemplate "Children must be born after the parent" ;
+  rdfs:comment "Children must be born after the parent" ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:CurrencyProperty
+  a rdfs:Class ;
+  spin:constraint [
+      a schemaspin:UnknownCurrency ;
+    ] ;
+  rdfs:comment "The type of properties that take currencies as their values." ;
+  rdfs:label "Currency property" ;
+  rdfs:subClassOf rdf:Property ;
+.
+schemaspin:DatesMustBeOrdered
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b40606 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b40606 ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b40606 ;
+          ]
+          [
+            sp:object [
+                sp:varName "message" ;
+              ] ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b40606 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "earlierDate" ;
+              ] ;
+            sp:predicate spin:_arg1 ;
+            sp:subject spin:_this ;
+          ]
+          [
+            sp:object [
+                sp:varName "laterDate" ;
+              ] ;
+            sp:predicate spin:_arg2 ;
+            sp:subject spin:_this ;
+          ]
+          [
+            a sp:Filter ;
+            sp:expression [
+                a sp:gt ;
+                sp:arg1 [
+                    sp:varName "earlierDate" ;
+                  ] ;
+                sp:arg2 [
+                    sp:varName "laterDate" ;
+                  ] ;
+              ] ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a sp:concat ;
+                sp:arg1 [
+                    a spif:name ;
+                    sp:arg1 spin:_arg2 ;
+                  ] ;
+                sp:arg2 " (" ;
+                sp:arg3 [
+                    a xsd:string ;
+                    sp:arg1 [
+                        sp:varName "laterDate" ;
+                      ] ;
+                  ] ;
+                sp:arg4 ") must be after " ;
+                sp:arg5 [
+                    a spif:name ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg6 " (" ;
+                sp:arg7 [
+                    a xsd:string ;
+                    sp:arg1 [
+                        sp:varName "earlierDate" ;
+                      ] ;
+                  ] ;
+                sp:arg8 ") at " ;
+                sp:arg9 [
+                    a spif:name ;
+                    sp:arg1 spin:_this ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "message" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "The property holding the earlier date (e.g. birthDate)." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "The property holding the later date (e.g. deathDate)" ;
+    ] ;
+  spin:labelTemplate "{?arg2} must be after {?arg1}" ;
+  rdfs:comment "Compares the values of two date properties, and checks whether the earlier date is before the later date." ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:InvalidEmailAddress
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b23470 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b23470 ;
+          ]
+          [
+            sp:object schema:email ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b23470 ;
+          ]
+          [
+            sp:object [
+                sp:varName "message" ;
+              ] ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b23470 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "email" ;
+              ] ;
+            sp:predicate schema:email ;
+            sp:subject spin:_this ;
+          ]
+          [
+            a sp:Filter ;
+            sp:expression [
+                a sp:not ;
+                sp:arg1 [
+                    a schemaspin:isEmailAddress ;
+                    sp:arg1 [
+                        sp:varName "email" ;
+                      ] ;
+                  ] ;
+              ] ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a sp:concat ;
+                sp:arg1 "Invalid email address " ;
+                sp:arg2 [
+                    sp:varName "email" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "message" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:labelTemplate "Invalid email address" ;
+  rdfs:comment "Invalid email address" ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:IrreflexivePropertyViolation
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b96310 ;
+          ]
+          [
+            sp:object [
+                sp:varName "message" ;
+              ] ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b96310 ;
+          ]
+          [
+            sp:object [
+                sp:varName "s" ;
+              ] ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b96310 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b96310 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "s" ;
+              ] ;
+            sp:predicate spin:_this ;
+            sp:subject [
+                sp:varName "s" ;
+              ] ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a sp:concat ;
+                sp:arg1 [
+                    a spif:name ;
+                    sp:arg1 [
+                        sp:varName "s" ;
+                      ] ;
+                  ] ;
+                sp:arg2 " cannot be in a " ;
+                sp:arg3 [
+                    a spif:name ;
+                    sp:arg1 spin:_this ;
+                  ] ;
+                sp:arg4 " relationship with itself" ;
+              ] ;
+            sp:variable [
+                sp:varName "message" ;
+              ] ;
+          ]
+        ) ;
+      rdfs:comment "Irreflexive property violation" ;
+    ] ;
+  spin:labelTemplate "Irreflexive property violation" ;
+  rdfs:comment "Irreflexive property violation" ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:NumericRangeCheck
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b68763 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b68763 ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b68763 ;
+          ]
+          [
+            sp:object [
+                sp:varName "message" ;
+              ] ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b68763 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "value" ;
+              ] ;
+            sp:predicate spin:_arg1 ;
+            sp:subject spin:_this ;
+          ]
+          [
+            a sp:Filter ;
+            sp:expression [
+                a sp:or ;
+                sp:arg1 [
+                    a sp:lt ;
+                    sp:arg1 [
+                        a xsd:double ;
+                        sp:arg1 [
+                            sp:varName "value" ;
+                          ] ;
+                      ] ;
+                    sp:arg2 spin:_arg2 ;
+                  ] ;
+                sp:arg2 [
+                    a sp:gt ;
+                    sp:arg1 [
+                        a xsd:double ;
+                        sp:arg1 [
+                            sp:varName "value" ;
+                          ] ;
+                      ] ;
+                    sp:arg2 spin:_arg3 ;
+                  ] ;
+              ] ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a sp:concat ;
+                sp:arg1 [
+                    a spif:name ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg2 " must be between " ;
+                sp:arg3 spin:_arg2 ;
+                sp:arg4 " and " ;
+                sp:arg5 spin:_arg3 ;
+                sp:arg6 " but found " ;
+                sp:arg7 [
+                    sp:varName "value" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "message" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "The property to validate the values of." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:double ;
+      rdfs:comment "The minimum value." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:double ;
+      rdfs:comment "The maximum value." ;
+    ] ;
+  spin:labelTemplate "{?arg1} must be between {?arg2} and {?arg3}" ;
+  rdfs:label "Numeric range check" ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:PropertyDomainCheck
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b692 ;
+          ]
+          [
+            sp:object [
+                sp:varName "msg" ;
+              ] ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b692 ;
+          ]
+          [
+            sp:object [
+                sp:varName "p" ;
+              ] ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b692 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b692 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            a sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "o" ;
+                      ] ;
+                    sp:predicate [
+                        sp:varName "p" ;
+                      ] ;
+                    sp:subject spin:_this ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "domain" ;
+                      ] ;
+                    sp:predicate rdfs:domain ;
+                    sp:subject [
+                        sp:varName "p" ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Filter ;
+                    sp:expression [
+                        a sp:isIRI ;
+                        sp:arg1 [
+                            sp:varName "domain" ;
+                          ] ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Filter ;
+                    sp:expression [
+                        a sp:notExists ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "type" ;
+                                ] ;
+                              sp:predicate rdf:type ;
+                              sp:subject spin:_this ;
+                            ]
+                            [
+                              a sp:TriplePath ;
+                              sp:object [
+                                  sp:varName "domain" ;
+                                ] ;
+                              sp:path [
+                                  a sp:ModPath ;
+                                  sp:modMax -2 ;
+                                  sp:modMin 0 ;
+                                  sp:subPath rdfs:subClassOf ;
+                                ] ;
+                              sp:subject [
+                                  sp:varName "type" ;
+                                ] ;
+                            ]
+                          ) ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Bind ;
+                    sp:expression [
+                        a sp:concat ;
+                        sp:arg1 "Property domain mismatch: property " ;
+                        sp:arg2 [
+                            a spif:name ;
+                            sp:arg1 [
+                                sp:varName "p" ;
+                              ] ;
+                          ] ;
+                        sp:arg3 " cannot be used for " ;
+                        sp:arg4 [
+                            a spif:name ;
+                            sp:arg1 spin:_this ;
+                          ] ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "msg" ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "o" ;
+                      ] ;
+                    sp:predicate [
+                        sp:varName "p" ;
+                      ] ;
+                    sp:subject spin:_this ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "domain" ;
+                      ] ;
+                    sp:predicate rdfs:domain ;
+                    sp:subject [
+                        sp:varName "p" ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Filter ;
+                    sp:expression [
+                        a sp:isBlank ;
+                        sp:arg1 [
+                            sp:varName "domain" ;
+                          ] ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Filter ;
+                    sp:expression [
+                        a sp:notExists ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "type" ;
+                                ] ;
+                              sp:predicate rdf:type ;
+                              sp:subject spin:_this ;
+                            ]
+                            [
+                              sp:object [
+                                  sp:varName "union" ;
+                                ] ;
+                              sp:predicate owl:unionOf ;
+                              sp:subject [
+                                  sp:varName "domain" ;
+                                ] ;
+                            ]
+                            [
+                              sp:object [
+                                  sp:varName "op" ;
+                                ] ;
+                              sp:predicate <http://jena.hpl.hp.com/ARQ/list#member> ;
+                              sp:subject [
+                                  sp:varName "union" ;
+                                ] ;
+                            ]
+                            [
+                              a sp:TriplePath ;
+                              sp:object [
+                                  sp:varName "op" ;
+                                ] ;
+                              sp:path [
+                                  a sp:ModPath ;
+                                  sp:modMax -2 ;
+                                  sp:modMin 0 ;
+                                  sp:subPath rdfs:subClassOf ;
+                                ] ;
+                              sp:subject [
+                                  sp:varName "type" ;
+                                ] ;
+                            ]
+                          ) ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Bind ;
+                    sp:expression [
+                        a sp:concat ;
+                        sp:arg1 "Property domain mismatch: property " ;
+                        sp:arg2 [
+                            a spif:name ;
+                            sp:arg1 [
+                                sp:varName "p" ;
+                              ] ;
+                          ] ;
+                        sp:arg3 " cannot be used for " ;
+                        sp:arg4 [
+                            a spif:name ;
+                            sp:arg1 spin:_this ;
+                          ] ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "msg" ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:labelTemplate "Property domain check" ;
+  rdfs:comment "Checks the values of all objects of ?this and verifies that the predicates have a matching domain for this." ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:PropertyRangeCheck
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b43088 ;
+          ]
+          [
+            sp:object [
+                sp:varName "msg" ;
+              ] ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b43088 ;
+          ]
+          [
+            sp:object [
+                sp:varName "p" ;
+              ] ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b43088 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b43088 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            a sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "o" ;
+                      ] ;
+                    sp:predicate [
+                        sp:varName "p" ;
+                      ] ;
+                    sp:subject spin:_this ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "range" ;
+                      ] ;
+                    sp:predicate rdfs:range ;
+                    sp:subject [
+                        sp:varName "p" ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Filter ;
+                    sp:expression [
+                        a sp:isIRI ;
+                        sp:arg1 [
+                            sp:varName "range" ;
+                          ] ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Filter ;
+                    sp:expression [
+                        a sp:and ;
+                        sp:arg1 [
+                            a sp:not ;
+                            sp:arg1 [
+                                a spl:instanceOf ;
+                                sp:arg1 [
+                                    sp:varName "o" ;
+                                  ] ;
+                                sp:arg2 [
+                                    sp:varName "range" ;
+                                  ] ;
+                              ] ;
+                          ] ;
+                        sp:arg2 [
+                            a sp:or ;
+                            sp:arg1 [
+                                a sp:not ;
+                                sp:arg1 [
+                                    a sp:isIRI ;
+                                    sp:arg1 [
+                                        sp:varName "o" ;
+                                      ] ;
+                                  ] ;
+                              ] ;
+                            sp:arg2 [
+                                a sp:exists ;
+                                sp:elements (
+                                    [
+                                      sp:object [
+                                          sp:varName "someType" ;
+                                        ] ;
+                                      sp:predicate rdf:type ;
+                                      sp:subject [
+                                          sp:varName "o" ;
+                                        ] ;
+                                    ]
+                                  ) ;
+                              ] ;
+                          ] ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Bind ;
+                    sp:expression [
+                        a sp:concat ;
+                        sp:arg1 "Property range mismatch: value " ;
+                        sp:arg2 [
+                            sp:varName "o" ;
+                          ] ;
+                        sp:arg3 " does not match range " ;
+                        sp:arg4 [
+                            a spif:name ;
+                            sp:arg1 [
+                                sp:varName "range" ;
+                              ] ;
+                          ] ;
+                        sp:arg5 " for property " ;
+                        sp:arg6 [
+                            a spif:name ;
+                            sp:arg1 [
+                                sp:varName "p" ;
+                              ] ;
+                          ] ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "msg" ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "o" ;
+                      ] ;
+                    sp:predicate [
+                        sp:varName "p" ;
+                      ] ;
+                    sp:subject spin:_this ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "range" ;
+                      ] ;
+                    sp:predicate rdfs:range ;
+                    sp:subject [
+                        sp:varName "p" ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Filter ;
+                    sp:expression [
+                        a sp:isBlank ;
+                        sp:arg1 [
+                            sp:varName "range" ;
+                          ] ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Filter ;
+                    sp:expression [
+                        a sp:notExists ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "union" ;
+                                ] ;
+                              sp:predicate owl:unionOf ;
+                              sp:subject [
+                                  sp:varName "range" ;
+                                ] ;
+                            ]
+                            [
+                              sp:object [
+                                  sp:varName "op" ;
+                                ] ;
+                              sp:predicate <http://jena.hpl.hp.com/ARQ/list#member> ;
+                              sp:subject [
+                                  sp:varName "union" ;
+                                ] ;
+                            ]
+                            [
+                              a sp:Filter ;
+                              sp:expression [
+                                  a sp:or ;
+                                  sp:arg1 [
+                                      a spl:instanceOf ;
+                                      sp:arg1 [
+                                          sp:varName "o" ;
+                                        ] ;
+                                      sp:arg2 [
+                                          sp:varName "op" ;
+                                        ] ;
+                                    ] ;
+                                  sp:arg2 [
+                                      a sp:and ;
+                                      sp:arg1 [
+                                          a sp:isIRI ;
+                                          sp:arg1 [
+                                              sp:varName "o" ;
+                                            ] ;
+                                        ] ;
+                                      sp:arg2 [
+                                          a sp:notExists ;
+                                          sp:elements (
+                                              [
+                                                sp:object [
+                                                    sp:varName "someType" ;
+                                                  ] ;
+                                                sp:predicate rdf:type ;
+                                                sp:subject [
+                                                    sp:varName "o" ;
+                                                  ] ;
+                                              ]
+                                            ) ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                            ]
+                          ) ;
+                      ] ;
+                  ]
+                  [
+                    a sp:Bind ;
+                    sp:expression [
+                        a sp:concat ;
+                        sp:arg1 "Property range mismatch: invalid value " ;
+                        sp:arg2 [
+                            sp:varName "o" ;
+                          ] ;
+                        sp:arg3 " for property " ;
+                        sp:arg4 [
+                            a spif:name ;
+                            sp:arg1 [
+                                sp:varName "p" ;
+                              ] ;
+                          ] ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "msg" ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:labelTemplate "Property range check" ;
+  rdfs:comment "Checks the values of all objects of ?this and verifies that the objects match the declared range of the predicate. This is violated if the object is not an instance of the range class, unless the object is untyped URI node." ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:UnknownCurrency
+  a spin:ConstructTemplate ;
+  spin:body [
+      a sp:Construct ;
+      sp:templates (
+          [
+            sp:object spin:ConstraintViolation ;
+            sp:predicate rdf:type ;
+            sp:subject _:b49354 ;
+          ]
+          [
+            sp:object [
+                sp:varName "s" ;
+              ] ;
+            sp:predicate spin:violationRoot ;
+            sp:subject _:b49354 ;
+          ]
+          [
+            sp:object spin:_this ;
+            sp:predicate spin:violationPath ;
+            sp:subject _:b49354 ;
+          ]
+          [
+            sp:object [
+                sp:varName "message" ;
+              ] ;
+            sp:predicate rdfs:label ;
+            sp:subject _:b49354 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "value" ;
+              ] ;
+            sp:predicate spin:_this ;
+            sp:subject [
+                sp:varName "s" ;
+              ] ;
+          ]
+          [
+            a sp:Filter ;
+            sp:expression [
+                a sp:notExists ;
+                sp:elements (
+                    [
+                      sp:object [
+                          sp:varName "value" ;
+                        ] ;
+                      sp:predicate <http://qudt.org/schema/qudt#abbreviation> ;
+                      sp:subject [
+                          sp:varName "currency" ;
+                        ] ;
+                    ]
+                    [
+                      sp:object <http://qudt.org/schema/qudt#CurrencyUnit> ;
+                      sp:predicate rdf:type ;
+                      sp:subject [
+                          sp:varName "currency" ;
+                        ] ;
+                    ]
+                  ) ;
+              ] ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a sp:concat ;
+                sp:arg1 "Unknown currency abbreviation \"" ;
+                sp:arg2 [
+                    sp:varName "value" ;
+                  ] ;
+                sp:arg3 "\" does not follow ISO 4217 format at property " ;
+                sp:arg4 [
+                    a spif:name ;
+                    sp:arg1 spin:_this ;
+                  ] ;
+                sp:arg5 " of " ;
+                sp:arg6 [
+                    a spif:name ;
+                    sp:arg1 [
+                        sp:varName "s" ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "message" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:labelTemplate "Unknown currency" ;
+  rdfs:comment "Unknown currency" ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+schemaspin:isEmailAddress
+  a spin:Function ;
+  spin:body [
+      a sp:Ask ;
+      sp:where (
+          [
+            a sp:Filter ;
+            sp:expression [
+                a sp:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b" ;
+                sp:arg3 "i" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The email address to validate." ;
+    ] ;
+  spin:returnType xsd:boolean ;
+  rdfs:comment "Checks whether a given string (?arg1) represents a valid email address, according to a regular expression." ;
+  rdfs:label "is email address" ;
+  rdfs:subClassOf spl:StringFunctions ;
+.
+owl:IrreflexiveProperty
+  spin:constraint [
+      a schemaspin:IrreflexivePropertyViolation ;
+    ] ;
+.

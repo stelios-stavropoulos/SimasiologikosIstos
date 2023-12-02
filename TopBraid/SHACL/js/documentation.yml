@@ -1,0 +1,32 @@
+toc:
+  - name: Main Entry Points
+    description: |
+      These global objects serve as main entry point into the API.
+    children:
+      - graph
+      - dataset
+  - name: Graph Nodes API
+    description: |
+      These classes are instantiated by the graph API to represent RDF nodes.
+      The root class GraphNode has the two subclasses NamedNode (for URIs and blank nodes) and LiteralNode (for literal values such as xsd:date nodes).
+      Note that the most common literal types (xsd:string, xsd:boolean and numeric types) are typically represented by simple JavaScript values
+      (strings, booleans and numbers).
+    children:
+      - GraphNode
+      - LiteralNode
+      - NamedNode
+  - name: System-level API
+    children:
+      - GraphType
+  - name: Utilities
+    children:
+      - GraphNodeUtil
+      - ResultSet
+      - sparql
+  - name: Uploaded Files and Data Import API
+    children:
+      - UploadedFile
+      - UploadedSpreadsheet
+      - SpreadsheetIterator
+      - XMLNode
+      - SQL

@@ -1,0 +1,133 @@
+# baseURI: http://datashapes.org/shacl2rdfs
+# imports: http://datashapes.org/dash
+# prefix: shacl2rdfs
+
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix shacl2rdfs: <http://datashapes.org/shacl2rdfs#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://datashapes.org/shacl2rdfs>
+  a owl:Ontology ;
+  rdfs:comment "A collection of SHACL rules that take a SHACL ontology as input and produce corresponding RDF Schema statements." ;
+  rdfs:label "SHACL to RDF Schema conversion rules" ;
+  owl:imports <http://datashapes.org/dash> ;
+.
+shacl2rdfs:ClassShape
+  a sh:NodeShape ;
+  rdfs:comment "A shape for rules that apply to all classes. Basically this copies the class definitions so that the inferences graph can be used as output for an exporter." ;
+  rdfs:label "Class shape" ;
+  sh:rule shacl2rdfs:copyClassDefinition ;
+  sh:targetClass rdfs:Class ;
+  sh:targetClass owl:Class ;
+.
+shacl2rdfs:OntologyShape
+  a sh:NodeShape ;
+  rdfs:comment "Copies the triples of the owl:Ontology into the target graph." ;
+  rdfs:label "Ontology shape" ;
+  sh:rule shacl2rdfs:copyOntology ;
+  sh:targetClass owl:Ontology ;
+.
+shacl2rdfs:PropertyShapeShape
+  a sh:NodeShape ;
+  rdfs:label "Property shape shape" ;
+  sh:rule shacl2rdfs:createRDFProperty ;
+  sh:rule shacl2rdfs:setDomain ;
+  sh:rule shacl2rdfs:setRange ;
+  sh:targetObjectsOf sh:property ;
+.
+shacl2rdfs:copyClassDefinition
+  a sh:SPARQLRule ;
+  rdfs:comment "Copies any triples associated with the current class, including rdf:type, rdfs:subClassOf, comments and labels. Excludes blank nodes as those might be OWL axioms that would require deeper traversal and are not needed for RDFS export." ;
+  rdfs:label "copy class definition" ;
+  sh:construct """CONSTRUCT {
+    $this ?p ?o .
+}
+WHERE {
+    $this ?p ?o .
+	FILTER (!isBlank(?o))
+	FILTER (?p != rdf:type || ?o != sh:NodeShape)
+	FILTER (?p != sh:property)
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
+shacl2rdfs:copyOntology
+  a sh:SPARQLRule ;
+  rdfs:comment "Copies any triples associated with the current owl:Ontology. Excludes blank nodes in case those are used." ;
+  rdfs:label "copy ontology" ;
+  sh:construct """CONSTRUCT {
+    $this ?p ?o .
+}
+WHERE {
+    $this ?p ?o .
+    FILTER (!isBlank(?o)) .
+	FILTER (?o NOT IN (<http://datashapes.org/dash>, <http://datashapes.org/graphql>, <http://topbraid.org/tosh>, <http://topbraid.org/teamworkconstraints> ))
+	FILTER (?p != rdf:type || ?o = owl:Ontology) .
+	FILTER (?p NOT IN (<http://topbraid.org/swa#defaultNamespace>, <http://topbraid.org/metadata#status>))
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
+shacl2rdfs:createRDFProperty
+  a sh:SPARQLRule ;
+  rdfs:comment "Creates an instance of rdf:Property for each URI path. Copies sh:name into rdfs:label and sh:description into rdfs:comment where applicable." ;
+  rdfs:label "create rdf:Property" ;
+  sh:construct """CONSTRUCT {
+    ?path a rdf:Property .
+	?path rdfs:label ?name .
+	?path rdfs:comment ?description .
+}
+WHERE {
+    $this sh:path ?path .
+	FILTER (isIRI(?path)) .
+	OPTIONAL {
+		$this sh:name ?name .
+	}
+	OPTIONAL {
+		$this sh:description ?description .
+	}
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
+shacl2rdfs:setDomain
+  a sh:SPARQLRule ;
+  rdfs:comment "Assigns an rdfs:domain to a property if there is exactly one class that has the given property as its sh:property." ;
+  rdfs:label "set domain" ;
+  sh:construct """CONSTRUCT {
+    ?path rdfs:domain ?domain .
+}
+WHERE {
+    $this sh:path ?path .
+	?domain sh:property $this .
+	FILTER (isIRI(?path)) .
+	FILTER NOT EXISTS {
+		?ps sh:path ?path .
+		?otherClass sh:property ?ps .
+		FILTER (?ps != $this) .
+		FILTER (?otherClass != ?domain)
+	}
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
+shacl2rdfs:setRange
+  a sh:SPARQLRule ;
+  rdfs:comment "Based on sh:datatype and sh:class constraints this sets the rdfs:range of the property, assuming that there is just a single constraint of this type anywhere." ;
+  rdfs:label "set range" ;
+  sh:construct """CONSTRUCT {
+    ?path rdfs:range ?range .
+}
+WHERE {
+    $this sh:path ?path .
+	$this sh:datatype|sh:class ?range .
+	FILTER (isIRI(?path))
+	FILTER NOT EXISTS {
+		?ps sh:path ?path .
+		?ps sh:datatype|sh:class ?otherRange .
+		FILTER (?otherRange != ?range) .
+		FILTER (?ps != $this)
+	}
+}""" ;
+  sh:prefixes <http://datashapes.org/dash> ;
+.
