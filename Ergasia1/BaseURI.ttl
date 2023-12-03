@@ -14,6 +14,10 @@
   a rdfs:Class ;
   rdfs:subClassOf :Drink ;
 .
+:Bob
+  a :Chef ;
+  :personName "Bob" ;
+.
 :Business
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
@@ -60,7 +64,11 @@
 .
 :Equipment
   a rdfs:Class ;
+  :usedBy :Worker ;
   rdfs:subClassOf rdfs:Resource ;
+.
+:Equipment_1
+  a :Equipment ;
 .
 :FeePayment
   a rdfs:Class ;
@@ -86,6 +94,10 @@
   a rdfs:Class ;
   rdfs:subClassOf :Equipment ;
 .
+:Maria
+  a :Cleaner ;
+  :personName "Maria" ;
+.
 :MemberCard
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
@@ -97,6 +109,14 @@
 :MenuProduct
   a rdfs:Class ;
   rdfs:subClassOf :Product ;
+.
+:Mop
+  a :CleaningTool ;
+  :cleaningToolUsedBy :Maria ;
+.
+:Pan
+  a :CousineTool ;
+  :cousineToolUsedBy :Bob ;
 .
 :Payment
   a rdfs:Class ;
@@ -153,4 +173,117 @@
 :Worker
   a rdfs:Class ;
   rdfs:subClassOf :Person ;
+.
+:businessField
+  a rdf:Property ;
+  rdfs:domain :Business ;
+  rdfs:range xsd:string ;
+.
+:businessName
+  a rdf:Property ;
+  rdfs:domain :Business ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf :name ;
+.
+:businessOwnedBy
+  a rdf:Property ;
+  rdfs:domain :Business ;
+  rdfs:range :BusinessOwner ;
+  rdfs:subPropertyOf :ownedBy ;
+.
+:businessVehicleOwnedBy
+  a rdf:Property ;
+  rdfs:domain :BusinessVehicle ;
+  rdfs:range :Business ;
+  rdfs:subPropertyOf :ownedBy ;
+.
+:cleaningToolUsedBy
+  a rdf:Property ;
+  rdfs:domain :CleaningTool ;
+  rdfs:range :Cleaner ;
+  rdfs:subPropertyOf :usedBy ;
+.
+:cousineToolUsedBy
+  a rdf:Property ;
+  rdfs:domain :CousineTool ;
+  rdfs:range :Chef ;
+  rdfs:subPropertyOf :usedBy ;
+.
+:foodTruckLocation
+  a rdf:Property ;
+  rdfs:domain :FoodTruck ;
+  rdfs:range :Location ;
+  rdfs:subPropertyOf :location ;
+.
+:foodTruckOwnedBy
+  a rdf:Property ;
+  rdfs:domain :FoodTruck ;
+  rdfs:range :Canteen ;
+  rdfs:subPropertyOf :businessVehicleOwnedBy ;
+.
+:hasIngredient
+  a rdf:Property ;
+  rdfs:domain :Recipe ;
+  rdfs:range :Ingredient ;
+.
+:includes
+  a rdf:Property ;
+  rdfs:domain :Menu ;
+  rdfs:range :MenuProduct ;
+.
+:ingredientQuantity
+  a rdf:Property ;
+  rdfs:domain :Ingredient ;
+  rdfs:range xsd:integer ;
+  rdfs:subPropertyOf :quantity ;
+.
+:location
+  a rdf:Property ;
+.
+:name
+  a rdf:Property ;
+  rdfs:range xsd:string ;
+.
+:needsElectricity
+  a rdf:Property ;
+  rdfs:domain :Machine ;
+  rdfs:range xsd:boolean ;
+.
+:ownedBy
+  a rdf:Property ;
+.
+:personName
+  a rdf:Property ;
+  rdfs:domain :Person ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf :name ;
+.
+:plate
+  a rdf:Property ;
+  rdfs:domain :Vehicle ;
+  rdfs:range xsd:string ;
+.
+:quantity
+  a rdf:Property ;
+  rdfs:range xsd:integer ;
+.
+:reservedBy
+  a rdf:Property ;
+  rdfs:domain :Reservation ;
+  rdfs:range :Customer ;
+.
+:reservedTable
+  a rdf:Property ;
+  rdfs:domain :Reservation ;
+  rdfs:range :Table ;
+.
+:storageCapacity
+  a rdf:Property ;
+  rdfs:domain :Truck ;
+  rdfs:range xsd:decimal ;
+.
+:usedBy
+  a rdf:Property ;
+  rdfs:domain :Equipment ;
+  rdfs:range :Worker ;
 .
