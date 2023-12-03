@@ -14,8 +14,23 @@
   a rdfs:Class ;
   rdfs:subClassOf :Drink ;
 .
+:Beer
+  a :AlcoholDrink ;
+  :costs "2"^^xsd:decimal ;
+  :hasAlcohol true ;
+.
+:BeerAnef
+  a :NonAlcoholDrink ;
+  :costs 2.5 ;
+  :hasAlcohol false ;
+.
+:BeingServiced
+  a rdfs:Class ;
+  rdfs:subClassOf :OperationStatus ;
+.
 :Bob
   a :Chef ;
+  :hasContractWith :To_Vromiariko_To_Kalo ;
   :personName "Bob" ;
 .
 :Business
@@ -58,6 +73,14 @@
   a rdfs:Class ;
   rdfs:subClassOf :Person ;
 .
+:Dex
+  a :Customer ;
+.
+:DexReservation
+  a :Reservation ;
+  :reservedBy :Dex ;
+  :reservedTable :Table_1 ;
+.
 :Drink
   a rdfs:Class ;
   rdfs:subClassOf :MenuProduct ;
@@ -82,6 +105,14 @@
   a rdfs:Class ;
   rdfs:subClassOf :Truck ;
 .
+:FoofTruck1
+  a :FoodTruck ;
+  :foodTruckLocation :Nestoros_Tipa_15 ;
+  :foodTruckOwnedBy :To_Vromiariko_To_Kalo ;
+.
+:Fridge
+  a :Machine ;
+.
 :Ingredient
   a rdfs:Class ;
   rdfs:subClassOf :Product ;
@@ -96,6 +127,7 @@
 .
 :Maria
   a :Cleaner ;
+  :freelacesTo :To_Vromiariko_To_Kalo ;
   :personName "Maria" ;
 .
 :MemberCard
@@ -114,13 +146,43 @@
   a :CleaningTool ;
   :cleaningToolUsedBy :Maria ;
 .
+:Nestoros_Tipa_15
+  a :Location ;
+  :hasAddress "Nestoros Tipa 15" ;
+.
+:NonAlcoholDrink
+  a rdfs:Class ;
+  rdfs:subClassOf :Drink ;
+.
+:Olympou_15_Xalandri
+  a :Location ;
+.
+:OperationStatus
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:OutOfOrder
+  a rdfs:Class ;
+  rdfs:subClassOf :OperationStatus ;
+.
 :Pan
   a :CousineTool ;
   :cousineToolUsedBy :Bob ;
 .
+:Panseta
+  a :Ingredient ;
+  :ingredientQuantity 40 ;
+.
+:Papaf
+  a :BusinessOwner ;
+  :personName "Papaf" ;
+.
 :Payment
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
+.
+:Payment_1
+  a :Payment ;
 .
 :Person
   a rdfs:Class ;
@@ -130,13 +192,56 @@
   a rdfs:Class ;
   rdfs:subClassOf :Vehicle ;
 .
+:Pita
+  a :Ingredient ;
+  :costs 0.2 ;
+  :ingredientQuantity 60 ;
+.
+:PitaPanseta
+  a :Food ;
+  :costs "3"^^xsd:decimal ;
+  :hasIngredient :Panseta ;
+  :hasIngredient :Pita ;
+  :hasIngredient :Tzatziki ;
+  :suitableForVegan false ;
+.
+:PitaSouvlaki
+  a :Food ;
+  :costs "3"^^xsd:decimal ;
+  :hasIngredient :Pita ;
+  :hasIngredient :Souvlaki ;
+  :hasIngredient :Tzatziki ;
+  :suitableForVegan false ;
+.
+:PostalCode
+  a rdf:Property ;
+  rdfs:domain :Location ;
+  rdfs:range xsd:integer ;
+.
 :Product
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
 .
-:Recipe
-  a rdfs:Class ;
-  rdfs:subClassOf rdfs:Resource ;
+:Psomaki
+  a :Ingredient ;
+  :costs 0.15 ;
+  :ingredientQuantity 60 ;
+.
+:PsomakiPanseta
+  a :Food ;
+  :costs 2.5 ;
+  :hasIngredient :Panseta ;
+  :hasIngredient :Psomaki ;
+  :hasIngredient :Tzatziki ;
+  :suitableForVegan false ;
+.
+:PsomakiSouvlaki
+  a :Food ;
+  :costs 2.5 ;
+  :hasIngredient :Psomaki ;
+  :hasIngredient :Souvlaki ;
+  :hasIngredient :Tzatziki ;
+  :suitableForVegan false ;
 .
 :Reservation
   a rdfs:Class ;
@@ -150,13 +255,56 @@
   a rdfs:Class ;
   rdfs:subClassOf :Payment ;
 .
+:Sok
+  a :Waiter ;
+  :hasContractWith :To_Vromiariko_To_Kalo ;
+  :personName "Sok" ;
+.
+:Souvlaki
+  a :Ingredient ;
+  :costs 0.5 ;
+  :ingredientQuantity 100 ;
+.
 :SupplierCompany
   a rdfs:Class ;
   rdfs:subClassOf :Business ;
 .
+:TaKalaTaIlika
+  a :SupplierCompany ;
+  :businessName "Ta Kala Ta Ilika" ;
+  :businessOwnedBy :Za ;
+.
 :Table
   a rdfs:Class ;
   rdfs:subClassOf :Equipment ;
+.
+:Table_1
+  a :Table ;
+  :tableInTruck :FoofTruck1 ;
+.
+:Table_2
+  a :Table ;
+  :tableInTruck :FoofTruck1 ;
+.
+:Table_3
+  a :Table ;
+  :tableInTruck :FoofTruck1 ;
+.
+:To_Vromiariko_Menu
+  a :Menu ;
+  :includes :Beer ;
+  :includes :BeerAnef ;
+  :includes :PitaPanseta ;
+  :includes :PitaSouvlaki ;
+  :includes :PsomakiPanseta ;
+  :includes :PsomakiSouvlaki ;
+  :includes :Water ;
+.
+:To_Vromiariko_To_Kalo
+  a :Canteen ;
+  :businessOwnedBy :Papaf ;
+  :businessPaysWorker :Bob ;
+  :businessPaysWorker :Maria ;
 .
 :Tool
   a rdfs:Class ;
@@ -166,13 +314,34 @@
   a rdfs:Class ;
   rdfs:subClassOf :BusinessVehicle ;
 .
+:Tzatziki
+  a :Ingredient ;
+  :costs 0.4 ;
+  :ingredientQuantity 2 ;
+.
 :Vehicle
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
 .
+:Waiter
+  a rdfs:Class ;
+  rdfs:subClassOf :Worker ;
+.
+:Water
+  a :NonAlcoholDrink ;
+  :costs 0.5 ;
+  :hasAlcohol false ;
+.
 :Worker
   a rdfs:Class ;
   rdfs:subClassOf :Person ;
+.
+:Working
+  a rdfs:Class ;
+  rdfs:subClassOf :OperationStatus ;
+.
+:Za
+  a :BusinessOwner ;
 .
 :businessField
   a rdf:Property ;
@@ -191,6 +360,24 @@
   rdfs:range :BusinessOwner ;
   rdfs:subPropertyOf :ownedBy ;
 .
+:businessPaysBusiness
+  a rdf:Property ;
+  rdfs:domain :Business ;
+  rdfs:range :Business ;
+  rdfs:subPropertyOf :paysTo ;
+.
+:businessPaysPerson
+  a rdf:Property ;
+  rdfs:domain :Business ;
+  rdfs:range :Person ;
+  rdfs:subPropertyOf :paysTo ;
+.
+:businessPaysWorker
+  a rdf:Property ;
+  rdfs:domain :Business ;
+  rdfs:range :Worker ;
+  rdfs:subPropertyOf :businessPaysPerson ;
+.
 :businessVehicleOwnedBy
   a rdf:Property ;
   rdfs:domain :BusinessVehicle ;
@@ -203,11 +390,22 @@
   rdfs:range :Cleaner ;
   rdfs:subPropertyOf :usedBy ;
 .
+:costs
+  a rdf:Property ;
+  rdfs:domain :Product ;
+  rdfs:range xsd:decimal ;
+.
 :cousineToolUsedBy
   a rdf:Property ;
   rdfs:domain :CousineTool ;
   rdfs:range :Chef ;
   rdfs:subPropertyOf :usedBy ;
+.
+:customerPaysBusiness
+  a rdf:Property ;
+  rdfs:domain :Customer ;
+  rdfs:range :Business ;
+  rdfs:subPropertyOf :personPaysBusiness ;
 .
 :foodTruckLocation
   a rdf:Property ;
@@ -221,10 +419,52 @@
   rdfs:range :Canteen ;
   rdfs:subPropertyOf :businessVehicleOwnedBy ;
 .
+:freelacesTo
+  a rdf:Property ;
+  rdfs:domain :Worker ;
+  rdfs:range :Business ;
+  rdfs:subPropertyOf :worksFor ;
+.
+:hasAddress
+  a rdf:Property ;
+  rdfs:domain :Location ;
+  rdfs:range xsd:string ;
+.
+:hasAlcohol
+  a rdf:Property ;
+  rdfs:domain :Drink ;
+  rdfs:range xsd:boolean ;
+.
+:hasContractWith
+  a rdf:Property ;
+  rdfs:domain :Worker ;
+  rdfs:range :Business ;
+  rdfs:subPropertyOf :worksFor ;
+.
 :hasIngredient
   a rdf:Property ;
-  rdfs:domain :Recipe ;
+  rdfs:domain :Food ;
   rdfs:range :Ingredient ;
+.
+:hasMemberPoints
+  a rdf:Property ;
+  rdfs:domain :MemberCard ;
+  rdfs:range xsd:integer ;
+.
+:hasMenu
+  a rdf:Property ;
+  rdfs:domain :FoodTruck ;
+  rdfs:range :Menu ;
+.
+:hasNumberID
+  a rdf:Property ;
+  rdfs:domain :Table ;
+  rdfs:range xsd:integer ;
+.
+:hasSpaceFor
+  a rdf:Property ;
+  rdfs:domain :Table ;
+  rdfs:range xsd:integer ;
 .
 :includes
   a rdf:Property ;
@@ -237,8 +477,19 @@
   rdfs:range xsd:integer ;
   rdfs:subPropertyOf :quantity ;
 .
+:lastServiced
+  a rdf:Property ;
+  rdfs:domain :Machine ;
+  rdfs:range xsd:date ;
+.
 :location
   a rdf:Property ;
+.
+:memberCardOwnedBy
+  a rdf:Property ;
+  rdfs:domain :MemberCard ;
+  rdfs:range :Customer ;
+  rdfs:subPropertyOf :ownedBy ;
 .
 :name
   a rdf:Property ;
@@ -249,7 +500,15 @@
   rdfs:domain :Machine ;
   rdfs:range xsd:boolean ;
 .
+:operationStatus
+  a rdf:Property ;
+  rdfs:domain :Machine ;
+  rdfs:range :OperationStatus ;
+.
 :ownedBy
+  a rdf:Property ;
+.
+:paysTo
   a rdf:Property ;
 .
 :personName
@@ -257,6 +516,10 @@
   rdfs:domain :Person ;
   rdfs:range xsd:string ;
   rdfs:subPropertyOf :name ;
+.
+:personPaysBusiness
+  a rdf:Property ;
+  rdfs:subPropertyOf :paysTo ;
 .
 :plate
   a rdf:Property ;
@@ -282,8 +545,23 @@
   rdfs:domain :Truck ;
   rdfs:range xsd:decimal ;
 .
+:suitableForVegan
+  a rdf:Property ;
+  rdfs:domain :Food ;
+  rdfs:range xsd:boolean ;
+.
+:tableInTruck
+  a rdf:Property ;
+  rdfs:domain :Table ;
+  rdfs:range :FoodTruck ;
+.
 :usedBy
   a rdf:Property ;
   rdfs:domain :Equipment ;
   rdfs:range :Worker ;
+.
+:worksFor
+  a rdf:Property ;
+  rdfs:domain :Worker ;
+  rdfs:range :Business ;
 .
