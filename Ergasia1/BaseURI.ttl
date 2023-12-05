@@ -28,6 +28,10 @@
   a rdfs:Class ;
   rdfs:subClassOf :OperationStatus ;
 .
+:BigMan
+  a :BusinessOwner ;
+  :personName "BigMan" ;
+.
 :Bob
   a :Chef ;
   :hasContractWith :To_Vromiariko_To_Kalo ;
@@ -40,10 +44,6 @@
 :BusinessOwner
   a rdfs:Class ;
   rdfs:subClassOf :Person ;
-.
-:BusinessPayment
-  a rdfs:Class ;
-  rdfs:subClassOf :Payment ;
 .
 :BusinessVehicle
   a rdfs:Class ;
@@ -93,10 +93,6 @@
 :Equipment_1
   a :Equipment ;
 .
-:FeePayment
-  a rdfs:Class ;
-  rdfs:subClassOf :BusinessPayment ;
-.
 :Food
   a rdfs:Class ;
   rdfs:subClassOf :MenuProduct ;
@@ -105,10 +101,18 @@
   a rdfs:Class ;
   rdfs:subClassOf :Truck ;
 .
-:FoofTruck1
+:FoodTruck1
   a :FoodTruck ;
   :foodTruckLocation :Nestoros_Tipa_15 ;
-  :foodTruckOwnedBy :To_Vromiariko_To_Kalo ;
+  :foodTruckOwnedBy :Papaf ;
+.
+:FoodTruck2
+  a :FoodTruck ;
+  :foodTruckLocation :Olympou_15_Xalandri ;
+  :foodTruckOwnedBy :Want_Some_Beef ;
+.
+:Freezer
+  a :Machine ;
 .
 :Fridge
   a :Machine ;
@@ -130,9 +134,17 @@
   :freelacesTo :To_Vromiariko_To_Kalo ;
   :personName "Maria" ;
 .
+:Martiou_25
+  a :Location ;
+.
 :MemberCard
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
+.
+:MemberCard_1
+  a :MemberCard ;
+  :hasMemberPoints 0 ;
+  :memberCardOwnedBy :Dex ;
 .
 :Menu
   a rdfs:Class ;
@@ -165,6 +177,14 @@
   a rdfs:Class ;
   rdfs:subClassOf :OperationStatus ;
 .
+:Oven
+  a :Equipment ;
+  :usedBy :Bob ;
+.
+:Paidakia
+  a :Food ;
+  :costs "10"^^xsd:decimal ;
+.
 :Pan
   a :CousineTool ;
   :cousineToolUsedBy :Bob ;
@@ -176,13 +196,6 @@
 :Papaf
   a :BusinessOwner ;
   :personName "Papaf" ;
-.
-:Payment
-  a rdfs:Class ;
-  rdfs:subClassOf rdfs:Resource ;
-.
-:Payment_1
-  a :Payment ;
 .
 :Person
   a rdfs:Class ;
@@ -247,13 +260,9 @@
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
 .
-:RestockPayment
-  a rdfs:Class ;
-  rdfs:subClassOf :BusinessPayment ;
-.
-:ServicePayment
-  a rdfs:Class ;
-  rdfs:subClassOf :Payment ;
+:Ribeye_beef
+  a :Food ;
+  :costs "30"^^xsd:decimal ;
 .
 :Sok
   a :Waiter ;
@@ -269,6 +278,10 @@
   a rdfs:Class ;
   rdfs:subClassOf :Business ;
 .
+:T-bone_beef
+  a :Food ;
+  :costs "40"^^xsd:decimal ;
+.
 :TaKalaTaIlika
   a :SupplierCompany ;
   :businessName "Ta Kala Ta Ilika" ;
@@ -280,15 +293,15 @@
 .
 :Table_1
   a :Table ;
-  :tableInTruck :FoofTruck1 ;
+  :tableInTruck :FoodTruck1 ;
 .
 :Table_2
   a :Table ;
-  :tableInTruck :FoofTruck1 ;
+  :tableInTruck :FoodTruck1 ;
 .
 :Table_3
   a :Table ;
-  :tableInTruck :FoofTruck1 ;
+  :tableInTruck :FoodTruck1 ;
 .
 :To_Vromiariko_Menu
   a :Menu ;
@@ -303,8 +316,10 @@
 :To_Vromiariko_To_Kalo
   a :Canteen ;
   :businessOwnedBy :Papaf ;
-  :businessPaysWorker :Bob ;
-  :businessPaysWorker :Maria ;
+.
+:Tomahawk_beef
+  a :Food ;
+  :costs "30"^^xsd:decimal ;
 .
 :Tool
   a rdfs:Class ;
@@ -327,6 +342,10 @@
   a rdfs:Class ;
   rdfs:subClassOf :Worker ;
 .
+:Want_Some_Beef
+  a :Canteen ;
+  :businessOwnedBy :BigMan ;
+.
 :Water
   a :NonAlcoholDrink ;
   :costs 0.5 ;
@@ -342,6 +361,7 @@
 .
 :Za
   a :BusinessOwner ;
+  :personName "Za" ;
 .
 :businessField
   a rdf:Property ;
@@ -360,29 +380,29 @@
   rdfs:range :BusinessOwner ;
   rdfs:subPropertyOf :ownedBy ;
 .
-:businessPaysBusiness
-  a rdf:Property ;
-  rdfs:domain :Business ;
-  rdfs:range :Business ;
-  rdfs:subPropertyOf :paysTo ;
-.
-:businessPaysPerson
-  a rdf:Property ;
-  rdfs:domain :Business ;
-  rdfs:range :Person ;
-  rdfs:subPropertyOf :paysTo ;
-.
-:businessPaysWorker
-  a rdf:Property ;
-  rdfs:domain :Business ;
-  rdfs:range :Worker ;
-  rdfs:subPropertyOf :businessPaysPerson ;
-.
 :businessVehicleOwnedBy
   a rdf:Property ;
   rdfs:domain :BusinessVehicle ;
   rdfs:range :Business ;
   rdfs:subPropertyOf :ownedBy ;
+.
+:bussinessPaysBussiness
+  a rdf:Property ;
+.
+:bussinessPaysPerson
+  a rdf:Property ;
+.
+:bussinessPaysSupplierCompany
+  a rdf:Property ;
+  rdfs:domain :Canteen ;
+  rdfs:range :SupplierCompany ;
+  rdfs:subPropertyOf :bussinessPaysBussiness ;
+.
+:bussinessPaysWorker
+  a rdf:Property ;
+  rdfs:domain :Business ;
+  rdfs:range :Worker ;
+  rdfs:subPropertyOf :bussinessPaysPerson ;
 .
 :cleaningToolUsedBy
   a rdf:Property ;
@@ -401,11 +421,14 @@
   rdfs:range :Chef ;
   rdfs:subPropertyOf :usedBy ;
 .
-:customerPaysBusiness
+:customerPaysBussiness
+  a rdf:Property ;
+.
+:customerPaysCanteen
   a rdf:Property ;
   rdfs:domain :Customer ;
-  rdfs:range :Business ;
-  rdfs:subPropertyOf :personPaysBusiness ;
+  rdfs:range :Canteen ;
+  rdfs:subPropertyOf :customerPaysBussiness ;
 .
 :foodTruckLocation
   a rdf:Property ;
@@ -508,18 +531,11 @@
 :ownedBy
   a rdf:Property ;
 .
-:paysTo
-  a rdf:Property ;
-.
 :personName
   a rdf:Property ;
   rdfs:domain :Person ;
   rdfs:range xsd:string ;
   rdfs:subPropertyOf :name ;
-.
-:personPaysBusiness
-  a rdf:Property ;
-  rdfs:subPropertyOf :paysTo ;
 .
 :plate
   a rdf:Property ;
