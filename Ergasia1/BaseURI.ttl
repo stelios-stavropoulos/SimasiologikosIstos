@@ -4,10 +4,12 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix spin: <http://spinrdf.org/spin#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://example.org/BaseURI>
   a owl:Ontology ;
+  spin:imports <http://topbraid.org/spin/rdfsplus> ;
   owl:versionInfo "Created with TopBraid Composer" ;
 .
 :AlcoholDrink
@@ -28,14 +30,25 @@
   a rdfs:Class ;
   rdfs:subClassOf :OperationStatus ;
 .
-:BigMan
-  a :BusinessOwner ;
-  :personName "BigMan" ;
+:BeingServiced_1
+  a :BeingServiced ;
 .
 :Bob
   a :Chef ;
   :hasContractWith :To_Vromiariko_To_Kalo ;
   :personName "Bob" ;
+.
+:Broom
+  a :CleaningTool ;
+  :EquipmentOperationStatus :Working_1 ;
+  :cleaningToolUsedBy :Lucia ;
+  :equipmentInFoodTruck :FoodTruck2 ;
+.
+:Broom_1
+  a :CleaningTool ;
+  :EquipmentOperationStatus :Working_1 ;
+  :cleaningToolUsedBy :Maria ;
+  :equipmentInFoodTruck :FoodTruck1 ;
 .
 :Business
   a rdfs:Class ;
@@ -73,13 +86,65 @@
   a rdfs:Class ;
   rdfs:subClassOf :Person ;
 .
+:CustomerFoodTruckPayment
+  a rdfs:Class ;
+  rdfs:subClassOf :CustomerPayment ;
+.
+:CustomerFoodTruckPayment_1
+  a :CustomerFoodTruckPayment ;
+  :PaymentAmount 4.99 ;
+  :PaymentDate "2023-12-05+02:00"^^xsd:date ;
+  :PaymentFromCustomer :Dex ;
+  :PaymentToCanteen :To_Vromiariko_To_Kalo ;
+  :PaymentToTruck :FoodTruck1 ;
+.
+:CustomerFoodTruckPayment_2
+  a :CustomerFoodTruckPayment ;
+  :PaymentAmount 8.99 ;
+  :PaymentFromCustomer :Doki ;
+  :PaymentToCanteen :To_Vromiariko_To_Kalo ;
+  :PaymentToTruck :FoodTruck1 ;
+.
+:CustomerFoodTruckPayment_3
+  a :CustomerFoodTruckPayment ;
+  :PaymentAmount 13.99 ;
+  :PaymentFromCustomer :Xidedin_Ibibam ;
+  :PaymentToCanteen :To_Vromiariko_To_Kalo ;
+  :PaymentToTruck :FoodTruck1 ;
+.
+:CustomerFoodTruckPayment_4
+  a :CustomerFoodTruckPayment ;
+  :PaymentAmount "60"^^xsd:decimal ;
+  :PaymentDate "2023-12-02+02:00"^^xsd:date ;
+  :PaymentFromCustomer :Xedi ;
+  :PaymentToCanteen :To_Vromiariko_To_Kalo ;
+  :PaymentToTruck :FoodTruck2 ;
+.
+:CustomerFoodTruckPayment_5
+  a :CustomerFoodTruckPayment ;
+  :PaymentAmount "60"^^xsd:decimal ;
+  :PaymentDate "2023-12-01+02:00"^^xsd:date ;
+  :PaymentFromCustomer :Xidedin_Ibibam ;
+  :PaymentToCanteen :To_Vromiariko_To_Kalo ;
+  :PaymentToTruck :FoodTruck2 ;
+.
+:CustomerPayment
+  a rdfs:Class ;
+  rdfs:subClassOf :Payment ;
+.
 :Dex
   a :Customer ;
+  :personName "Dex" ;
 .
 :DexReservation
   a :Reservation ;
+  :reservationDate "2023-12-22+02:00"^^xsd:date ;
+  :reservationTable :Table_1 ;
   :reservedBy :Dex ;
-  :reservedTable :Table_1 ;
+.
+:Doki
+  a :Customer ;
+  :personName "Doki" ;
 .
 :Drink
   a rdfs:Class ;
@@ -90,8 +155,10 @@
   :usedBy :Worker ;
   rdfs:subClassOf rdfs:Resource ;
 .
-:Equipment_1
-  a :Equipment ;
+:EquipmentOperationStatus
+  a rdf:Property ;
+  rdfs:domain :Equipment ;
+  rdfs:range :OperationStatus ;
 .
 :Food
   a rdfs:Class ;
@@ -104,26 +171,90 @@
 :FoodTruck1
   a :FoodTruck ;
   :foodTruckLocation :Nestoros_Tipa_15 ;
-  :foodTruckOwnedBy :Papaf ;
+  :foodTruckOwnedBy :To_Vromiariko_To_Kalo ;
+  :hasMenu :To_Vromiariko_Menu ;
+  :plate "XKR 7891" ;
+  :storageCapacity "130"^^xsd:decimal ;
 .
 :FoodTruck2
   a :FoodTruck ;
   :foodTruckLocation :Olympou_15_Xalandri ;
-  :foodTruckOwnedBy :Want_Some_Beef ;
+  :foodTruckOwnedBy :To_Vromiariko_To_Kalo ;
+  :hasMenu :To_Vromiariko_Menu_Xalandri ;
+  :plate "XKR 4555" ;
+  :storageCapacity "100"^^xsd:decimal ;
 .
 :Freezer
   a :Machine ;
+  :EquipmentOperationStatus :Working_1 ;
+  :equipmentInFoodTruck :FoodTruck1 ;
+  :lastServiced "2023-12-02+02:00"^^xsd:date ;
+  :needsElectricity true ;
+  :usedBy :Bob ;
+.
+:Freezer_1
+  a :Machine ;
+  :EquipmentOperationStatus :Working_1 ;
+  :equipmentInFoodTruck :FoodTruck2 ;
+  :lastServiced "2023-11-11+02:00"^^xsd:date ;
+  :needsElectricity true ;
+  :usedBy :Martin ;
 .
 :Fridge
   a :Machine ;
+  :EquipmentOperationStatus :Working_1 ;
+  :equipmentInFoodTruck :FoodTruck1 ;
+  :lastServiced "2023-12-01+02:00"^^xsd:date ;
+  :needsElectricity true ;
+  :usedBy :Bob ;
+.
+:Fridge_1
+  a :Machine ;
+  :EquipmentOperationStatus :Working_1 ;
+  :equipmentInFoodTruck :FoodTruck2 ;
+  :lastServiced "2023-12-01+02:00"^^xsd:date ;
+  :needsElectricity true ;
+  :usedBy :Martin ;
+.
+:Grill
+  a :Machine ;
+  :EquipmentOperationStatus :Working_1 ;
+  :equipmentInFoodTruck :FoodTruck1 ;
+  :lastServiced "2023-10-18+02:00"^^xsd:date ;
+  :needsElectricity false ;
+  :usedBy :Bob ;
+.
+:Grill_1
+  a :Machine ;
+  :EquipmentOperationStatus :Working_1 ;
+  :equipmentInFoodTruck :FoodTruck2 ;
+  :needsElectricity false ;
+  :usedBy :Martin ;
 .
 :Ingredient
   a rdfs:Class ;
   rdfs:subClassOf :Product ;
 .
+:Knife
+  a :CousineTool ;
+  :EquipmentOperationStatus :Working_1 ;
+  :cousineToolUsedBy :Bob ;
+  :equipmentInFoodTruck :FoodTruck1 ;
+.
+:Knife_1
+  a :CousineTool ;
+  :EquipmentOperationStatus :Working_1 ;
+  :cousineToolUsedBy :Bob ;
+  :equipmentInFoodTruck :FoodTruck2 ;
+.
 :Location
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
+.
+:Lucia
+  a :Cleaner ;
+  :freelacesTo :To_Vromiariko_To_Kalo ;
+  :personName "Lucia" ;
 .
 :Machine
   a rdfs:Class ;
@@ -134,8 +265,11 @@
   :freelacesTo :To_Vromiariko_To_Kalo ;
   :personName "Maria" ;
 .
-:Martiou_25
-  a :Location ;
+:Martin
+  a :Chef ;
+  :hasContractWith :To_Vromiariko_To_Kalo ;
+  :personName """Martin
+""" ;
 .
 :MemberCard
   a rdfs:Class ;
@@ -143,8 +277,13 @@
 .
 :MemberCard_1
   a :MemberCard ;
-  :hasMemberPoints 0 ;
+  :hasMemberPoints 30 ;
   :memberCardOwnedBy :Dex ;
+.
+:MemberCard_2
+  a :MemberCard ;
+  :hasMemberPoints 144 ;
+  :memberCardOwnedBy :Xidedin_Ibibam ;
 .
 :Menu
   a rdfs:Class ;
@@ -154,12 +293,26 @@
   a rdfs:Class ;
   rdfs:subClassOf :Product ;
 .
+:MetaforikiTakMpam
+  a :Truck ;
+  :businessVehicleOwnedBy :TaKalaTaIlika ;
+  :storageCapacity "300"^^xsd:decimal ;
+.
 :Mop
   a :CleaningTool ;
+  :EquipmentOperationStatus :Working_1 ;
   :cleaningToolUsedBy :Maria ;
+  :equipmentInFoodTruck :FoodTruck1 ;
+.
+:Mop_1
+  a :CleaningTool ;
+  :EquipmentOperationStatus :Working_1 ;
+  :cleaningToolUsedBy :Maria ;
+  :equipmentInFoodTruck :FoodTruck2 ;
 .
 :Nestoros_Tipa_15
   a :Location ;
+  :PostalCode 54258 ;
   :hasAddress "Nestoros Tipa 15" ;
 .
 :NonAlcoholDrink
@@ -168,6 +321,8 @@
 .
 :Olympou_15_Xalandri
   a :Location ;
+  :PostalCode 46464 ;
+  :hasAddress "Olympou 15 Xalandri" ;
 .
 :OperationStatus
   a rdfs:Class ;
@@ -177,17 +332,35 @@
   a rdfs:Class ;
   rdfs:subClassOf :OperationStatus ;
 .
-:Oven
-  a :Equipment ;
-  :usedBy :Bob ;
+:OutOfOrder_1
+  a :OutOfOrder ;
 .
-:Paidakia
-  a :Food ;
-  :costs "10"^^xsd:decimal ;
+:Oven
+  a :Machine ;
+  :EquipmentOperationStatus :BeingServiced_1 ;
+  :equipmentInFoodTruck :FoodTruck1 ;
+  :lastServiced "2023-11-25+02:00"^^xsd:date ;
+  :needsElectricity true ;
+.
+:Oven_1
+  a :Machine ;
+  :EquipmentOperationStatus :BeingServiced_1 ;
+  :equipmentInFoodTruck :FoodTruck2 ;
+  :lastServiced "2023-10-15+02:00"^^xsd:date ;
+  :needsElectricity true ;
+  :usedBy :Martin ;
 .
 :Pan
   a :CousineTool ;
+  :EquipmentOperationStatus :Working_1 ;
   :cousineToolUsedBy :Bob ;
+  :equipmentInFoodTruck :FoodTruck1 ;
+.
+:Pan_1
+  a :CousineTool ;
+  :EquipmentOperationStatus :Working_1 ;
+  :cousineToolUsedBy :Martin ;
+  :equipmentInFoodTruck :FoodTruck2 ;
 .
 :Panseta
   a :Ingredient ;
@@ -195,7 +368,87 @@
 .
 :Papaf
   a :BusinessOwner ;
-  :personName "Papaf" ;
+.
+:Parking
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:ParkingSlot
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:ParkingSlot_1
+  a :ParkingSlot ;
+  :isParkingSlotFree false ;
+  :parkingSlotInParking :Parking_1 ;
+  :parkingSlotOccupiedBy :PersonalVehicle_1 ;
+.
+:ParkingSlot_2
+  a :ParkingSlot ;
+  :isParkingSlotFree true ;
+  :parkingSlotInParking :Parking_1 ;
+.
+:ParkingSlot_3
+  a :ParkingSlot ;
+  :isParkingSlotFree true ;
+  :parkingSlotInParking :Parking_1 ;
+.
+:Parking_1
+  a :Parking ;
+  :parkingInFoodTruck :FoodTruck1 ;
+.
+:Payment
+  a rdfs:Class ;
+  rdfs:subClassOf rdfs:Resource ;
+.
+:PaymentAmount
+  a rdf:Property ;
+  rdfs:domain :Payment ;
+  rdfs:range xsd:decimal ;
+.
+:PaymentDate
+  a rdf:Property ;
+  rdfs:domain :Payment ;
+  rdfs:range xsd:date ;
+.
+:PaymentFromBusinessOwner
+  a rdf:Property ;
+  rdfs:domain :SupplyPayment ;
+  rdfs:range :BusinessOwner ;
+  rdfs:subPropertyOf :PaymentFromPerson ;
+.
+:PaymentFromCustomer
+  a rdf:Property ;
+  rdfs:domain :CustomerPayment ;
+  rdfs:range :Customer ;
+  rdfs:subPropertyOf :PaymentFromPerson ;
+.
+:PaymentFromPerson
+  a rdf:Property ;
+  rdfs:domain :Payment ;
+  rdfs:range :Person ;
+.
+:PaymentToBusiness
+  a rdf:Property ;
+  rdfs:domain :Payment ;
+  rdfs:range :Business ;
+.
+:PaymentToCanteen
+  a rdf:Property ;
+  rdfs:domain :CustomerPayment ;
+  rdfs:range :Canteen ;
+  rdfs:subPropertyOf :PaymentToBusiness ;
+.
+:PaymentToSupplyCompany
+  a rdf:Property ;
+  rdfs:domain :SupplyPayment ;
+  rdfs:range :SupplierCompany ;
+  rdfs:subPropertyOf :PaymentToBusiness ;
+.
+:PaymentToTruck
+  a rdf:Property ;
+  rdfs:domain :Payment ;
+  rdfs:range :FoodTruck ;
 .
 :Person
   a rdfs:Class ;
@@ -204,6 +457,10 @@
 :PersonalVehicle
   a rdfs:Class ;
   rdfs:subClassOf :Vehicle ;
+.
+:PersonalVehicle_1
+  a :PersonalVehicle ;
+  :plate "NNN 0007" ;
 .
 :Pita
   a :Ingredient ;
@@ -248,6 +505,14 @@
   :hasIngredient :Tzatziki ;
   :suitableForVegan false ;
 .
+:PsomakiRibeye
+  a :Food ;
+  :costs "60"^^xsd:decimal ;
+  :hasIngredient :Psomaki_1 ;
+  :hasIngredient :Ribeye ;
+  :hasIngredient :Tzatziki_1 ;
+  :suitableForVegan false ;
+.
 :PsomakiSouvlaki
   a :Food ;
   :costs 2.5 ;
@@ -256,13 +521,27 @@
   :hasIngredient :Tzatziki ;
   :suitableForVegan false ;
 .
+:PsomakiTbone
+  a :Food ;
+  :costs "60"^^xsd:decimal ;
+  :hasIngredient :Psomaki_1 ;
+  :hasIngredient :T_Bone ;
+  :hasIngredient :Tzatziki_1 ;
+  :suitableForVegan false ;
+.
+:Psomaki_1
+  a :Ingredient ;
+  :costs 0.3 ;
+  :ingredientQuantity 130 ;
+.
 :Reservation
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
 .
-:Ribeye_beef
-  a :Food ;
+:Ribeye
+  a :Ingredient ;
   :costs "30"^^xsd:decimal ;
+  :ingredientQuantity 70 ;
 .
 :Sok
   a :Waiter ;
@@ -278,9 +557,21 @@
   a rdfs:Class ;
   rdfs:subClassOf :Business ;
 .
-:T-bone_beef
-  a :Food ;
+:SupplyPayment
+  a rdfs:Class ;
+  rdfs:subClassOf :Payment ;
+.
+:SupplyPayment_1
+  a :SupplyPayment ;
+  :PaymentAmount 199.99 ;
+  :PaymentDate "2023-12-02+02:00"^^xsd:date ;
+  :PaymentFromBusinessOwner :Papaf ;
+  :PaymentToSupplyCompany :TaKalaTaIlika ;
+.
+:T_Bone
+  a :Ingredient ;
   :costs "40"^^xsd:decimal ;
+  :ingredientQuantity 60 ;
 .
 :TaKalaTaIlika
   a :SupplierCompany ;
@@ -289,18 +580,24 @@
 .
 :Table
   a rdfs:Class ;
-  rdfs:subClassOf :Equipment ;
+  rdfs:subClassOf rdfs:Resource ;
 .
 :Table_1
   a :Table ;
+  :hasNumberID 1 ;
+  :hasSpaceFor 4 ;
   :tableInTruck :FoodTruck1 ;
 .
 :Table_2
   a :Table ;
+  :hasNumberID 2 ;
+  :hasSpaceFor 4 ;
   :tableInTruck :FoodTruck1 ;
 .
 :Table_3
   a :Table ;
+  :hasNumberID 3 ;
+  :hasSpaceFor 2 ;
   :tableInTruck :FoodTruck1 ;
 .
 :To_Vromiariko_Menu
@@ -313,13 +610,15 @@
   :includes :PsomakiSouvlaki ;
   :includes :Water ;
 .
+:To_Vromiariko_Menu_Xalandri
+  a :Menu ;
+  :includes :PsomakiRibeye ;
+  :includes :PsomakiTbone ;
+  :includes :Water ;
+.
 :To_Vromiariko_To_Kalo
   a :Canteen ;
   :businessOwnedBy :Papaf ;
-.
-:Tomahawk_beef
-  a :Food ;
-  :costs "30"^^xsd:decimal ;
 .
 :Tool
   a rdfs:Class ;
@@ -334,6 +633,11 @@
   :costs 0.4 ;
   :ingredientQuantity 2 ;
 .
+:Tzatziki_1
+  a :Ingredient ;
+  :costs 0.5 ;
+  :ingredientQuantity 3 ;
+.
 :Vehicle
   a rdfs:Class ;
   rdfs:subClassOf rdfs:Resource ;
@@ -341,10 +645,6 @@
 :Waiter
   a rdfs:Class ;
   rdfs:subClassOf :Worker ;
-.
-:Want_Some_Beef
-  a :Canteen ;
-  :businessOwnedBy :BigMan ;
 .
 :Water
   a :NonAlcoholDrink ;
@@ -358,6 +658,17 @@
 :Working
   a rdfs:Class ;
   rdfs:subClassOf :OperationStatus ;
+.
+:Working_1
+  a :Working ;
+.
+:Xedi
+  a :Customer ;
+  :personName "Xedi" ;
+.
+:Xidedin_Ibibam
+  a :Customer ;
+  :personName "Xidedin Ibibam" ;
 .
 :Za
   a :BusinessOwner ;
@@ -386,24 +697,6 @@
   rdfs:range :Business ;
   rdfs:subPropertyOf :ownedBy ;
 .
-:bussinessPaysBussiness
-  a rdf:Property ;
-.
-:bussinessPaysPerson
-  a rdf:Property ;
-.
-:bussinessPaysSupplierCompany
-  a rdf:Property ;
-  rdfs:domain :Canteen ;
-  rdfs:range :SupplierCompany ;
-  rdfs:subPropertyOf :bussinessPaysBussiness ;
-.
-:bussinessPaysWorker
-  a rdf:Property ;
-  rdfs:domain :Business ;
-  rdfs:range :Worker ;
-  rdfs:subPropertyOf :bussinessPaysPerson ;
-.
 :cleaningToolUsedBy
   a rdf:Property ;
   rdfs:domain :CleaningTool ;
@@ -421,14 +714,10 @@
   rdfs:range :Chef ;
   rdfs:subPropertyOf :usedBy ;
 .
-:customerPaysBussiness
+:equipmentInFoodTruck
   a rdf:Property ;
-.
-:customerPaysCanteen
-  a rdf:Property ;
-  rdfs:domain :Customer ;
-  rdfs:range :Canteen ;
-  rdfs:subPropertyOf :customerPaysBussiness ;
+  rdfs:domain :Equipment ;
+  rdfs:range :FoodTruck ;
 .
 :foodTruckLocation
   a rdf:Property ;
@@ -500,6 +789,11 @@
   rdfs:range xsd:integer ;
   rdfs:subPropertyOf :quantity ;
 .
+:isParkingSlotFree
+  a rdf:Property ;
+  rdfs:domain :ParkingSlot ;
+  rdfs:range xsd:boolean ;
+.
 :lastServiced
   a rdf:Property ;
   rdfs:domain :Machine ;
@@ -531,6 +825,21 @@
 :ownedBy
   a rdf:Property ;
 .
+:parkingInFoodTruck
+  a rdf:Property ;
+  rdfs:domain :Parking ;
+  rdfs:range :FoodTruck ;
+.
+:parkingSlotInParking
+  a rdf:Property ;
+  rdfs:domain :ParkingSlot ;
+  rdfs:range :Parking ;
+.
+:parkingSlotOccupiedBy
+  a rdf:Property ;
+  rdfs:domain :ParkingSlot ;
+  rdfs:range :PersonalVehicle ;
+.
 :personName
   a rdf:Property ;
   rdfs:domain :Person ;
@@ -546,15 +855,20 @@
   a rdf:Property ;
   rdfs:range xsd:integer ;
 .
+:reservationDate
+  a rdf:Property ;
+  rdfs:domain :Reservation ;
+  rdfs:range xsd:date ;
+.
+:reservationTable
+  a rdf:Property ;
+  rdfs:domain :Reservation ;
+  rdfs:range :Table ;
+.
 :reservedBy
   a rdf:Property ;
   rdfs:domain :Reservation ;
   rdfs:range :Customer ;
-.
-:reservedTable
-  a rdf:Property ;
-  rdfs:domain :Reservation ;
-  rdfs:range :Table ;
 .
 :storageCapacity
   a rdf:Property ;

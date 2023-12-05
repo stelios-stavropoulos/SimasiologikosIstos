@@ -147,10 +147,10 @@
           <tags>persp.newWizSC:org.topbraidcomposer.shacl.wizards.createTestCases</tags>
           <tags>persp.newWizSC:org.eclipse.ui.wizards.new.folder</tags>
           <tags>persp.viewSC:org.topbraidcomposer.uispin.view</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_HuNIkpE1Ee6JGfO1DCDeJA" selectedElement="_HuNIk5E1Ee6JGfO1DCDeJA" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_HuNIkpE1Ee6JGfO1DCDeJA" selectedElement="_HuNInZE1Ee6JGfO1DCDeJA" horizontal="true">
             <children xsi:type="basic:PartSashContainer" xmi:id="_HuNIk5E1Ee6JGfO1DCDeJA" containerData="3000" selectedElement="_HuNIlJE1Ee6JGfO1DCDeJA">
               <children xsi:type="basic:PartStack" xmi:id="_HuNIlJE1Ee6JGfO1DCDeJA" elementId="topLeft" containerData="6260" selectedElement="_HuNIlZE1Ee6JGfO1DCDeJA">
-                <tags>active</tags>
+                <tags>noFocus</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_HuNIlZE1Ee6JGfO1DCDeJA" elementId="org.topbraidcomposer.navigation.subclassestree" ref="_HuJeMJE1Ee6JGfO1DCDeJA" closeable="true">
                   <tags>View</tags>
                   <tags>categoryTag:TopBraid</tags>
@@ -207,6 +207,7 @@
                 </children>
               </children>
               <children xsi:type="basic:PartStack" xmi:id="_HuNIpZE1Ee6JGfO1DCDeJA" elementId="bottomCenter" containerData="3620" selectedElement="_HuNIp5E1Ee6JGfO1DCDeJA">
+                <tags>active</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_HuNIppE1Ee6JGfO1DCDeJA" elementId="org.topbraidcomposer.navigation.imports" ref="_HuKsU5E1Ee6JGfO1DCDeJA" closeable="true">
                   <tags>View</tags>
                   <tags>categoryTag:TopBraid</tags>
@@ -243,7 +244,7 @@
                   <tags>View</tags>
                   <tags>categoryTag:TopBraid</tags>
                 </children>
-                <children xsi:type="advanced:Placeholder" xmi:id="_HuNvppE1Ee6JGfO1DCDeJA" elementId="org.topbraidcomposer.navigation.inferences" toBeRendered="false" ref="_HuL6cJE1Ee6JGfO1DCDeJA" closeable="true">
+                <children xsi:type="advanced:Placeholder" xmi:id="_HuNvppE1Ee6JGfO1DCDeJA" elementId="org.topbraidcomposer.navigation.inferences" ref="_HuL6cJE1Ee6JGfO1DCDeJA" closeable="true">
                   <tags>View</tags>
                   <tags>categoryTag:TopBraid</tags>
                 </children>
@@ -423,8 +424,6 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:TopBraid</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_Hup0gJE1Ee6JGfO1DCDeJA" elementId="org.topbraidcomposer.navigation.subclassestree">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -467,6 +466,8 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:TopBraid</tags>
+      <tags>active</tags>
+      <tags>activeOnClose</tags>
       <menus xmi:id="_27wCkJE1Ee6JGfO1DCDeJA" elementId="org.topbraidcomposer.navigation.instances">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -542,8 +543,14 @@
     <sharedElements xsi:type="basic:Part" xmi:id="_HuL6cJE1Ee6JGfO1DCDeJA" elementId="org.topbraidcomposer.navigation.inferences" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Inferences" iconURI="platform:/plugin/org.topbraidcomposer.spin/icons/InferencesView.gif" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="org.topbraidcomposer.inference.view.InferencesView"/>
       <persistedState key="originalCompatibilityViewBundle" value="org.topbraidcomposer.spin"/>
+      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view/>"/>
       <tags>View</tags>
       <tags>categoryTag:TopBraid</tags>
+      <menus xmi:id="_4733IJNtEe6Gmb2XKi87Cw" elementId="org.topbraidcomposer.navigation.inferences">
+        <tags>ViewMenu</tags>
+        <tags>menuContribution:menu</tags>
+      </menus>
+      <toolbar xmi:id="_4733IZNtEe6Gmb2XKi87Cw" elementId="org.topbraidcomposer.navigation.inferences" visible="false"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_HuL6cZE1Ee6JGfO1DCDeJA" elementId="org.topbraidcomposer.ui.views.fileregistry" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="File Registry" iconURI="platform:/plugin/org.topbraidcomposer.ui/icons/FileRegistry.gif" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="org.topbraidcomposer.ui.views.fileregistry.FileRegistryTableView"/>
@@ -684,7 +691,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_FoKpIJE1Ee6JGfO1DCDeJA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_YqUVQJICEe668uXnw3gF6w" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_FdUrOJE1Ee6JGfO1DCDeJA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_hwyycJN_Ee6SNOvOXhsbcA" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_FdUrOJE1Ee6JGfO1DCDeJA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_FoKpIZE1Ee6JGfO1DCDeJA" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -718,7 +725,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_FoKpKJE1Ee6JGfO1DCDeJA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_YqWKcJICEe668uXnw3gF6w" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_FdTc8JE1Ee6JGfO1DCDeJA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_hw1OsJN_Ee6SNOvOXhsbcA" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_FdTc8JE1Ee6JGfO1DCDeJA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_FoKpKZE1Ee6JGfO1DCDeJA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
