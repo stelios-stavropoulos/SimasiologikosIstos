@@ -28,6 +28,8 @@ Declaration(Class(:Drink))
 Declaration(Class(:Equipment))
 Declaration(Class(:Food))
 Declaration(Class(:FoodTruck))
+Declaration(Class(:GlutenFreeFood))
+Declaration(Class(:GlutenFreeIngredient))
 Declaration(Class(:Ingredient))
 Declaration(Class(:Location))
 Declaration(Class(:Machine))
@@ -49,6 +51,8 @@ Declaration(Class(:SupplyPayment))
 Declaration(Class(:Table))
 Declaration(Class(:Tool))
 Declaration(Class(:Truck))
+Declaration(Class(:VeganFood))
+Declaration(Class(:VeganIngredient))
 Declaration(Class(:Vehicle))
 Declaration(Class(:Waiter))
 Declaration(Class(:Worker))
@@ -129,6 +133,8 @@ Declaration(NamedIndividual(:Knife))
 Declaration(NamedIndividual(:Knife_1))
 Declaration(NamedIndividual(:Lucia))
 Declaration(NamedIndividual(:Maria))
+Declaration(NamedIndividual(:Marouli))
+Declaration(NamedIndividual(:MarouliSketo))
 Declaration(NamedIndividual(:Martin))
 Declaration(NamedIndividual(:MemberCard_1))
 Declaration(NamedIndividual(:MemberCard_2))
@@ -150,6 +156,7 @@ Declaration(NamedIndividual(:ParkingSlot_3))
 Declaration(NamedIndividual(:Parking_1))
 Declaration(NamedIndividual(:PersonalVehicle_1))
 Declaration(NamedIndividual(:Pita))
+Declaration(NamedIndividual(:PitaGlutenFree))
 Declaration(NamedIndividual(:PitaPanseta))
 Declaration(NamedIndividual(:PitaSouvlaki))
 Declaration(NamedIndividual(:Psomaki))
@@ -172,7 +179,9 @@ Declaration(NamedIndividual(:To_Vromiariko_Menu_Xalandri))
 Declaration(NamedIndividual(:To_Vromiariko_To_Kalo))
 Declaration(NamedIndividual(:Tzatziki))
 Declaration(NamedIndividual(:Tzatziki_1))
+Declaration(NamedIndividual(:Vodka))
 Declaration(NamedIndividual(:Water))
+Declaration(NamedIndividual(:Wine))
 Declaration(NamedIndividual(:Worker))
 Declaration(NamedIndividual(:Working_1))
 Declaration(NamedIndividual(:Xedi))
@@ -483,6 +492,14 @@ DataPropertyDomain(:suitableForVegan :Food)
 DataPropertyRange(:suitableForVegan xsd:boolean)
 
 
+############################
+#   Datatypes
+############################
+
+# Datatype: xsd:boolean (xsd:boolean)
+
+DatatypeDefinition(xsd:boolean xsd:boolean)
+
 
 ############################
 #   Classes
@@ -490,6 +507,7 @@ DataPropertyRange(:suitableForVegan xsd:boolean)
 
 # Class: :AlcoholDrink (:AlcoholDrink)
 
+EquivalentClasses(:AlcoholDrink DataAllValuesFrom(:hasAlcohol DataOneOf("true"^^xsd:boolean)))
 SubClassOf(:AlcoholDrink :Drink)
 
 # Class: :BeingServiced (:BeingServiced)
@@ -556,6 +574,15 @@ SubClassOf(:Food :MenuProduct)
 
 SubClassOf(:FoodTruck :Truck)
 
+# Class: :GlutenFreeFood (:GlutenFreeFood)
+
+EquivalentClasses(:GlutenFreeFood ObjectIntersectionOf(:GlutenFreeFood ObjectAllValuesFrom(:hasIngredient :GlutenFreeIngredient)))
+SubClassOf(:GlutenFreeFood :Food)
+
+# Class: :GlutenFreeIngredient (:GlutenFreeIngredient)
+
+SubClassOf(:GlutenFreeIngredient :Ingredient)
+
 # Class: :Ingredient (:Ingredient)
 
 SubClassOf(:Ingredient :Product)
@@ -582,6 +609,7 @@ SubClassOf(:MenuProduct :Product)
 
 # Class: :NonAlcoholDrink (:NonAlcoholDrink)
 
+EquivalentClasses(:NonAlcoholDrink DataAllValuesFrom(:hasAlcohol DataOneOf("false"^^xsd:boolean)))
 SubClassOf(:NonAlcoholDrink :Drink)
 
 # Class: :OperationStatus (:OperationStatus)
@@ -639,6 +667,15 @@ SubClassOf(:Tool :Equipment)
 # Class: :Truck (:Truck)
 
 SubClassOf(:Truck :BusinessVehicle)
+
+# Class: :VeganFood (:VeganFood)
+
+EquivalentClasses(:VeganFood ObjectIntersectionOf(:VeganFood ObjectAllValuesFrom(:hasIngredient :VeganIngredient)))
+SubClassOf(:VeganFood :Food)
+
+# Class: :VeganIngredient (:VeganIngredient)
+
+SubClassOf(:VeganIngredient :Ingredient)
 
 # Class: :Vehicle (:Vehicle)
 
@@ -857,6 +894,16 @@ DataPropertyAssertion(:personName :Lucia "Lucia")
 ClassAssertion(:Cleaner :Maria)
 ObjectPropertyAssertion(:freelacesTo :Maria :To_Vromiariko_To_Kalo)
 DataPropertyAssertion(:personName :Maria "Maria")
+
+# Individual: :Marouli (:Marouli)
+
+ClassAssertion(:VeganIngredient :Marouli)
+
+# Individual: :MarouliSketo (:MarouliSketo)
+
+ClassAssertion(:VeganFood :MarouliSketo)
+ObjectPropertyAssertion(:hasIngredient :MarouliSketo :Marouli)
+ObjectPropertyAssertion(:hasIngredient :MarouliSketo :Souvlaki)
 
 # Individual: :Martin (:Martin)
 
@@ -1148,11 +1195,21 @@ ClassAssertion(:Ingredient :Tzatziki_1)
 DataPropertyAssertion(:costs :Tzatziki_1 "0.5"^^xsd:decimal)
 DataPropertyAssertion(:ingredientQuantity :Tzatziki_1 "3"^^xsd:integer)
 
+# Individual: :Vodka (:Vodka)
+
+ClassAssertion(:AlcoholDrink :Vodka)
+DataPropertyAssertion(:hasAlcohol :Vodka "true"^^xsd:boolean)
+
 # Individual: :Water (:Water)
 
 ClassAssertion(:NonAlcoholDrink :Water)
 DataPropertyAssertion(:costs :Water "0.5"^^xsd:decimal)
 DataPropertyAssertion(:hasAlcohol :Water "false"^^xsd:boolean)
+
+# Individual: :Wine (:Wine)
+
+ClassAssertion(:AlcoholDrink :Wine)
+DataPropertyAssertion(:hasAlcohol :Wine "true"^^xsd:boolean)
 
 # Individual: :Working_1 (:Working_1)
 
