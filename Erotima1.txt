@@ -1,0 +1,7 @@
+SELECT ?customer
+WHERE {
+  ?membercard   :memberCardOwnedBy ?customer ;
+        :hasMemberPoints ?points
+}
+ORDER BY DESC(?points)
+LIMIT 1

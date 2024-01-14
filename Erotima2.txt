@@ -1,0 +1,8 @@
+SELECT ?canteen ?machine 
+WHERE {
+  ?status rdf:type  :OutOfOrder .
+  ?machine  :EquipmentOperationStatus ?status .
+  ?machine :equipmentInFoodTruck ?foodTruck .
+  ?foodTruck :foodTruckOwnedBy ?canteen
+ }
+ORDER BY(?canteen)

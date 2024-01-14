@@ -1,0 +1,9 @@
+SELECT ?plate ?slot ?parking ?canteen
+WHERE {
+ ?car :plate ?plate .
+ ?slot :parkingSlotOccupiedBy ?car .
+?slot :parkingSlotInParking ?parking .
+?parking :parkingInFoodTruck ?foodtruck .
+?foodtruck :foodTruckOwnedBy ?canteen .
+ }
+ORDER BY ?parking  ?canteen

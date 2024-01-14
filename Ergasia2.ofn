@@ -1,0 +1,1177 @@
+Prefix(:=<http://example.org/BaseURI#>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+Prefix(spin:=<http://spinrdf.org/spin#>)
+
+
+Ontology(<http://example.org/BaseURI>
+Annotation(spin:imports <http://topbraid.org/spin/rdfsplus>)
+Annotation(owl:versionInfo "Created with TopBraid Composer")
+
+Declaration(Class(:AlcoholDrink))
+Declaration(Class(:BeingServiced))
+Declaration(Class(:Business))
+Declaration(Class(:BusinessOwner))
+Declaration(Class(:BusinessVehicle))
+Declaration(Class(:Canteen))
+Declaration(Class(:Chef))
+Declaration(Class(:Cleaner))
+Declaration(Class(:CleaningTool))
+Declaration(Class(:CousineTool))
+Declaration(Class(:Customer))
+Declaration(Class(:CustomerFoodTruckPayment))
+Declaration(Class(:CustomerPayment))
+Declaration(Class(:Drink))
+Declaration(Class(:Equipment))
+Declaration(Class(:Food))
+Declaration(Class(:FoodTruck))
+Declaration(Class(:Ingredient))
+Declaration(Class(:Location))
+Declaration(Class(:Machine))
+Declaration(Class(:MemberCard))
+Declaration(Class(:Menu))
+Declaration(Class(:MenuProduct))
+Declaration(Class(:NonAlcoholDrink))
+Declaration(Class(:OperationStatus))
+Declaration(Class(:OutOfOrder))
+Declaration(Class(:Parking))
+Declaration(Class(:ParkingSlot))
+Declaration(Class(:Payment))
+Declaration(Class(:Person))
+Declaration(Class(:PersonalVehicle))
+Declaration(Class(:Product))
+Declaration(Class(:Reservation))
+Declaration(Class(:SupplierCompany))
+Declaration(Class(:SupplyPayment))
+Declaration(Class(:Table))
+Declaration(Class(:Tool))
+Declaration(Class(:Truck))
+Declaration(Class(:Vehicle))
+Declaration(Class(:Waiter))
+Declaration(Class(:Worker))
+Declaration(Class(:Working))
+Declaration(Class(rdfs:Resource))
+Declaration(ObjectProperty(:EquipmentOperationStatus))
+Declaration(ObjectProperty(:PaymentFromBusinessOwner))
+Declaration(ObjectProperty(:PaymentFromCustomer))
+Declaration(ObjectProperty(:PaymentFromPerson))
+Declaration(ObjectProperty(:PaymentToBusiness))
+Declaration(ObjectProperty(:PaymentToCanteen))
+Declaration(ObjectProperty(:PaymentToSupplyCompany))
+Declaration(ObjectProperty(:PaymentToTruck))
+Declaration(ObjectProperty(:cleaningToolUsedBy))
+Declaration(ObjectProperty(:cousineToolUsedBy))
+Declaration(ObjectProperty(:equipmentInFoodTruck))
+Declaration(ObjectProperty(:foodTruckOwnedBy))
+Declaration(ObjectProperty(:freelacesTo))
+Declaration(ObjectProperty(:hasContractWith))
+Declaration(ObjectProperty(:hasIngredient))
+Declaration(ObjectProperty(:hasMenu))
+Declaration(ObjectProperty(:includes))
+Declaration(ObjectProperty(:operationStatus))
+Declaration(ObjectProperty(:parkingInFoodTruck))
+Declaration(ObjectProperty(:parkingSlotInParking))
+Declaration(ObjectProperty(:parkingSlotOccupiedBy))
+Declaration(ObjectProperty(:reservationTable))
+Declaration(ObjectProperty(:reservedBy))
+Declaration(ObjectProperty(:tableInTruck))
+Declaration(ObjectProperty(:usedBy))
+Declaration(ObjectProperty(:worksFor))
+Declaration(DataProperty(:PaymentAmount))
+Declaration(DataProperty(:PaymentDate))
+Declaration(DataProperty(:PostalCode))
+Declaration(DataProperty(:businessField))
+Declaration(DataProperty(:businessName))
+Declaration(DataProperty(:costs))
+Declaration(DataProperty(:hasAddress))
+Declaration(DataProperty(:hasAlcohol))
+Declaration(DataProperty(:hasMemberPoints))
+Declaration(DataProperty(:hasNumberID))
+Declaration(DataProperty(:hasSpaceFor))
+Declaration(DataProperty(:ingredientQuantity))
+Declaration(DataProperty(:isParkingSlotFree))
+Declaration(DataProperty(:lastServiced))
+Declaration(DataProperty(:name))
+Declaration(DataProperty(:needsElectricity))
+Declaration(DataProperty(:personName))
+Declaration(DataProperty(:plate))
+Declaration(DataProperty(:quantity))
+Declaration(DataProperty(:reservationDate))
+Declaration(DataProperty(:storageCapacity))
+Declaration(DataProperty(:suitableForVegan))
+Declaration(NamedIndividual(:Beer))
+Declaration(NamedIndividual(:BeerAnef))
+Declaration(NamedIndividual(:BeingServiced_1))
+Declaration(NamedIndividual(:Bob))
+Declaration(NamedIndividual(:Broom))
+Declaration(NamedIndividual(:Broom_1))
+Declaration(NamedIndividual(:CustomerFoodTruckPayment_1))
+Declaration(NamedIndividual(:CustomerFoodTruckPayment_2))
+Declaration(NamedIndividual(:CustomerFoodTruckPayment_3))
+Declaration(NamedIndividual(:CustomerFoodTruckPayment_4))
+Declaration(NamedIndividual(:CustomerFoodTruckPayment_5))
+Declaration(NamedIndividual(:Dex))
+Declaration(NamedIndividual(:DexReservation))
+Declaration(NamedIndividual(:Doki))
+Declaration(NamedIndividual(:Equipment))
+Declaration(NamedIndividual(:FoodTruck1))
+Declaration(NamedIndividual(:FoodTruck2))
+Declaration(NamedIndividual(:Freezer))
+Declaration(NamedIndividual(:Freezer_1))
+Declaration(NamedIndividual(:Fridge))
+Declaration(NamedIndividual(:Fridge_1))
+Declaration(NamedIndividual(:Grill))
+Declaration(NamedIndividual(:Grill_1))
+Declaration(NamedIndividual(:Knife))
+Declaration(NamedIndividual(:Knife_1))
+Declaration(NamedIndividual(:Lucia))
+Declaration(NamedIndividual(:Maria))
+Declaration(NamedIndividual(:Martin))
+Declaration(NamedIndividual(:MemberCard_1))
+Declaration(NamedIndividual(:MemberCard_2))
+Declaration(NamedIndividual(:MetaforikiTakMpam))
+Declaration(NamedIndividual(:Mop))
+Declaration(NamedIndividual(:Mop_1))
+Declaration(NamedIndividual(:Nestoros_Tipa_15))
+Declaration(NamedIndividual(:Olympou_15_Xalandri))
+Declaration(NamedIndividual(:OutOfOrder_1))
+Declaration(NamedIndividual(:Oven))
+Declaration(NamedIndividual(:Oven_1))
+Declaration(NamedIndividual(:Pan))
+Declaration(NamedIndividual(:Pan_1))
+Declaration(NamedIndividual(:Panseta))
+Declaration(NamedIndividual(:Papaf))
+Declaration(NamedIndividual(:ParkingSlot_1))
+Declaration(NamedIndividual(:ParkingSlot_2))
+Declaration(NamedIndividual(:ParkingSlot_3))
+Declaration(NamedIndividual(:Parking_1))
+Declaration(NamedIndividual(:PersonalVehicle_1))
+Declaration(NamedIndividual(:Pita))
+Declaration(NamedIndividual(:PitaPanseta))
+Declaration(NamedIndividual(:PitaSouvlaki))
+Declaration(NamedIndividual(:Psomaki))
+Declaration(NamedIndividual(:PsomakiPanseta))
+Declaration(NamedIndividual(:PsomakiRibeye))
+Declaration(NamedIndividual(:PsomakiSouvlaki))
+Declaration(NamedIndividual(:PsomakiTbone))
+Declaration(NamedIndividual(:Psomaki_1))
+Declaration(NamedIndividual(:Ribeye))
+Declaration(NamedIndividual(:Sok))
+Declaration(NamedIndividual(:Souvlaki))
+Declaration(NamedIndividual(:SupplyPayment_1))
+Declaration(NamedIndividual(:T_Bone))
+Declaration(NamedIndividual(:TaKalaTaIlika))
+Declaration(NamedIndividual(:Table_1))
+Declaration(NamedIndividual(:Table_2))
+Declaration(NamedIndividual(:Table_3))
+Declaration(NamedIndividual(:To_Vromiariko_Menu))
+Declaration(NamedIndividual(:To_Vromiariko_Menu_Xalandri))
+Declaration(NamedIndividual(:To_Vromiariko_To_Kalo))
+Declaration(NamedIndividual(:Tzatziki))
+Declaration(NamedIndividual(:Tzatziki_1))
+Declaration(NamedIndividual(:Water))
+Declaration(NamedIndividual(:Worker))
+Declaration(NamedIndividual(:Working_1))
+Declaration(NamedIndividual(:Xedi))
+Declaration(NamedIndividual(:Xidedin_Ibibam))
+Declaration(NamedIndividual(:Za))
+Declaration(AnnotationProperty(:location))
+Declaration(AnnotationProperty(:ownedBy))
+Declaration(AnnotationProperty(spin:imports))
+Declaration(Datatype(xsd:date))
+############################
+#   Annotation Properties
+############################
+
+# Annotation Property: :businessOwnedBy (:businessOwnedBy)
+
+SubAnnotationPropertyOf(:businessOwnedBy :ownedBy)
+
+# Annotation Property: :businessVehicleOwnedBy (:businessVehicleOwnedBy)
+
+SubAnnotationPropertyOf(:businessVehicleOwnedBy :ownedBy)
+
+# Annotation Property: :foodTruckLocation (:foodTruckLocation)
+
+SubAnnotationPropertyOf(:foodTruckLocation :location)
+
+# Annotation Property: :memberCardOwnedBy (:memberCardOwnedBy)
+
+SubAnnotationPropertyOf(:memberCardOwnedBy :ownedBy)
+
+
+############################
+#   Object Properties
+############################
+
+# Object Property: :EquipmentOperationStatus (:EquipmentOperationStatus)
+
+ObjectPropertyDomain(:EquipmentOperationStatus :Equipment)
+ObjectPropertyRange(:EquipmentOperationStatus :OperationStatus)
+
+# Object Property: :PaymentFromBusinessOwner (:PaymentFromBusinessOwner)
+
+SubObjectPropertyOf(:PaymentFromBusinessOwner :PaymentFromPerson)
+ObjectPropertyDomain(:PaymentFromBusinessOwner :SupplyPayment)
+ObjectPropertyRange(:PaymentFromBusinessOwner :BusinessOwner)
+
+# Object Property: :PaymentFromCustomer (:PaymentFromCustomer)
+
+SubObjectPropertyOf(:PaymentFromCustomer :PaymentFromPerson)
+ObjectPropertyDomain(:PaymentFromCustomer :CustomerPayment)
+ObjectPropertyRange(:PaymentFromCustomer :Customer)
+
+# Object Property: :PaymentFromPerson (:PaymentFromPerson)
+
+ObjectPropertyDomain(:PaymentFromPerson :Payment)
+ObjectPropertyRange(:PaymentFromPerson :Person)
+
+# Object Property: :PaymentToBusiness (:PaymentToBusiness)
+
+ObjectPropertyDomain(:PaymentToBusiness :Payment)
+ObjectPropertyRange(:PaymentToBusiness :Business)
+
+# Object Property: :PaymentToCanteen (:PaymentToCanteen)
+
+SubObjectPropertyOf(:PaymentToCanteen :PaymentToBusiness)
+ObjectPropertyDomain(:PaymentToCanteen :CustomerPayment)
+ObjectPropertyRange(:PaymentToCanteen :Canteen)
+
+# Object Property: :PaymentToSupplyCompany (:PaymentToSupplyCompany)
+
+SubObjectPropertyOf(:PaymentToSupplyCompany :PaymentToBusiness)
+ObjectPropertyDomain(:PaymentToSupplyCompany :SupplyPayment)
+ObjectPropertyRange(:PaymentToSupplyCompany :SupplierCompany)
+
+# Object Property: :PaymentToTruck (:PaymentToTruck)
+
+ObjectPropertyDomain(:PaymentToTruck :Payment)
+ObjectPropertyRange(:PaymentToTruck :FoodTruck)
+
+# Object Property: :businessOwnedBy (:businessOwnedBy)
+
+ObjectPropertyDomain(:businessOwnedBy :Business)
+ObjectPropertyRange(:businessOwnedBy :BusinessOwner)
+
+# Object Property: :businessVehicleOwnedBy (:businessVehicleOwnedBy)
+
+ObjectPropertyDomain(:businessVehicleOwnedBy :BusinessVehicle)
+ObjectPropertyRange(:businessVehicleOwnedBy :Business)
+
+# Object Property: :cleaningToolUsedBy (:cleaningToolUsedBy)
+
+SubObjectPropertyOf(:cleaningToolUsedBy :usedBy)
+ObjectPropertyDomain(:cleaningToolUsedBy :CleaningTool)
+ObjectPropertyRange(:cleaningToolUsedBy :Cleaner)
+
+# Object Property: :cousineToolUsedBy (:cousineToolUsedBy)
+
+SubObjectPropertyOf(:cousineToolUsedBy :usedBy)
+ObjectPropertyDomain(:cousineToolUsedBy :CousineTool)
+ObjectPropertyRange(:cousineToolUsedBy :Chef)
+
+# Object Property: :equipmentInFoodTruck (:equipmentInFoodTruck)
+
+ObjectPropertyDomain(:equipmentInFoodTruck :Equipment)
+ObjectPropertyRange(:equipmentInFoodTruck :FoodTruck)
+
+# Object Property: :foodTruckLocation (:foodTruckLocation)
+
+ObjectPropertyDomain(:foodTruckLocation :FoodTruck)
+ObjectPropertyRange(:foodTruckLocation :Location)
+
+# Object Property: :foodTruckOwnedBy (:foodTruckOwnedBy)
+
+SubObjectPropertyOf(:foodTruckOwnedBy :businessVehicleOwnedBy)
+ObjectPropertyDomain(:foodTruckOwnedBy :FoodTruck)
+ObjectPropertyRange(:foodTruckOwnedBy :Canteen)
+
+# Object Property: :freelacesTo (:freelacesTo)
+
+SubObjectPropertyOf(:freelacesTo :worksFor)
+ObjectPropertyDomain(:freelacesTo :Worker)
+ObjectPropertyRange(:freelacesTo :Business)
+
+# Object Property: :hasContractWith (:hasContractWith)
+
+SubObjectPropertyOf(:hasContractWith :worksFor)
+ObjectPropertyDomain(:hasContractWith :Worker)
+ObjectPropertyRange(:hasContractWith :Business)
+
+# Object Property: :hasIngredient (:hasIngredient)
+
+ObjectPropertyDomain(:hasIngredient :Food)
+ObjectPropertyRange(:hasIngredient :Ingredient)
+
+# Object Property: :hasMenu (:hasMenu)
+
+ObjectPropertyDomain(:hasMenu :FoodTruck)
+ObjectPropertyRange(:hasMenu :Menu)
+
+# Object Property: :includes (:includes)
+
+ObjectPropertyDomain(:includes :Menu)
+ObjectPropertyRange(:includes :MenuProduct)
+
+# Object Property: :memberCardOwnedBy (:memberCardOwnedBy)
+
+ObjectPropertyDomain(:memberCardOwnedBy :MemberCard)
+ObjectPropertyRange(:memberCardOwnedBy :Customer)
+
+# Object Property: :operationStatus (:operationStatus)
+
+ObjectPropertyDomain(:operationStatus :Machine)
+ObjectPropertyRange(:operationStatus :OperationStatus)
+
+# Object Property: :parkingInFoodTruck (:parkingInFoodTruck)
+
+ObjectPropertyDomain(:parkingInFoodTruck :Parking)
+ObjectPropertyRange(:parkingInFoodTruck :FoodTruck)
+
+# Object Property: :parkingSlotInParking (:parkingSlotInParking)
+
+ObjectPropertyDomain(:parkingSlotInParking :ParkingSlot)
+ObjectPropertyRange(:parkingSlotInParking :Parking)
+
+# Object Property: :parkingSlotOccupiedBy (:parkingSlotOccupiedBy)
+
+ObjectPropertyDomain(:parkingSlotOccupiedBy :ParkingSlot)
+ObjectPropertyRange(:parkingSlotOccupiedBy :PersonalVehicle)
+
+# Object Property: :reservationTable (:reservationTable)
+
+ObjectPropertyDomain(:reservationTable :Reservation)
+ObjectPropertyRange(:reservationTable :Table)
+
+# Object Property: :reservedBy (:reservedBy)
+
+ObjectPropertyDomain(:reservedBy :Reservation)
+ObjectPropertyRange(:reservedBy :Customer)
+
+# Object Property: :tableInTruck (:tableInTruck)
+
+ObjectPropertyDomain(:tableInTruck :Table)
+ObjectPropertyRange(:tableInTruck :FoodTruck)
+
+# Object Property: :usedBy (:usedBy)
+
+ObjectPropertyDomain(:usedBy :Equipment)
+ObjectPropertyRange(:usedBy :Worker)
+
+# Object Property: :worksFor (:worksFor)
+
+ObjectPropertyDomain(:worksFor :Worker)
+ObjectPropertyRange(:worksFor :Business)
+
+
+############################
+#   Data Properties
+############################
+
+# Data Property: :PaymentAmount (:PaymentAmount)
+
+DataPropertyDomain(:PaymentAmount :Payment)
+DataPropertyRange(:PaymentAmount xsd:decimal)
+
+# Data Property: :PaymentDate (:PaymentDate)
+
+DataPropertyDomain(:PaymentDate :Payment)
+DataPropertyRange(:PaymentDate xsd:date)
+
+# Data Property: :PostalCode (:PostalCode)
+
+DataPropertyDomain(:PostalCode :Location)
+DataPropertyRange(:PostalCode xsd:integer)
+
+# Data Property: :businessField (:businessField)
+
+DataPropertyDomain(:businessField :Business)
+DataPropertyRange(:businessField xsd:string)
+
+# Data Property: :businessName (:businessName)
+
+SubDataPropertyOf(:businessName :name)
+DataPropertyDomain(:businessName :Business)
+DataPropertyRange(:businessName xsd:string)
+
+# Data Property: :costs (:costs)
+
+DataPropertyDomain(:costs :Product)
+DataPropertyRange(:costs xsd:decimal)
+
+# Data Property: :hasAddress (:hasAddress)
+
+DataPropertyDomain(:hasAddress :Location)
+DataPropertyRange(:hasAddress xsd:string)
+
+# Data Property: :hasAlcohol (:hasAlcohol)
+
+DataPropertyDomain(:hasAlcohol :Drink)
+DataPropertyRange(:hasAlcohol xsd:boolean)
+
+# Data Property: :hasMemberPoints (:hasMemberPoints)
+
+DataPropertyDomain(:hasMemberPoints :MemberCard)
+DataPropertyRange(:hasMemberPoints xsd:integer)
+
+# Data Property: :hasNumberID (:hasNumberID)
+
+DataPropertyDomain(:hasNumberID :Table)
+DataPropertyRange(:hasNumberID xsd:integer)
+
+# Data Property: :hasSpaceFor (:hasSpaceFor)
+
+DataPropertyDomain(:hasSpaceFor :Table)
+DataPropertyRange(:hasSpaceFor xsd:integer)
+
+# Data Property: :ingredientQuantity (:ingredientQuantity)
+
+SubDataPropertyOf(:ingredientQuantity :quantity)
+DataPropertyDomain(:ingredientQuantity :Ingredient)
+DataPropertyRange(:ingredientQuantity xsd:integer)
+
+# Data Property: :isParkingSlotFree (:isParkingSlotFree)
+
+DataPropertyDomain(:isParkingSlotFree :ParkingSlot)
+DataPropertyRange(:isParkingSlotFree xsd:boolean)
+
+# Data Property: :lastServiced (:lastServiced)
+
+DataPropertyDomain(:lastServiced :Machine)
+DataPropertyRange(:lastServiced xsd:date)
+
+# Data Property: :name (:name)
+
+DataPropertyRange(:name xsd:string)
+
+# Data Property: :needsElectricity (:needsElectricity)
+
+DataPropertyDomain(:needsElectricity :Machine)
+DataPropertyRange(:needsElectricity xsd:boolean)
+
+# Data Property: :personName (:personName)
+
+SubDataPropertyOf(:personName :name)
+DataPropertyDomain(:personName :Person)
+DataPropertyRange(:personName xsd:string)
+
+# Data Property: :plate (:plate)
+
+DataPropertyDomain(:plate :Vehicle)
+DataPropertyRange(:plate xsd:string)
+
+# Data Property: :quantity (:quantity)
+
+DataPropertyRange(:quantity xsd:integer)
+
+# Data Property: :reservationDate (:reservationDate)
+
+DataPropertyDomain(:reservationDate :Reservation)
+DataPropertyRange(:reservationDate xsd:date)
+
+# Data Property: :storageCapacity (:storageCapacity)
+
+DataPropertyDomain(:storageCapacity :Truck)
+DataPropertyRange(:storageCapacity xsd:decimal)
+
+# Data Property: :suitableForVegan (:suitableForVegan)
+
+DataPropertyDomain(:suitableForVegan :Food)
+DataPropertyRange(:suitableForVegan xsd:boolean)
+
+
+
+############################
+#   Classes
+############################
+
+# Class: :AlcoholDrink (:AlcoholDrink)
+
+SubClassOf(:AlcoholDrink :Drink)
+
+# Class: :BeingServiced (:BeingServiced)
+
+SubClassOf(:BeingServiced :OperationStatus)
+
+# Class: :Business (:Business)
+
+SubClassOf(:Business rdfs:Resource)
+
+# Class: :BusinessOwner (:BusinessOwner)
+
+SubClassOf(:BusinessOwner :Person)
+
+# Class: :BusinessVehicle (:BusinessVehicle)
+
+SubClassOf(:BusinessVehicle :Vehicle)
+
+# Class: :Canteen (:Canteen)
+
+SubClassOf(:Canteen :Business)
+
+# Class: :Chef (:Chef)
+
+SubClassOf(:Chef :Worker)
+
+# Class: :Cleaner (:Cleaner)
+
+SubClassOf(:Cleaner :Worker)
+
+# Class: :CleaningTool (:CleaningTool)
+
+SubClassOf(:CleaningTool :Tool)
+
+# Class: :CousineTool (:CousineTool)
+
+SubClassOf(:CousineTool :Tool)
+
+# Class: :Customer (:Customer)
+
+SubClassOf(:Customer :Person)
+
+# Class: :CustomerFoodTruckPayment (:CustomerFoodTruckPayment)
+
+SubClassOf(:CustomerFoodTruckPayment :CustomerPayment)
+
+# Class: :CustomerPayment (:CustomerPayment)
+
+SubClassOf(:CustomerPayment :Payment)
+
+# Class: :Drink (:Drink)
+
+SubClassOf(:Drink :MenuProduct)
+
+# Class: :Equipment (:Equipment)
+
+SubClassOf(:Equipment rdfs:Resource)
+
+# Class: :Food (:Food)
+
+SubClassOf(:Food :MenuProduct)
+
+# Class: :FoodTruck (:FoodTruck)
+
+SubClassOf(:FoodTruck :Truck)
+
+# Class: :Ingredient (:Ingredient)
+
+SubClassOf(:Ingredient :Product)
+
+# Class: :Location (:Location)
+
+SubClassOf(:Location rdfs:Resource)
+
+# Class: :Machine (:Machine)
+
+SubClassOf(:Machine :Equipment)
+
+# Class: :MemberCard (:MemberCard)
+
+SubClassOf(:MemberCard rdfs:Resource)
+
+# Class: :Menu (:Menu)
+
+SubClassOf(:Menu rdfs:Resource)
+
+# Class: :MenuProduct (:MenuProduct)
+
+SubClassOf(:MenuProduct :Product)
+
+# Class: :NonAlcoholDrink (:NonAlcoholDrink)
+
+SubClassOf(:NonAlcoholDrink :Drink)
+
+# Class: :OperationStatus (:OperationStatus)
+
+SubClassOf(:OperationStatus rdfs:Resource)
+
+# Class: :OutOfOrder (:OutOfOrder)
+
+SubClassOf(:OutOfOrder :OperationStatus)
+
+# Class: :Parking (:Parking)
+
+SubClassOf(:Parking rdfs:Resource)
+
+# Class: :ParkingSlot (:ParkingSlot)
+
+SubClassOf(:ParkingSlot rdfs:Resource)
+
+# Class: :Payment (:Payment)
+
+SubClassOf(:Payment rdfs:Resource)
+
+# Class: :Person (:Person)
+
+SubClassOf(:Person rdfs:Resource)
+
+# Class: :PersonalVehicle (:PersonalVehicle)
+
+SubClassOf(:PersonalVehicle :Vehicle)
+
+# Class: :Product (:Product)
+
+SubClassOf(:Product rdfs:Resource)
+
+# Class: :Reservation (:Reservation)
+
+SubClassOf(:Reservation rdfs:Resource)
+
+# Class: :SupplierCompany (:SupplierCompany)
+
+SubClassOf(:SupplierCompany :Business)
+
+# Class: :SupplyPayment (:SupplyPayment)
+
+SubClassOf(:SupplyPayment :Payment)
+
+# Class: :Table (:Table)
+
+SubClassOf(:Table rdfs:Resource)
+
+# Class: :Tool (:Tool)
+
+SubClassOf(:Tool :Equipment)
+
+# Class: :Truck (:Truck)
+
+SubClassOf(:Truck :BusinessVehicle)
+
+# Class: :Vehicle (:Vehicle)
+
+SubClassOf(:Vehicle rdfs:Resource)
+
+# Class: :Waiter (:Waiter)
+
+SubClassOf(:Waiter :Worker)
+
+# Class: :Worker (:Worker)
+
+SubClassOf(:Worker :Person)
+
+# Class: :Working (:Working)
+
+SubClassOf(:Working :OperationStatus)
+
+
+############################
+#   Named Individuals
+############################
+
+# Individual: :Beer (:Beer)
+
+ClassAssertion(:AlcoholDrink :Beer)
+DataPropertyAssertion(:costs :Beer "2"^^xsd:decimal)
+DataPropertyAssertion(:hasAlcohol :Beer "true"^^xsd:boolean)
+
+# Individual: :BeerAnef (:BeerAnef)
+
+ClassAssertion(:NonAlcoholDrink :BeerAnef)
+DataPropertyAssertion(:costs :BeerAnef "2.5"^^xsd:decimal)
+DataPropertyAssertion(:hasAlcohol :BeerAnef "false"^^xsd:boolean)
+
+# Individual: :BeingServiced_1 (:BeingServiced_1)
+
+ClassAssertion(:BeingServiced :BeingServiced_1)
+
+# Individual: :Bob (:Bob)
+
+ClassAssertion(:Chef :Bob)
+ObjectPropertyAssertion(:hasContractWith :Bob :To_Vromiariko_To_Kalo)
+DataPropertyAssertion(:personName :Bob "Bob")
+
+# Individual: :Broom (:Broom)
+
+ClassAssertion(:CleaningTool :Broom)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Broom :Working_1)
+ObjectPropertyAssertion(:cleaningToolUsedBy :Broom :Lucia)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Broom :FoodTruck2)
+
+# Individual: :Broom_1 (:Broom_1)
+
+ClassAssertion(:CleaningTool :Broom_1)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Broom_1 :Working_1)
+ObjectPropertyAssertion(:cleaningToolUsedBy :Broom_1 :Maria)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Broom_1 :FoodTruck1)
+
+# Individual: :CustomerFoodTruckPayment_1 (:CustomerFoodTruckPayment_1)
+
+ClassAssertion(:CustomerFoodTruckPayment :CustomerFoodTruckPayment_1)
+ObjectPropertyAssertion(:PaymentFromCustomer :CustomerFoodTruckPayment_1 :Dex)
+ObjectPropertyAssertion(:PaymentToCanteen :CustomerFoodTruckPayment_1 :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:PaymentToTruck :CustomerFoodTruckPayment_1 :FoodTruck1)
+DataPropertyAssertion(:PaymentAmount :CustomerFoodTruckPayment_1 "4.99"^^xsd:decimal)
+DataPropertyAssertion(:PaymentDate :CustomerFoodTruckPayment_1 "2023-12-05+02:00"^^xsd:date)
+
+# Individual: :CustomerFoodTruckPayment_2 (:CustomerFoodTruckPayment_2)
+
+ClassAssertion(:CustomerFoodTruckPayment :CustomerFoodTruckPayment_2)
+ObjectPropertyAssertion(:PaymentFromCustomer :CustomerFoodTruckPayment_2 :Doki)
+ObjectPropertyAssertion(:PaymentToCanteen :CustomerFoodTruckPayment_2 :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:PaymentToTruck :CustomerFoodTruckPayment_2 :FoodTruck1)
+DataPropertyAssertion(:PaymentAmount :CustomerFoodTruckPayment_2 "8.99"^^xsd:decimal)
+
+# Individual: :CustomerFoodTruckPayment_3 (:CustomerFoodTruckPayment_3)
+
+ClassAssertion(:CustomerFoodTruckPayment :CustomerFoodTruckPayment_3)
+ObjectPropertyAssertion(:PaymentFromCustomer :CustomerFoodTruckPayment_3 :Xidedin_Ibibam)
+ObjectPropertyAssertion(:PaymentToCanteen :CustomerFoodTruckPayment_3 :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:PaymentToTruck :CustomerFoodTruckPayment_3 :FoodTruck1)
+DataPropertyAssertion(:PaymentAmount :CustomerFoodTruckPayment_3 "13.99"^^xsd:decimal)
+
+# Individual: :CustomerFoodTruckPayment_4 (:CustomerFoodTruckPayment_4)
+
+ClassAssertion(:CustomerFoodTruckPayment :CustomerFoodTruckPayment_4)
+ObjectPropertyAssertion(:PaymentFromCustomer :CustomerFoodTruckPayment_4 :Xedi)
+ObjectPropertyAssertion(:PaymentToCanteen :CustomerFoodTruckPayment_4 :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:PaymentToTruck :CustomerFoodTruckPayment_4 :FoodTruck2)
+DataPropertyAssertion(:PaymentAmount :CustomerFoodTruckPayment_4 "60"^^xsd:decimal)
+DataPropertyAssertion(:PaymentDate :CustomerFoodTruckPayment_4 "2023-12-02+02:00"^^xsd:date)
+
+# Individual: :CustomerFoodTruckPayment_5 (:CustomerFoodTruckPayment_5)
+
+ClassAssertion(:CustomerFoodTruckPayment :CustomerFoodTruckPayment_5)
+ObjectPropertyAssertion(:PaymentFromCustomer :CustomerFoodTruckPayment_5 :Xidedin_Ibibam)
+ObjectPropertyAssertion(:PaymentToCanteen :CustomerFoodTruckPayment_5 :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:PaymentToTruck :CustomerFoodTruckPayment_5 :FoodTruck2)
+DataPropertyAssertion(:PaymentAmount :CustomerFoodTruckPayment_5 "60"^^xsd:decimal)
+DataPropertyAssertion(:PaymentDate :CustomerFoodTruckPayment_5 "2023-12-01+02:00"^^xsd:date)
+
+# Individual: :Dex (:Dex)
+
+ClassAssertion(:Customer :Dex)
+DataPropertyAssertion(:personName :Dex "Dex")
+
+# Individual: :DexReservation (:DexReservation)
+
+ClassAssertion(:Reservation :DexReservation)
+ObjectPropertyAssertion(:reservationTable :DexReservation :Table_1)
+ObjectPropertyAssertion(:reservedBy :DexReservation :Dex)
+DataPropertyAssertion(:reservationDate :DexReservation "2023-12-22+02:00"^^xsd:date)
+
+# Individual: :Doki (:Doki)
+
+ClassAssertion(:Customer :Doki)
+DataPropertyAssertion(:personName :Doki "Doki")
+
+# Individual: :Equipment (:Equipment)
+
+ObjectPropertyAssertion(:usedBy :Equipment :Worker)
+
+# Individual: :FoodTruck1 (:FoodTruck1)
+
+ClassAssertion(:FoodTruck :FoodTruck1)
+ObjectPropertyAssertion(:foodTruckLocation :FoodTruck1 :Nestoros_Tipa_15)
+ObjectPropertyAssertion(:foodTruckOwnedBy :FoodTruck1 :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:hasMenu :FoodTruck1 :To_Vromiariko_Menu)
+DataPropertyAssertion(:plate :FoodTruck1 "XKR 7891")
+DataPropertyAssertion(:storageCapacity :FoodTruck1 "130"^^xsd:decimal)
+
+# Individual: :FoodTruck2 (:FoodTruck2)
+
+ClassAssertion(:FoodTruck :FoodTruck2)
+ObjectPropertyAssertion(:foodTruckLocation :FoodTruck2 :Olympou_15_Xalandri)
+ObjectPropertyAssertion(:foodTruckOwnedBy :FoodTruck2 :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:hasMenu :FoodTruck2 :To_Vromiariko_Menu_Xalandri)
+DataPropertyAssertion(:plate :FoodTruck2 "XKR 4555")
+DataPropertyAssertion(:storageCapacity :FoodTruck2 "100"^^xsd:decimal)
+
+# Individual: :Freezer (:Freezer)
+
+ClassAssertion(:Machine :Freezer)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Freezer :Working_1)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Freezer :FoodTruck1)
+ObjectPropertyAssertion(:usedBy :Freezer :Bob)
+DataPropertyAssertion(:lastServiced :Freezer "2023-12-02+02:00"^^xsd:date)
+DataPropertyAssertion(:needsElectricity :Freezer "true"^^xsd:boolean)
+
+# Individual: :Freezer_1 (:Freezer_1)
+
+ClassAssertion(:Machine :Freezer_1)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Freezer_1 :Working_1)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Freezer_1 :FoodTruck2)
+ObjectPropertyAssertion(:usedBy :Freezer_1 :Martin)
+DataPropertyAssertion(:lastServiced :Freezer_1 "2023-11-11+02:00"^^xsd:date)
+DataPropertyAssertion(:needsElectricity :Freezer_1 "true"^^xsd:boolean)
+
+# Individual: :Fridge (:Fridge)
+
+ClassAssertion(:Machine :Fridge)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Fridge :OutOfOrder_1)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Fridge :FoodTruck1)
+ObjectPropertyAssertion(:usedBy :Fridge :Bob)
+DataPropertyAssertion(:lastServiced :Fridge "2023-12-01+02:00"^^xsd:date)
+DataPropertyAssertion(:needsElectricity :Fridge "true"^^xsd:boolean)
+
+# Individual: :Fridge_1 (:Fridge_1)
+
+ClassAssertion(:Machine :Fridge_1)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Fridge_1 :Working_1)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Fridge_1 :FoodTruck2)
+ObjectPropertyAssertion(:usedBy :Fridge_1 :Martin)
+DataPropertyAssertion(:lastServiced :Fridge_1 "2023-12-01+02:00"^^xsd:date)
+DataPropertyAssertion(:needsElectricity :Fridge_1 "true"^^xsd:boolean)
+
+# Individual: :Grill (:Grill)
+
+ClassAssertion(:Machine :Grill)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Grill :Working_1)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Grill :FoodTruck1)
+ObjectPropertyAssertion(:usedBy :Grill :Bob)
+DataPropertyAssertion(:lastServiced :Grill "2023-10-18+02:00"^^xsd:date)
+DataPropertyAssertion(:needsElectricity :Grill "false"^^xsd:boolean)
+
+# Individual: :Grill_1 (:Grill_1)
+
+ClassAssertion(:Machine :Grill_1)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Grill_1 :Working_1)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Grill_1 :FoodTruck2)
+ObjectPropertyAssertion(:usedBy :Grill_1 :Martin)
+DataPropertyAssertion(:needsElectricity :Grill_1 "false"^^xsd:boolean)
+
+# Individual: :Knife (:Knife)
+
+ClassAssertion(:CousineTool :Knife)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Knife :Working_1)
+ObjectPropertyAssertion(:cousineToolUsedBy :Knife :Bob)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Knife :FoodTruck1)
+
+# Individual: :Knife_1 (:Knife_1)
+
+ClassAssertion(:CousineTool :Knife_1)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Knife_1 :Working_1)
+ObjectPropertyAssertion(:cousineToolUsedBy :Knife_1 :Bob)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Knife_1 :FoodTruck2)
+
+# Individual: :Lucia (:Lucia)
+
+ClassAssertion(:Cleaner :Lucia)
+ObjectPropertyAssertion(:freelacesTo :Lucia :To_Vromiariko_To_Kalo)
+DataPropertyAssertion(:personName :Lucia "Lucia")
+
+# Individual: :Maria (:Maria)
+
+ClassAssertion(:Cleaner :Maria)
+ObjectPropertyAssertion(:freelacesTo :Maria :To_Vromiariko_To_Kalo)
+DataPropertyAssertion(:personName :Maria "Maria")
+
+# Individual: :Martin (:Martin)
+
+ClassAssertion(:Chef :Martin)
+ObjectPropertyAssertion(:hasContractWith :Martin :To_Vromiariko_To_Kalo)
+DataPropertyAssertion(:personName :Martin "Martin
+")
+
+# Individual: :MemberCard_1 (:MemberCard_1)
+
+ClassAssertion(:MemberCard :MemberCard_1)
+ObjectPropertyAssertion(:memberCardOwnedBy :MemberCard_1 :Dex)
+DataPropertyAssertion(:hasMemberPoints :MemberCard_1 "30"^^xsd:integer)
+
+# Individual: :MemberCard_2 (:MemberCard_2)
+
+ClassAssertion(:MemberCard :MemberCard_2)
+ObjectPropertyAssertion(:memberCardOwnedBy :MemberCard_2 :Xidedin_Ibibam)
+DataPropertyAssertion(:hasMemberPoints :MemberCard_2 "144"^^xsd:integer)
+
+# Individual: :MetaforikiTakMpam (:MetaforikiTakMpam)
+
+ClassAssertion(:Truck :MetaforikiTakMpam)
+ObjectPropertyAssertion(:businessVehicleOwnedBy :MetaforikiTakMpam :TaKalaTaIlika)
+DataPropertyAssertion(:storageCapacity :MetaforikiTakMpam "300"^^xsd:decimal)
+
+# Individual: :Mop (:Mop)
+
+ClassAssertion(:CleaningTool :Mop)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Mop :Working_1)
+ObjectPropertyAssertion(:cleaningToolUsedBy :Mop :Maria)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Mop :FoodTruck1)
+
+# Individual: :Mop_1 (:Mop_1)
+
+ClassAssertion(:CleaningTool :Mop_1)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Mop_1 :Working_1)
+ObjectPropertyAssertion(:cleaningToolUsedBy :Mop_1 :Maria)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Mop_1 :FoodTruck2)
+
+# Individual: :Nestoros_Tipa_15 (:Nestoros_Tipa_15)
+
+ClassAssertion(:Location :Nestoros_Tipa_15)
+DataPropertyAssertion(:PostalCode :Nestoros_Tipa_15 "54258"^^xsd:integer)
+DataPropertyAssertion(:hasAddress :Nestoros_Tipa_15 "Nestoros Tipa 15")
+
+# Individual: :Olympou_15_Xalandri (:Olympou_15_Xalandri)
+
+ClassAssertion(:Location :Olympou_15_Xalandri)
+DataPropertyAssertion(:PostalCode :Olympou_15_Xalandri "46464"^^xsd:integer)
+DataPropertyAssertion(:hasAddress :Olympou_15_Xalandri "Olympou 15 Xalandri")
+
+# Individual: :OutOfOrder_1 (:OutOfOrder_1)
+
+ClassAssertion(:OutOfOrder :OutOfOrder_1)
+
+# Individual: :Oven (:Oven)
+
+ClassAssertion(:Machine :Oven)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Oven :BeingServiced_1)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Oven :FoodTruck1)
+DataPropertyAssertion(:lastServiced :Oven "2023-11-25+02:00"^^xsd:date)
+DataPropertyAssertion(:needsElectricity :Oven "true"^^xsd:boolean)
+
+# Individual: :Oven_1 (:Oven_1)
+
+ClassAssertion(:Machine :Oven_1)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Oven_1 :BeingServiced_1)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Oven_1 :FoodTruck2)
+ObjectPropertyAssertion(:usedBy :Oven_1 :Martin)
+DataPropertyAssertion(:lastServiced :Oven_1 "2023-10-15+02:00"^^xsd:date)
+DataPropertyAssertion(:needsElectricity :Oven_1 "true"^^xsd:boolean)
+
+# Individual: :Pan (:Pan)
+
+ClassAssertion(:CousineTool :Pan)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Pan :Working_1)
+ObjectPropertyAssertion(:cousineToolUsedBy :Pan :Bob)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Pan :FoodTruck1)
+
+# Individual: :Pan_1 (:Pan_1)
+
+ClassAssertion(:CousineTool :Pan_1)
+ObjectPropertyAssertion(:EquipmentOperationStatus :Pan_1 :Working_1)
+ObjectPropertyAssertion(:cousineToolUsedBy :Pan_1 :Martin)
+ObjectPropertyAssertion(:equipmentInFoodTruck :Pan_1 :FoodTruck2)
+
+# Individual: :Panseta (:Panseta)
+
+ClassAssertion(:Ingredient :Panseta)
+DataPropertyAssertion(:ingredientQuantity :Panseta "40"^^xsd:integer)
+
+# Individual: :Papaf (:Papaf)
+
+ClassAssertion(:BusinessOwner :Papaf)
+
+# Individual: :ParkingSlot_1 (:ParkingSlot_1)
+
+ClassAssertion(:ParkingSlot :ParkingSlot_1)
+ObjectPropertyAssertion(:parkingSlotInParking :ParkingSlot_1 :Parking_1)
+ObjectPropertyAssertion(:parkingSlotOccupiedBy :ParkingSlot_1 :PersonalVehicle_1)
+DataPropertyAssertion(:isParkingSlotFree :ParkingSlot_1 "false"^^xsd:boolean)
+
+# Individual: :ParkingSlot_2 (:ParkingSlot_2)
+
+ClassAssertion(:ParkingSlot :ParkingSlot_2)
+ObjectPropertyAssertion(:parkingSlotInParking :ParkingSlot_2 :Parking_1)
+DataPropertyAssertion(:isParkingSlotFree :ParkingSlot_2 "true"^^xsd:boolean)
+
+# Individual: :ParkingSlot_3 (:ParkingSlot_3)
+
+ClassAssertion(:ParkingSlot :ParkingSlot_3)
+ObjectPropertyAssertion(:parkingSlotInParking :ParkingSlot_3 :Parking_1)
+DataPropertyAssertion(:isParkingSlotFree :ParkingSlot_3 "true"^^xsd:boolean)
+
+# Individual: :Parking_1 (:Parking_1)
+
+ClassAssertion(:Parking :Parking_1)
+ObjectPropertyAssertion(:parkingInFoodTruck :Parking_1 :FoodTruck1)
+
+# Individual: :PersonalVehicle_1 (:PersonalVehicle_1)
+
+ClassAssertion(:PersonalVehicle :PersonalVehicle_1)
+DataPropertyAssertion(:plate :PersonalVehicle_1 "NNN 0007")
+
+# Individual: :Pita (:Pita)
+
+ClassAssertion(:Ingredient :Pita)
+DataPropertyAssertion(:costs :Pita "0.2"^^xsd:decimal)
+DataPropertyAssertion(:ingredientQuantity :Pita "60"^^xsd:integer)
+
+# Individual: :PitaPanseta (:PitaPanseta)
+
+ClassAssertion(:Food :PitaPanseta)
+ObjectPropertyAssertion(:hasIngredient :PitaPanseta :Panseta)
+ObjectPropertyAssertion(:hasIngredient :PitaPanseta :Pita)
+ObjectPropertyAssertion(:hasIngredient :PitaPanseta :Tzatziki)
+DataPropertyAssertion(:costs :PitaPanseta "3"^^xsd:decimal)
+DataPropertyAssertion(:suitableForVegan :PitaPanseta "false"^^xsd:boolean)
+
+# Individual: :PitaSouvlaki (:PitaSouvlaki)
+
+ClassAssertion(:Food :PitaSouvlaki)
+ObjectPropertyAssertion(:hasIngredient :PitaSouvlaki :Pita)
+ObjectPropertyAssertion(:hasIngredient :PitaSouvlaki :Souvlaki)
+ObjectPropertyAssertion(:hasIngredient :PitaSouvlaki :Tzatziki)
+DataPropertyAssertion(:costs :PitaSouvlaki "3"^^xsd:decimal)
+DataPropertyAssertion(:suitableForVegan :PitaSouvlaki "false"^^xsd:boolean)
+
+# Individual: :Psomaki (:Psomaki)
+
+ClassAssertion(:Ingredient :Psomaki)
+DataPropertyAssertion(:costs :Psomaki "0.15"^^xsd:decimal)
+DataPropertyAssertion(:ingredientQuantity :Psomaki "60"^^xsd:integer)
+
+# Individual: :PsomakiPanseta (:PsomakiPanseta)
+
+ClassAssertion(:Food :PsomakiPanseta)
+ObjectPropertyAssertion(:hasIngredient :PsomakiPanseta :Panseta)
+ObjectPropertyAssertion(:hasIngredient :PsomakiPanseta :Psomaki)
+ObjectPropertyAssertion(:hasIngredient :PsomakiPanseta :Tzatziki)
+DataPropertyAssertion(:costs :PsomakiPanseta "2.5"^^xsd:decimal)
+DataPropertyAssertion(:suitableForVegan :PsomakiPanseta "false"^^xsd:boolean)
+
+# Individual: :PsomakiRibeye (:PsomakiRibeye)
+
+ClassAssertion(:Food :PsomakiRibeye)
+ObjectPropertyAssertion(:hasIngredient :PsomakiRibeye :Psomaki_1)
+ObjectPropertyAssertion(:hasIngredient :PsomakiRibeye :Ribeye)
+ObjectPropertyAssertion(:hasIngredient :PsomakiRibeye :Tzatziki_1)
+DataPropertyAssertion(:costs :PsomakiRibeye "60"^^xsd:decimal)
+DataPropertyAssertion(:suitableForVegan :PsomakiRibeye "false"^^xsd:boolean)
+
+# Individual: :PsomakiSouvlaki (:PsomakiSouvlaki)
+
+ClassAssertion(:Food :PsomakiSouvlaki)
+ObjectPropertyAssertion(:hasIngredient :PsomakiSouvlaki :Psomaki)
+ObjectPropertyAssertion(:hasIngredient :PsomakiSouvlaki :Souvlaki)
+ObjectPropertyAssertion(:hasIngredient :PsomakiSouvlaki :Tzatziki)
+DataPropertyAssertion(:costs :PsomakiSouvlaki "2.5"^^xsd:decimal)
+DataPropertyAssertion(:suitableForVegan :PsomakiSouvlaki "false"^^xsd:boolean)
+
+# Individual: :PsomakiTbone (:PsomakiTbone)
+
+ClassAssertion(:Food :PsomakiTbone)
+ObjectPropertyAssertion(:hasIngredient :PsomakiTbone :Psomaki_1)
+ObjectPropertyAssertion(:hasIngredient :PsomakiTbone :T_Bone)
+ObjectPropertyAssertion(:hasIngredient :PsomakiTbone :Tzatziki_1)
+DataPropertyAssertion(:costs :PsomakiTbone "60"^^xsd:decimal)
+DataPropertyAssertion(:suitableForVegan :PsomakiTbone "false"^^xsd:boolean)
+
+# Individual: :Psomaki_1 (:Psomaki_1)
+
+ClassAssertion(:Ingredient :Psomaki_1)
+DataPropertyAssertion(:costs :Psomaki_1 "0.3"^^xsd:decimal)
+DataPropertyAssertion(:ingredientQuantity :Psomaki_1 "130"^^xsd:integer)
+
+# Individual: :Ribeye (:Ribeye)
+
+ClassAssertion(:Ingredient :Ribeye)
+DataPropertyAssertion(:costs :Ribeye "30"^^xsd:decimal)
+DataPropertyAssertion(:ingredientQuantity :Ribeye "70"^^xsd:integer)
+
+# Individual: :Sok (:Sok)
+
+ClassAssertion(:Waiter :Sok)
+ObjectPropertyAssertion(:hasContractWith :Sok :To_Vromiariko_To_Kalo)
+DataPropertyAssertion(:personName :Sok "Sok")
+
+# Individual: :Souvlaki (:Souvlaki)
+
+ClassAssertion(:Ingredient :Souvlaki)
+DataPropertyAssertion(:costs :Souvlaki "0.5"^^xsd:decimal)
+DataPropertyAssertion(:ingredientQuantity :Souvlaki "100"^^xsd:integer)
+
+# Individual: :SupplyPayment_1 (:SupplyPayment_1)
+
+ClassAssertion(:SupplyPayment :SupplyPayment_1)
+ObjectPropertyAssertion(:PaymentFromBusinessOwner :SupplyPayment_1 :Papaf)
+ObjectPropertyAssertion(:PaymentToSupplyCompany :SupplyPayment_1 :TaKalaTaIlika)
+DataPropertyAssertion(:PaymentAmount :SupplyPayment_1 "199.99"^^xsd:decimal)
+DataPropertyAssertion(:PaymentDate :SupplyPayment_1 "2023-12-02+02:00"^^xsd:date)
+
+# Individual: :T_Bone (:T_Bone)
+
+ClassAssertion(:Ingredient :T_Bone)
+DataPropertyAssertion(:costs :T_Bone "40"^^xsd:decimal)
+DataPropertyAssertion(:ingredientQuantity :T_Bone "60"^^xsd:integer)
+
+# Individual: :TaKalaTaIlika (:TaKalaTaIlika)
+
+ClassAssertion(:SupplierCompany :TaKalaTaIlika)
+ObjectPropertyAssertion(:businessOwnedBy :TaKalaTaIlika :Za)
+DataPropertyAssertion(:businessName :TaKalaTaIlika "Ta Kala Ta Ilika")
+
+# Individual: :Table_1 (:Table_1)
+
+ClassAssertion(:Table :Table_1)
+ObjectPropertyAssertion(:tableInTruck :Table_1 :FoodTruck1)
+DataPropertyAssertion(:hasNumberID :Table_1 "1"^^xsd:integer)
+DataPropertyAssertion(:hasSpaceFor :Table_1 "4"^^xsd:integer)
+
+# Individual: :Table_2 (:Table_2)
+
+ClassAssertion(:Table :Table_2)
+ObjectPropertyAssertion(:tableInTruck :Table_2 :FoodTruck1)
+DataPropertyAssertion(:hasNumberID :Table_2 "2"^^xsd:integer)
+DataPropertyAssertion(:hasSpaceFor :Table_2 "4"^^xsd:integer)
+
+# Individual: :Table_3 (:Table_3)
+
+ClassAssertion(:Table :Table_3)
+ObjectPropertyAssertion(:tableInTruck :Table_3 :FoodTruck1)
+DataPropertyAssertion(:hasNumberID :Table_3 "3"^^xsd:integer)
+DataPropertyAssertion(:hasSpaceFor :Table_3 "2"^^xsd:integer)
+
+# Individual: :To_Vromiariko_Menu (:To_Vromiariko_Menu)
+
+ClassAssertion(:Menu :To_Vromiariko_Menu)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu :Beer)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu :BeerAnef)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu :PitaPanseta)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu :PitaSouvlaki)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu :PsomakiPanseta)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu :PsomakiSouvlaki)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu :Water)
+
+# Individual: :To_Vromiariko_Menu_Xalandri (:To_Vromiariko_Menu_Xalandri)
+
+ClassAssertion(:Menu :To_Vromiariko_Menu_Xalandri)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu_Xalandri :PsomakiRibeye)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu_Xalandri :PsomakiTbone)
+ObjectPropertyAssertion(:includes :To_Vromiariko_Menu_Xalandri :Water)
+
+# Individual: :To_Vromiariko_To_Kalo (:To_Vromiariko_To_Kalo)
+
+ClassAssertion(:Canteen :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:businessOwnedBy :To_Vromiariko_To_Kalo :Papaf)
+
+# Individual: :Tzatziki (:Tzatziki)
+
+ClassAssertion(:Ingredient :Tzatziki)
+DataPropertyAssertion(:costs :Tzatziki "0.4"^^xsd:decimal)
+DataPropertyAssertion(:ingredientQuantity :Tzatziki "2"^^xsd:integer)
+
+# Individual: :Tzatziki_1 (:Tzatziki_1)
+
+ClassAssertion(:Ingredient :Tzatziki_1)
+DataPropertyAssertion(:costs :Tzatziki_1 "0.5"^^xsd:decimal)
+DataPropertyAssertion(:ingredientQuantity :Tzatziki_1 "3"^^xsd:integer)
+
+# Individual: :Water (:Water)
+
+ClassAssertion(:NonAlcoholDrink :Water)
+DataPropertyAssertion(:costs :Water "0.5"^^xsd:decimal)
+DataPropertyAssertion(:hasAlcohol :Water "false"^^xsd:boolean)
+
+# Individual: :Working_1 (:Working_1)
+
+ClassAssertion(:Working :Working_1)
+
+# Individual: :Xedi (:Xedi)
+
+ClassAssertion(:Customer :Xedi)
+DataPropertyAssertion(:personName :Xedi "Xedi")
+
+# Individual: :Xidedin_Ibibam (:Xidedin_Ibibam)
+
+ClassAssertion(:Customer :Xidedin_Ibibam)
+DataPropertyAssertion(:personName :Xidedin_Ibibam "Xidedin Ibibam")
+
+# Individual: :Za (:Za)
+
+ClassAssertion(:BusinessOwner :Za)
+DataPropertyAssertion(:personName :Za "Za")
+
+
+)
