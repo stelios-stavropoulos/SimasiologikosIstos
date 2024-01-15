@@ -28,6 +28,7 @@ Declaration(Class(:Drink))
 Declaration(Class(:Equipment))
 Declaration(Class(:Food))
 Declaration(Class(:FoodTruck))
+Declaration(Class(:GlutenFreeAndVeganFood))
 Declaration(Class(:GlutenFreeFood))
 Declaration(Class(:GlutenFreeIngredient))
 Declaration(Class(:Ingredient))
@@ -46,6 +47,7 @@ Declaration(Class(:Person))
 Declaration(Class(:PersonalVehicle))
 Declaration(Class(:Product))
 Declaration(Class(:Reservation))
+Declaration(Class(:SpecialFood))
 Declaration(Class(:SupplierCompany))
 Declaration(Class(:SupplyPayment))
 Declaration(Class(:Table))
@@ -92,6 +94,7 @@ Declaration(DataProperty(:businessName))
 Declaration(DataProperty(:costs))
 Declaration(DataProperty(:hasAddress))
 Declaration(DataProperty(:hasAlcohol))
+Declaration(DataProperty(:hasGluten))
 Declaration(DataProperty(:hasMemberPoints))
 Declaration(DataProperty(:hasNumberID))
 Declaration(DataProperty(:hasSpaceFor))
@@ -182,6 +185,7 @@ Declaration(NamedIndividual(:Tzatziki_1))
 Declaration(NamedIndividual(:Vodka))
 Declaration(NamedIndividual(:Water))
 Declaration(NamedIndividual(:Wine))
+Declaration(NamedIndividual(:Wishky))
 Declaration(NamedIndividual(:Worker))
 Declaration(NamedIndividual(:Working_1))
 Declaration(NamedIndividual(:Xedi))
@@ -421,6 +425,11 @@ DataPropertyRange(:hasAddress xsd:string)
 DataPropertyDomain(:hasAlcohol :Drink)
 DataPropertyRange(:hasAlcohol xsd:boolean)
 
+# Data Property: :hasGluten (:hasGluten)
+
+DataPropertyDomain(:hasGluten :Food)
+DataPropertyRange(:hasGluten xsd:boolean)
+
 # Data Property: :hasMemberPoints (:hasMemberPoints)
 
 DataPropertyDomain(:hasMemberPoints :MemberCard)
@@ -507,8 +516,9 @@ DatatypeDefinition(xsd:boolean xsd:boolean)
 
 # Class: :AlcoholDrink (:AlcoholDrink)
 
-EquivalentClasses(:AlcoholDrink DataAllValuesFrom(:hasAlcohol DataOneOf("true"^^xsd:boolean)))
+EquivalentClasses(:AlcoholDrink DataHasValue(:hasAlcohol "true"^^xsd:boolean))
 SubClassOf(:AlcoholDrink :Drink)
+DisjointClasses(:AlcoholDrink :NonAlcoholDrink)
 
 # Class: :BeingServiced (:BeingServiced)
 
@@ -574,9 +584,14 @@ SubClassOf(:Food :MenuProduct)
 
 SubClassOf(:FoodTruck :Truck)
 
+# Class: :GlutenFreeAndVeganFood (:GlutenFreeAndVeganFood)
+
+EquivalentClasses(:GlutenFreeAndVeganFood ObjectIntersectionOf(:GlutenFreeFood :VeganFood))
+SubClassOf(:GlutenFreeAndVeganFood :Food)
+
 # Class: :GlutenFreeFood (:GlutenFreeFood)
 
-EquivalentClasses(:GlutenFreeFood ObjectIntersectionOf(:GlutenFreeFood ObjectAllValuesFrom(:hasIngredient :GlutenFreeIngredient)))
+EquivalentClasses(:GlutenFreeFood ObjectAllValuesFrom(:hasIngredient :GlutenFreeIngredient))
 SubClassOf(:GlutenFreeFood :Food)
 
 # Class: :GlutenFreeIngredient (:GlutenFreeIngredient)
@@ -609,7 +624,7 @@ SubClassOf(:MenuProduct :Product)
 
 # Class: :NonAlcoholDrink (:NonAlcoholDrink)
 
-EquivalentClasses(:NonAlcoholDrink DataAllValuesFrom(:hasAlcohol DataOneOf("false"^^xsd:boolean)))
+EquivalentClasses(:NonAlcoholDrink DataHasValue(:hasAlcohol "false"^^xsd:boolean))
 SubClassOf(:NonAlcoholDrink :Drink)
 
 # Class: :OperationStatus (:OperationStatus)
@@ -648,6 +663,11 @@ SubClassOf(:Product rdfs:Resource)
 
 SubClassOf(:Reservation rdfs:Resource)
 
+# Class: :SpecialFood (:SpecialFood)
+
+EquivalentClasses(:SpecialFood ObjectUnionOf(:GlutenFreeFood :VeganFood))
+SubClassOf(:SpecialFood :Food)
+
 # Class: :SupplierCompany (:SupplierCompany)
 
 SubClassOf(:SupplierCompany :Business)
@@ -670,7 +690,7 @@ SubClassOf(:Truck :BusinessVehicle)
 
 # Class: :VeganFood (:VeganFood)
 
-EquivalentClasses(:VeganFood ObjectIntersectionOf(:VeganFood ObjectAllValuesFrom(:hasIngredient :VeganIngredient)))
+EquivalentClasses(:VeganFood ObjectAllValuesFrom(:hasIngredient :VeganIngredient))
 SubClassOf(:VeganFood :Food)
 
 # Class: :VeganIngredient (:VeganIngredient)
@@ -903,7 +923,6 @@ ClassAssertion(:VeganIngredient :Marouli)
 
 ClassAssertion(:VeganFood :MarouliSketo)
 ObjectPropertyAssertion(:hasIngredient :MarouliSketo :Marouli)
-ObjectPropertyAssertion(:hasIngredient :MarouliSketo :Souvlaki)
 
 # Individual: :Martin (:Martin)
 
@@ -1031,9 +1050,13 @@ DataPropertyAssertion(:plate :PersonalVehicle_1 "NNN 0007")
 
 # Individual: :Pita (:Pita)
 
-ClassAssertion(:Ingredient :Pita)
+ClassAssertion(:VeganIngredient :Pita)
 DataPropertyAssertion(:costs :Pita "0.2"^^xsd:decimal)
 DataPropertyAssertion(:ingredientQuantity :Pita "60"^^xsd:integer)
+
+# Individual: :PitaGlutenFree (:PitaGlutenFree)
+
+ClassAssertion(:GlutenFreeIngredient :PitaGlutenFree)
 
 # Individual: :PitaPanseta (:PitaPanseta)
 
@@ -1208,8 +1231,12 @@ DataPropertyAssertion(:hasAlcohol :Water "false"^^xsd:boolean)
 
 # Individual: :Wine (:Wine)
 
-ClassAssertion(:AlcoholDrink :Wine)
+DataPropertyAssertion(:costs :Wine "3"^^xsd:decimal)
 DataPropertyAssertion(:hasAlcohol :Wine "true"^^xsd:boolean)
+
+# Individual: :Wishky (:Wishky)
+
+DataPropertyAssertion(:hasAlcohol :Wishky "true"^^xsd:boolean)
 
 # Individual: :Working_1 (:Working_1)
 
