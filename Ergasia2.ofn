@@ -130,6 +130,7 @@ Declaration(NamedIndividual(:Freezer))
 Declaration(NamedIndividual(:Freezer_1))
 Declaration(NamedIndividual(:Fridge))
 Declaration(NamedIndividual(:Fridge_1))
+Declaration(NamedIndividual(:GRook))
 Declaration(NamedIndividual(:Grill))
 Declaration(NamedIndividual(:Grill_1))
 Declaration(NamedIndividual(:Knife))
@@ -162,6 +163,7 @@ Declaration(NamedIndividual(:Pita))
 Declaration(NamedIndividual(:PitaGlutenFree))
 Declaration(NamedIndividual(:PitaPanseta))
 Declaration(NamedIndividual(:PitaSouvlaki))
+Declaration(NamedIndividual(:PlitaGluttenFreeMeMarouli))
 Declaration(NamedIndividual(:Psomaki))
 Declaration(NamedIndividual(:PsomakiPanseta))
 Declaration(NamedIndividual(:PsomakiRibeye))
@@ -177,11 +179,13 @@ Declaration(NamedIndividual(:TaKalaTaIlika))
 Declaration(NamedIndividual(:Table_1))
 Declaration(NamedIndividual(:Table_2))
 Declaration(NamedIndividual(:Table_3))
+Declaration(NamedIndividual(:The_Good_The_Food))
 Declaration(NamedIndividual(:To_Vromiariko_Menu))
 Declaration(NamedIndividual(:To_Vromiariko_Menu_Xalandri))
 Declaration(NamedIndividual(:To_Vromiariko_To_Kalo))
 Declaration(NamedIndividual(:Tzatziki))
 Declaration(NamedIndividual(:Tzatziki_1))
+Declaration(NamedIndividual(:VeganMenu))
 Declaration(NamedIndividual(:Vodka))
 Declaration(NamedIndividual(:Water))
 Declaration(NamedIndividual(:Wine))
@@ -527,6 +531,7 @@ SubClassOf(:BeingServiced :OperationStatus)
 # Class: :Business (:Business)
 
 SubClassOf(:Business rdfs:Resource)
+SubClassOf(:Business ObjectSomeValuesFrom(:businessOwnedBy :BusinessOwner))
 
 # Class: :BusinessOwner (:BusinessOwner)
 
@@ -539,6 +544,7 @@ SubClassOf(:BusinessVehicle :Vehicle)
 # Class: :Canteen (:Canteen)
 
 SubClassOf(:Canteen :Business)
+SubClassOf(:Canteen DataHasValue(:businessField "FoodChain"))
 
 # Class: :Chef (:Chef)
 
@@ -591,7 +597,6 @@ SubClassOf(:GlutenFreeAndVeganFood :Food)
 
 # Class: :GlutenFreeFood (:GlutenFreeFood)
 
-EquivalentClasses(:GlutenFreeFood ObjectAllValuesFrom(:hasIngredient :GlutenFreeIngredient))
 SubClassOf(:GlutenFreeFood :Food)
 
 # Class: :GlutenFreeIngredient (:GlutenFreeIngredient)
@@ -612,11 +617,13 @@ SubClassOf(:Machine :Equipment)
 
 # Class: :MemberCard (:MemberCard)
 
+EquivalentClasses(:MemberCard ObjectExactCardinality(1 :memberCardOwnedBy :Customer))
 SubClassOf(:MemberCard rdfs:Resource)
 
 # Class: :Menu (:Menu)
 
 SubClassOf(:Menu rdfs:Resource)
+SubClassOf(:Menu ObjectSomeValuesFrom(:includes :MenuProduct))
 
 # Class: :MenuProduct (:MenuProduct)
 
@@ -690,7 +697,6 @@ SubClassOf(:Truck :BusinessVehicle)
 
 # Class: :VeganFood (:VeganFood)
 
-EquivalentClasses(:VeganFood ObjectAllValuesFrom(:hasIngredient :VeganIngredient))
 SubClassOf(:VeganFood :Food)
 
 # Class: :VeganIngredient (:VeganIngredient)
@@ -872,6 +878,10 @@ ObjectPropertyAssertion(:usedBy :Fridge_1 :Martin)
 DataPropertyAssertion(:lastServiced :Fridge_1 "2023-12-01+02:00"^^xsd:date)
 DataPropertyAssertion(:needsElectricity :Fridge_1 "true"^^xsd:boolean)
 
+# Individual: :GRook (:GRook)
+
+ClassAssertion(:BusinessOwner :GRook)
+
 # Individual: :Grill (:Grill)
 
 ClassAssertion(:Machine :Grill)
@@ -917,6 +927,7 @@ DataPropertyAssertion(:personName :Maria "Maria")
 
 # Individual: :Marouli (:Marouli)
 
+ClassAssertion(:GlutenFreeIngredient :Marouli)
 ClassAssertion(:VeganIngredient :Marouli)
 
 # Individual: :MarouliSketo (:MarouliSketo)
@@ -1076,6 +1087,12 @@ ObjectPropertyAssertion(:hasIngredient :PitaSouvlaki :Tzatziki)
 DataPropertyAssertion(:costs :PitaSouvlaki "3"^^xsd:decimal)
 DataPropertyAssertion(:suitableForVegan :PitaSouvlaki "false"^^xsd:boolean)
 
+# Individual: :PlitaGluttenFreeMeMarouli (:PlitaGluttenFreeMeMarouli)
+
+ClassAssertion(:GlutenFreeFood :PlitaGluttenFreeMeMarouli)
+ObjectPropertyAssertion(:hasIngredient :PlitaGluttenFreeMeMarouli :Marouli)
+ObjectPropertyAssertion(:hasIngredient :PlitaGluttenFreeMeMarouli :PitaGlutenFree)
+
 # Individual: :Psomaki (:Psomaki)
 
 ClassAssertion(:Ingredient :Psomaki)
@@ -1183,6 +1200,11 @@ ObjectPropertyAssertion(:tableInTruck :Table_3 :FoodTruck1)
 DataPropertyAssertion(:hasNumberID :Table_3 "3"^^xsd:integer)
 DataPropertyAssertion(:hasSpaceFor :Table_3 "2"^^xsd:integer)
 
+# Individual: :The_Good_The_Food (:The_Good_The_Food)
+
+ObjectPropertyAssertion(:businessOwnedBy :The_Good_The_Food :GRook)
+DataPropertyAssertion(:businessField :The_Good_The_Food "FoodChain")
+
 # Individual: :To_Vromiariko_Menu (:To_Vromiariko_Menu)
 
 ClassAssertion(:Menu :To_Vromiariko_Menu)
@@ -1204,7 +1226,10 @@ ObjectPropertyAssertion(:includes :To_Vromiariko_Menu_Xalandri :Water)
 # Individual: :To_Vromiariko_To_Kalo (:To_Vromiariko_To_Kalo)
 
 ClassAssertion(:Canteen :To_Vromiariko_To_Kalo)
+ObjectPropertyAssertion(:businessOwnedBy :To_Vromiariko_To_Kalo :GRook)
 ObjectPropertyAssertion(:businessOwnedBy :To_Vromiariko_To_Kalo :Papaf)
+ObjectPropertyAssertion(:businessOwnedBy :To_Vromiariko_To_Kalo :Za)
+DataPropertyAssertion(:businessField :To_Vromiariko_To_Kalo "FoodChain")
 
 # Individual: :Tzatziki (:Tzatziki)
 
@@ -1217,6 +1242,10 @@ DataPropertyAssertion(:ingredientQuantity :Tzatziki "2"^^xsd:integer)
 ClassAssertion(:Ingredient :Tzatziki_1)
 DataPropertyAssertion(:costs :Tzatziki_1 "0.5"^^xsd:decimal)
 DataPropertyAssertion(:ingredientQuantity :Tzatziki_1 "3"^^xsd:integer)
+
+# Individual: :VeganMenu (:VeganMenu)
+
+ObjectPropertyAssertion(:includes :VeganMenu :MarouliSketo)
 
 # Individual: :Vodka (:Vodka)
 
