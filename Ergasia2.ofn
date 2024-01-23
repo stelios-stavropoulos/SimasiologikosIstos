@@ -48,6 +48,7 @@ Declaration(Class(:Payment))
 Declaration(Class(:Person))
 Declaration(Class(:PersonalVehicle))
 Declaration(Class(:Product))
+Declaration(Class(:ReadyToUseEquipment))
 Declaration(Class(:Reservation))
 Declaration(Class(:SpecialFood))
 Declaration(Class(:SupplierCompany))
@@ -55,6 +56,7 @@ Declaration(Class(:SupplyPayment))
 Declaration(Class(:Table))
 Declaration(Class(:Tool))
 Declaration(Class(:Truck))
+Declaration(Class(:UnavailableEquipment))
 Declaration(Class(:VeganFood))
 Declaration(Class(:VeganIngredient))
 Declaration(Class(:Vehicle))
@@ -62,6 +64,7 @@ Declaration(Class(:Waiter))
 Declaration(Class(:Worker))
 Declaration(Class(:Working))
 Declaration(Class(rdfs:Resource))
+Declaration(ObjectProperty(:BusinessmanOwnsBusiness))
 Declaration(ObjectProperty(:EquipmentOperationStatus))
 Declaration(ObjectProperty(:PaymentFromBusinessOwner))
 Declaration(ObjectProperty(:PaymentFromCustomer))
@@ -70,6 +73,7 @@ Declaration(ObjectProperty(:PaymentToBusiness))
 Declaration(ObjectProperty(:PaymentToCanteen))
 Declaration(ObjectProperty(:PaymentToSupplyCompany))
 Declaration(ObjectProperty(:PaymentToTruck))
+Declaration(ObjectProperty(:businessOwnsBusinessVehicle))
 Declaration(ObjectProperty(:cleaningToolUsedBy))
 Declaration(ObjectProperty(:cousineToolUsedBy))
 Declaration(ObjectProperty(:equipmentInFoodTruck))
@@ -79,14 +83,17 @@ Declaration(ObjectProperty(:hasContractWith))
 Declaration(ObjectProperty(:hasIngredient))
 Declaration(ObjectProperty(:hasMenu))
 Declaration(ObjectProperty(:includes))
+Declaration(ObjectProperty(:isIncluded))
 Declaration(ObjectProperty(:operationStatus))
 Declaration(ObjectProperty(:parkingInFoodTruck))
 Declaration(ObjectProperty(:parkingSlotInParking))
 Declaration(ObjectProperty(:parkingSlotOccupiedBy))
 Declaration(ObjectProperty(:reservationTable))
+Declaration(ObjectProperty(:reserved))
 Declaration(ObjectProperty(:reservedBy))
 Declaration(ObjectProperty(:tableInTruck))
 Declaration(ObjectProperty(:usedBy))
+Declaration(ObjectProperty(:uses))
 Declaration(ObjectProperty(:worksFor))
 Declaration(DataProperty(:PaymentAmount))
 Declaration(DataProperty(:PaymentDate))
@@ -115,6 +122,7 @@ Declaration(NamedIndividual(:Beer))
 Declaration(NamedIndividual(:BeerAnef))
 Declaration(NamedIndividual(:BeingServiced_1))
 Declaration(NamedIndividual(:Bob))
+Declaration(NamedIndividual(:Boiler))
 Declaration(NamedIndividual(:Broom))
 Declaration(NamedIndividual(:Broom_1))
 Declaration(NamedIndividual(:CustomerFoodTruckPayment_1))
@@ -227,165 +235,241 @@ SubAnnotationPropertyOf(:memberCardOwnedBy :ownedBy)
 #   Object Properties
 ############################
 
+# Object Property: :BusinessmanOwnsBusiness (:BusinessmanOwnsBusiness)
+
+SubObjectPropertyOf(:BusinessmanOwnsBusiness owl:topObjectProperty)
+
 # Object Property: :EquipmentOperationStatus (:EquipmentOperationStatus)
 
+AsymmetricObjectProperty(:EquipmentOperationStatus)
+IrreflexiveObjectProperty(:EquipmentOperationStatus)
 ObjectPropertyDomain(:EquipmentOperationStatus :Equipment)
 ObjectPropertyRange(:EquipmentOperationStatus :OperationStatus)
 
 # Object Property: :PaymentFromBusinessOwner (:PaymentFromBusinessOwner)
 
 SubObjectPropertyOf(:PaymentFromBusinessOwner :PaymentFromPerson)
+AsymmetricObjectProperty(:PaymentFromBusinessOwner)
+IrreflexiveObjectProperty(:PaymentFromBusinessOwner)
 ObjectPropertyDomain(:PaymentFromBusinessOwner :SupplyPayment)
 ObjectPropertyRange(:PaymentFromBusinessOwner :BusinessOwner)
 
 # Object Property: :PaymentFromCustomer (:PaymentFromCustomer)
 
 SubObjectPropertyOf(:PaymentFromCustomer :PaymentFromPerson)
+AsymmetricObjectProperty(:PaymentFromCustomer)
+IrreflexiveObjectProperty(:PaymentFromCustomer)
 ObjectPropertyDomain(:PaymentFromCustomer :CustomerPayment)
 ObjectPropertyRange(:PaymentFromCustomer :Customer)
 
 # Object Property: :PaymentFromPerson (:PaymentFromPerson)
 
+AsymmetricObjectProperty(:PaymentFromPerson)
+IrreflexiveObjectProperty(:PaymentFromPerson)
 ObjectPropertyDomain(:PaymentFromPerson :Payment)
 ObjectPropertyRange(:PaymentFromPerson :Person)
 
 # Object Property: :PaymentToBusiness (:PaymentToBusiness)
 
+AsymmetricObjectProperty(:PaymentToBusiness)
+IrreflexiveObjectProperty(:PaymentToBusiness)
 ObjectPropertyDomain(:PaymentToBusiness :Payment)
 ObjectPropertyRange(:PaymentToBusiness :Business)
 
 # Object Property: :PaymentToCanteen (:PaymentToCanteen)
 
 SubObjectPropertyOf(:PaymentToCanteen :PaymentToBusiness)
+AsymmetricObjectProperty(:PaymentToCanteen)
+IrreflexiveObjectProperty(:PaymentToCanteen)
 ObjectPropertyDomain(:PaymentToCanteen :CustomerPayment)
 ObjectPropertyRange(:PaymentToCanteen :Canteen)
 
 # Object Property: :PaymentToSupplyCompany (:PaymentToSupplyCompany)
 
 SubObjectPropertyOf(:PaymentToSupplyCompany :PaymentToBusiness)
+AsymmetricObjectProperty(:PaymentToSupplyCompany)
+IrreflexiveObjectProperty(:PaymentToSupplyCompany)
 ObjectPropertyDomain(:PaymentToSupplyCompany :SupplyPayment)
 ObjectPropertyRange(:PaymentToSupplyCompany :SupplierCompany)
 
 # Object Property: :PaymentToTruck (:PaymentToTruck)
 
+AsymmetricObjectProperty(:PaymentToTruck)
+IrreflexiveObjectProperty(:PaymentToTruck)
 ObjectPropertyDomain(:PaymentToTruck :Payment)
 ObjectPropertyRange(:PaymentToTruck :FoodTruck)
 
 # Object Property: :businessOwnedBy (:businessOwnedBy)
 
-AsymmetricObjectProperty(:businessOwnedBy)
+SymmetricObjectProperty(:businessOwnedBy)
 IrreflexiveObjectProperty(:businessOwnedBy)
 ObjectPropertyDomain(:businessOwnedBy :Business)
 ObjectPropertyRange(:businessOwnedBy :BusinessOwner)
 
+# Object Property: :businessOwnsBusinessVehicle (:businessOwnsBusinessVehicle)
+
+InverseObjectProperties(:businessOwnsBusinessVehicle :businessVehicleOwnedBy)
+
 # Object Property: :businessVehicleOwnedBy (:businessVehicleOwnedBy)
 
+SymmetricObjectProperty(:businessVehicleOwnedBy)
+IrreflexiveObjectProperty(:businessVehicleOwnedBy)
 ObjectPropertyDomain(:businessVehicleOwnedBy :BusinessVehicle)
 ObjectPropertyRange(:businessVehicleOwnedBy :Business)
 
 # Object Property: :cleaningToolUsedBy (:cleaningToolUsedBy)
 
 SubObjectPropertyOf(:cleaningToolUsedBy :usedBy)
+AsymmetricObjectProperty(:cleaningToolUsedBy)
+IrreflexiveObjectProperty(:cleaningToolUsedBy)
 ObjectPropertyDomain(:cleaningToolUsedBy :CleaningTool)
 ObjectPropertyRange(:cleaningToolUsedBy :Cleaner)
 
 # Object Property: :cousineToolUsedBy (:cousineToolUsedBy)
 
 SubObjectPropertyOf(:cousineToolUsedBy :usedBy)
+AsymmetricObjectProperty(:cousineToolUsedBy)
+IrreflexiveObjectProperty(:cousineToolUsedBy)
 ObjectPropertyDomain(:cousineToolUsedBy :CousineTool)
 ObjectPropertyRange(:cousineToolUsedBy :Chef)
 
 # Object Property: :equipmentInFoodTruck (:equipmentInFoodTruck)
 
+AsymmetricObjectProperty(:equipmentInFoodTruck)
+IrreflexiveObjectProperty(:equipmentInFoodTruck)
 ObjectPropertyDomain(:equipmentInFoodTruck :Equipment)
 ObjectPropertyRange(:equipmentInFoodTruck :FoodTruck)
 
 # Object Property: :foodTruckLocation (:foodTruckLocation)
 
+AsymmetricObjectProperty(:foodTruckLocation)
+IrreflexiveObjectProperty(:foodTruckLocation)
 ObjectPropertyDomain(:foodTruckLocation :FoodTruck)
 ObjectPropertyRange(:foodTruckLocation :Location)
 
 # Object Property: :foodTruckOwnedBy (:foodTruckOwnedBy)
 
 SubObjectPropertyOf(:foodTruckOwnedBy :businessVehicleOwnedBy)
+SymmetricObjectProperty(:foodTruckOwnedBy)
+IrreflexiveObjectProperty(:foodTruckOwnedBy)
 ObjectPropertyDomain(:foodTruckOwnedBy :FoodTruck)
 ObjectPropertyRange(:foodTruckOwnedBy :Canteen)
 
 # Object Property: :freelacesTo (:freelacesTo)
 
 SubObjectPropertyOf(:freelacesTo :worksFor)
+AsymmetricObjectProperty(:freelacesTo)
+IrreflexiveObjectProperty(:freelacesTo)
 ObjectPropertyDomain(:freelacesTo :Worker)
 ObjectPropertyRange(:freelacesTo :Business)
 
 # Object Property: :hasContractWith (:hasContractWith)
 
 SubObjectPropertyOf(:hasContractWith :worksFor)
+AsymmetricObjectProperty(:hasContractWith)
+IrreflexiveObjectProperty(:hasContractWith)
 ObjectPropertyDomain(:hasContractWith :Worker)
 ObjectPropertyRange(:hasContractWith :Business)
 
 # Object Property: :hasIngredient (:hasIngredient)
 
 SubObjectPropertyOf(:hasIngredient :hasIngredient)
-ObjectPropertyDomain(:hasIngredient ObjectUnionOf(:Food :VeganFood))
+AsymmetricObjectProperty(:hasIngredient)
+IrreflexiveObjectProperty(:hasIngredient)
+ObjectPropertyDomain(:hasIngredient :Food)
 ObjectPropertyRange(:hasIngredient :Ingredient)
 
 # Object Property: :hasMenu (:hasMenu)
 
+AsymmetricObjectProperty(:hasMenu)
+IrreflexiveObjectProperty(:hasMenu)
 ObjectPropertyDomain(:hasMenu :FoodTruck)
 ObjectPropertyRange(:hasMenu :Menu)
 
 # Object Property: :includes (:includes)
 
+InverseObjectProperties(:includes :isIncluded)
 ObjectPropertyDomain(:includes :Menu)
 ObjectPropertyRange(:includes :MenuProduct)
 
 # Object Property: :memberCardOwnedBy (:memberCardOwnedBy)
 
+AsymmetricObjectProperty(:memberCardOwnedBy)
+IrreflexiveObjectProperty(:memberCardOwnedBy)
 ObjectPropertyDomain(:memberCardOwnedBy :MemberCard)
 ObjectPropertyRange(:memberCardOwnedBy :Customer)
 
 # Object Property: :operationStatus (:operationStatus)
 
+AsymmetricObjectProperty(:operationStatus)
+IrreflexiveObjectProperty(:operationStatus)
 ObjectPropertyDomain(:operationStatus :Machine)
 ObjectPropertyRange(:operationStatus :OperationStatus)
 
 # Object Property: :parkingInFoodTruck (:parkingInFoodTruck)
 
+InverseFunctionalObjectProperty(:parkingInFoodTruck)
+AsymmetricObjectProperty(:parkingInFoodTruck)
+IrreflexiveObjectProperty(:parkingInFoodTruck)
 ObjectPropertyDomain(:parkingInFoodTruck :Parking)
 ObjectPropertyRange(:parkingInFoodTruck :FoodTruck)
 
 # Object Property: :parkingSlotInParking (:parkingSlotInParking)
 
+AsymmetricObjectProperty(:parkingSlotInParking)
+IrreflexiveObjectProperty(:parkingSlotInParking)
 ObjectPropertyDomain(:parkingSlotInParking :ParkingSlot)
 ObjectPropertyRange(:parkingSlotInParking :Parking)
 
 # Object Property: :parkingSlotOccupiedBy (:parkingSlotOccupiedBy)
 
+InverseFunctionalObjectProperty(:parkingSlotOccupiedBy)
 ObjectPropertyDomain(:parkingSlotOccupiedBy :ParkingSlot)
 ObjectPropertyRange(:parkingSlotOccupiedBy :PersonalVehicle)
 
 # Object Property: :reservationTable (:reservationTable)
 
+AsymmetricObjectProperty(:reservationTable)
+IrreflexiveObjectProperty(:reservationTable)
 ObjectPropertyDomain(:reservationTable :Reservation)
 ObjectPropertyRange(:reservationTable :Table)
 
+# Object Property: :reserved (:reserved)
+
+SubObjectPropertyOf(:reserved owl:topObjectProperty)
+InverseObjectProperties(:reserved :reservedBy)
+
 # Object Property: :reservedBy (:reservedBy)
 
+FunctionalObjectProperty(:reservedBy)
+AsymmetricObjectProperty(:reservedBy)
+IrreflexiveObjectProperty(:reservedBy)
 ObjectPropertyDomain(:reservedBy :Reservation)
 ObjectPropertyRange(:reservedBy :Customer)
 
 # Object Property: :tableInTruck (:tableInTruck)
 
+AsymmetricObjectProperty(:tableInTruck)
+IrreflexiveObjectProperty(:tableInTruck)
 ObjectPropertyDomain(:tableInTruck :Table)
 ObjectPropertyRange(:tableInTruck :FoodTruck)
 
 # Object Property: :usedBy (:usedBy)
 
+InverseObjectProperties(:usedBy :uses)
+AsymmetricObjectProperty(:usedBy)
+IrreflexiveObjectProperty(:usedBy)
 ObjectPropertyDomain(:usedBy :Equipment)
 ObjectPropertyRange(:usedBy :Worker)
 
+# Object Property: :uses (:uses)
+
+SubObjectPropertyOf(:uses owl:topObjectProperty)
+
 # Object Property: :worksFor (:worksFor)
 
+AsymmetricObjectProperty(:worksFor)
+IrreflexiveObjectProperty(:worksFor)
 ObjectPropertyDomain(:worksFor :Worker)
 ObjectPropertyRange(:worksFor :Business)
 
@@ -406,6 +490,7 @@ DataPropertyRange(:PaymentDate xsd:date)
 
 # Data Property: :PostalCode (:PostalCode)
 
+FunctionalDataProperty(:PostalCode)
 DataPropertyDomain(:PostalCode :Location)
 DataPropertyRange(:PostalCode xsd:integer)
 
@@ -417,6 +502,7 @@ DataPropertyRange(:businessField xsd:string)
 # Data Property: :businessName (:businessName)
 
 SubDataPropertyOf(:businessName :name)
+FunctionalDataProperty(:businessName)
 DataPropertyDomain(:businessName :Business)
 DataPropertyRange(:businessName xsd:string)
 
@@ -473,6 +559,7 @@ DataPropertyRange(:lastServiced xsd:date)
 
 # Data Property: :name (:name)
 
+FunctionalDataProperty(:name)
 DataPropertyRange(:name xsd:string)
 
 # Data Property: :needsElectricity (:needsElectricity)
@@ -483,11 +570,13 @@ DataPropertyRange(:needsElectricity xsd:boolean)
 # Data Property: :personName (:personName)
 
 SubDataPropertyOf(:personName :name)
+FunctionalDataProperty(:personName)
 DataPropertyDomain(:personName :Person)
 DataPropertyRange(:personName xsd:string)
 
 # Data Property: :plate (:plate)
 
+FunctionalDataProperty(:plate)
 DataPropertyDomain(:plate :Vehicle)
 DataPropertyRange(:plate xsd:string)
 
@@ -553,6 +642,7 @@ SubClassOf(:BusinessVehicle ObjectSomeValuesFrom(:businessVehicleOwnedBy :Busine
 EquivalentClasses(:Canteen DataHasValue(:businessField "FoodChain"))
 SubClassOf(:Canteen :Business)
 SubClassOf(:Canteen ObjectMaxCardinality(2 :businessOwnedBy :BusinessOwner))
+DisjointClasses(:Canteen :SupplierCompany)
 
 # Class: :Chef (:Chef)
 
@@ -565,6 +655,7 @@ SubClassOf(:Cleaner :Worker)
 # Class: :CleaningTool (:CleaningTool)
 
 SubClassOf(:CleaningTool :Tool)
+DisjointClasses(:CleaningTool :CousineTool)
 
 # Class: :CousineTool (:CousineTool)
 
@@ -581,6 +672,7 @@ SubClassOf(:CustomerFoodTruckPayment :CustomerPayment)
 # Class: :CustomerPayment (:CustomerPayment)
 
 SubClassOf(:CustomerPayment :Payment)
+DisjointClasses(:CustomerPayment :SupplyPayment)
 
 # Class: :Drink (:Drink)
 
@@ -597,6 +689,7 @@ SubClassOf(:Food :MenuProduct)
 # Class: :FoodTruck (:FoodTruck)
 
 SubClassOf(:FoodTruck :Truck)
+SubClassOf(:FoodTruck ObjectSomeValuesFrom(:foodTruckOwnedBy :Canteen))
 
 # Class: :GlutenFreeAndVeganFood (:GlutenFreeAndVeganFood)
 
@@ -605,8 +698,8 @@ SubClassOf(:GlutenFreeAndVeganFood :Food)
 
 # Class: :GlutenFreeFood (:GlutenFreeFood)
 
+EquivalentClasses(:GlutenFreeFood ObjectIntersectionOf(:Food ObjectUnionOf(ObjectAllValuesFrom(:hasIngredient :GlutenFreeIngredient) DataHasValue(:hasGluten "false"^^xsd:boolean))))
 SubClassOf(:GlutenFreeFood :Food)
-SubClassOf(:GlutenFreeFood ObjectAllValuesFrom(:hasIngredient :GlutenFreeIngredient))
 
 # Class: :GlutenFreeIngredient (:GlutenFreeIngredient)
 
@@ -645,6 +738,7 @@ SubClassOf(:NonAlcoholDrink :Drink)
 
 # Class: :NormalFood (:NormalFood)
 
+EquivalentClasses(:NormalFood DataHasValue(:suitableForVegan "false"^^xsd:boolean))
 SubClassOf(:NormalFood :Food)
 
 # Class: :NormalIngredient (:NormalIngredient)
@@ -684,6 +778,12 @@ SubClassOf(:PersonalVehicle :Vehicle)
 
 SubClassOf(:Product rdfs:Resource)
 
+# Class: :ReadyToUseEquipment (:ReadyToUseEquipment)
+
+EquivalentClasses(:ReadyToUseEquipment ObjectSomeValuesFrom(:EquipmentOperationStatus :Working))
+SubClassOf(:ReadyToUseEquipment :Equipment)
+DisjointClasses(:ReadyToUseEquipment :UnavailableEquipment)
+
 # Class: :Reservation (:Reservation)
 
 SubClassOf(:Reservation rdfs:Resource)
@@ -691,7 +791,7 @@ SubClassOf(:Reservation ObjectMaxCardinality(2 :reservationTable :Table))
 
 # Class: :SpecialFood (:SpecialFood)
 
-EquivalentClasses(:SpecialFood ObjectUnionOf(:GlutenFreeFood :VeganFood))
+EquivalentClasses(:SpecialFood ObjectUnionOf(DataHasValue(:hasGluten "false"^^xsd:boolean) DataHasValue(:suitableForVegan "true"^^xsd:boolean)))
 SubClassOf(:SpecialFood :Food)
 
 # Class: :SupplierCompany (:SupplierCompany)
@@ -715,10 +815,15 @@ SubClassOf(:Tool :Equipment)
 
 SubClassOf(:Truck :BusinessVehicle)
 
+# Class: :UnavailableEquipment (:UnavailableEquipment)
+
+EquivalentClasses(:UnavailableEquipment ObjectUnionOf(ObjectSomeValuesFrom(:EquipmentOperationStatus :BeingServiced) ObjectSomeValuesFrom(:EquipmentOperationStatus :OutOfOrder)))
+SubClassOf(:UnavailableEquipment :Equipment)
+
 # Class: :VeganFood (:VeganFood)
 
+EquivalentClasses(:VeganFood ObjectIntersectionOf(:Food ObjectUnionOf(ObjectAllValuesFrom(:hasIngredient :VeganIngredient) DataHasValue(:suitableForVegan "true"^^xsd:boolean))))
 SubClassOf(:VeganFood :Food)
-SubClassOf(:VeganFood ObjectSomeValuesFrom(:hasIngredient :VeganIngredient))
 
 # Class: :VeganIngredient (:VeganIngredient)
 
@@ -1094,6 +1199,7 @@ ObjectPropertyAssertion(:hasIngredient :PitaPanseta :Panseta)
 ObjectPropertyAssertion(:hasIngredient :PitaPanseta :Pita)
 ObjectPropertyAssertion(:hasIngredient :PitaPanseta :Tzatziki)
 DataPropertyAssertion(:costs :PitaPanseta "3"^^xsd:decimal)
+DataPropertyAssertion(:hasGluten :PitaPanseta "true"^^xsd:boolean)
 DataPropertyAssertion(:suitableForVegan :PitaPanseta "false"^^xsd:boolean)
 
 # Individual: :PitaSouvlaki (:PitaSouvlaki)
@@ -1103,13 +1209,14 @@ ObjectPropertyAssertion(:hasIngredient :PitaSouvlaki :Pita)
 ObjectPropertyAssertion(:hasIngredient :PitaSouvlaki :Souvlaki)
 ObjectPropertyAssertion(:hasIngredient :PitaSouvlaki :Tzatziki)
 DataPropertyAssertion(:costs :PitaSouvlaki "3"^^xsd:decimal)
+DataPropertyAssertion(:hasGluten :PitaSouvlaki "true"^^xsd:boolean)
 DataPropertyAssertion(:suitableForVegan :PitaSouvlaki "false"^^xsd:boolean)
 
 # Individual: :PlitaGluttenFreeMeMarouli (:PlitaGluttenFreeMeMarouli)
 
-ClassAssertion(:GlutenFreeFood :PlitaGluttenFreeMeMarouli)
-ClassAssertion(:VeganIngredient :PlitaGluttenFreeMeMarouli)
 ObjectPropertyAssertion(:hasIngredient :PlitaGluttenFreeMeMarouli :PitaGlutenFree)
+DataPropertyAssertion(:hasGluten :PlitaGluttenFreeMeMarouli "false"^^xsd:boolean)
+DataPropertyAssertion(:suitableForVegan :PlitaGluttenFreeMeMarouli "true"^^xsd:boolean)
 
 # Individual: :Psomaki (:Psomaki)
 
@@ -1124,6 +1231,7 @@ ObjectPropertyAssertion(:hasIngredient :PsomakiPanseta :Panseta)
 ObjectPropertyAssertion(:hasIngredient :PsomakiPanseta :Psomaki)
 ObjectPropertyAssertion(:hasIngredient :PsomakiPanseta :Tzatziki)
 DataPropertyAssertion(:costs :PsomakiPanseta "2.5"^^xsd:decimal)
+DataPropertyAssertion(:hasGluten :PsomakiPanseta "true"^^xsd:boolean)
 DataPropertyAssertion(:suitableForVegan :PsomakiPanseta "false"^^xsd:boolean)
 
 # Individual: :PsomakiRibeye (:PsomakiRibeye)
@@ -1133,6 +1241,7 @@ ObjectPropertyAssertion(:hasIngredient :PsomakiRibeye :Psomaki_1)
 ObjectPropertyAssertion(:hasIngredient :PsomakiRibeye :Ribeye)
 ObjectPropertyAssertion(:hasIngredient :PsomakiRibeye :Tzatziki_1)
 DataPropertyAssertion(:costs :PsomakiRibeye "60"^^xsd:decimal)
+DataPropertyAssertion(:hasGluten :PsomakiRibeye "true"^^xsd:boolean)
 DataPropertyAssertion(:suitableForVegan :PsomakiRibeye "false"^^xsd:boolean)
 
 # Individual: :PsomakiSouvlaki (:PsomakiSouvlaki)
@@ -1142,6 +1251,7 @@ ObjectPropertyAssertion(:hasIngredient :PsomakiSouvlaki :Psomaki)
 ObjectPropertyAssertion(:hasIngredient :PsomakiSouvlaki :Souvlaki)
 ObjectPropertyAssertion(:hasIngredient :PsomakiSouvlaki :Tzatziki)
 DataPropertyAssertion(:costs :PsomakiSouvlaki "2.5"^^xsd:decimal)
+DataPropertyAssertion(:hasGluten :PsomakiSouvlaki "true"^^xsd:boolean)
 DataPropertyAssertion(:suitableForVegan :PsomakiSouvlaki "false"^^xsd:boolean)
 
 # Individual: :PsomakiTbone (:PsomakiTbone)
@@ -1151,6 +1261,7 @@ ObjectPropertyAssertion(:hasIngredient :PsomakiTbone :Psomaki_1)
 ObjectPropertyAssertion(:hasIngredient :PsomakiTbone :T_Bone)
 ObjectPropertyAssertion(:hasIngredient :PsomakiTbone :Tzatziki_1)
 DataPropertyAssertion(:costs :PsomakiTbone "60"^^xsd:decimal)
+DataPropertyAssertion(:hasGluten :PsomakiTbone "true"^^xsd:boolean)
 DataPropertyAssertion(:suitableForVegan :PsomakiTbone "false"^^xsd:boolean)
 
 # Individual: :Psomaki_1 (:Psomaki_1)
@@ -1307,4 +1418,8 @@ ClassAssertion(:BusinessOwner :Za)
 DataPropertyAssertion(:personName :Za "Za")
 
 
+DisjointClasses(:BeingServiced :OutOfOrder :Working)
+DisjointClasses(:BusinessOwner :Customer :Worker)
+DisjointClasses(:Chef :Cleaner :Waiter)
+DisjointClasses(:GlutenFreeIngredient :NormalIngredient :VeganIngredient)
 )
