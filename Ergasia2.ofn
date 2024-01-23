@@ -301,7 +301,7 @@ ObjectPropertyRange(:PaymentToTruck :FoodTruck)
 
 # Object Property: :businessOwnedBy (:businessOwnedBy)
 
-SymmetricObjectProperty(:businessOwnedBy)
+AsymmetricObjectProperty(:businessOwnedBy)
 IrreflexiveObjectProperty(:businessOwnedBy)
 ObjectPropertyDomain(:businessOwnedBy :Business)
 ObjectPropertyRange(:businessOwnedBy :BusinessOwner)
@@ -312,7 +312,7 @@ InverseObjectProperties(:businessOwnsBusinessVehicle :businessVehicleOwnedBy)
 
 # Object Property: :businessVehicleOwnedBy (:businessVehicleOwnedBy)
 
-SymmetricObjectProperty(:businessVehicleOwnedBy)
+AsymmetricObjectProperty(:businessVehicleOwnedBy)
 IrreflexiveObjectProperty(:businessVehicleOwnedBy)
 ObjectPropertyDomain(:businessVehicleOwnedBy :BusinessVehicle)
 ObjectPropertyRange(:businessVehicleOwnedBy :Business)
@@ -350,7 +350,7 @@ ObjectPropertyRange(:foodTruckLocation :Location)
 # Object Property: :foodTruckOwnedBy (:foodTruckOwnedBy)
 
 SubObjectPropertyOf(:foodTruckOwnedBy :businessVehicleOwnedBy)
-SymmetricObjectProperty(:foodTruckOwnedBy)
+AsymmetricObjectProperty(:foodTruckOwnedBy)
 IrreflexiveObjectProperty(:foodTruckOwnedBy)
 ObjectPropertyDomain(:foodTruckOwnedBy :FoodTruck)
 ObjectPropertyRange(:foodTruckOwnedBy :Canteen)
@@ -490,6 +490,7 @@ DataPropertyRange(:PaymentDate xsd:date)
 
 # Data Property: :PostalCode (:PostalCode)
 
+SubDataPropertyOf(:PostalCode :quantity)
 FunctionalDataProperty(:PostalCode)
 DataPropertyDomain(:PostalCode :Location)
 DataPropertyRange(:PostalCode xsd:integer)
@@ -523,6 +524,7 @@ DataPropertyRange(:hasAlcohol xsd:boolean)
 
 # Data Property: :hasGluten (:hasGluten)
 
+SubDataPropertyOf(:hasGluten :hasMemberPoints)
 DataPropertyDomain(:hasGluten :Food)
 DataPropertyRange(:hasGluten xsd:boolean)
 
@@ -704,6 +706,7 @@ SubClassOf(:GlutenFreeFood :Food)
 # Class: :GlutenFreeIngredient (:GlutenFreeIngredient)
 
 SubClassOf(:GlutenFreeIngredient :Ingredient)
+DisjointClasses(:GlutenFreeIngredient :NormalIngredient)
 
 # Class: :Ingredient (:Ingredient)
 
@@ -1058,6 +1061,7 @@ ClassAssertion(:VeganIngredient :Marouli)
 # Individual: :MarouliSketo (:MarouliSketo)
 
 ObjectPropertyAssertion(:hasIngredient :MarouliSketo :Marouli)
+DataPropertyAssertion(:suitableForVegan :MarouliSketo "true"^^xsd:boolean)
 
 # Individual: :Martin (:Martin)
 
@@ -1421,5 +1425,4 @@ DataPropertyAssertion(:personName :Za "Za")
 DisjointClasses(:BeingServiced :OutOfOrder :Working)
 DisjointClasses(:BusinessOwner :Customer :Worker)
 DisjointClasses(:Chef :Cleaner :Waiter)
-DisjointClasses(:GlutenFreeIngredient :NormalIngredient :VeganIngredient)
 )
